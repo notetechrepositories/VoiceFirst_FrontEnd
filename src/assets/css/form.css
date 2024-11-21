@@ -1,5 +1,6 @@
 .form-label,.form-select,.form-control,.form-check-label {
     font-size: .9rem;
+    margin-bottom: 0;
 }
 .text-danger {
     color: #dc3545 !important;
