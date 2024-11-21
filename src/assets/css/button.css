@@ -1,0 +1,16 @@
+.primary-btn {
+    background-color: var(--primary-color);
+    border: none;
+    color: #fff;
+    padding: 5px 15px;
+    border-radius: 7px;
+    font-size: 0.9rem;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    cursor: pointer;
+}
+
+.primary-btn:active {
+    transform: scale(0.95); /* Slightly shrink the button */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px 0px; /* Reduced shadow effect */
+}

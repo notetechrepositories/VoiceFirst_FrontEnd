@@ -1,0 +1,8 @@
+.form-label,.form-select,.form-control,.form-check-label {
+    font-size: .9rem;
+}
+.text-danger {
+    color: #dc3545 !important;
+    margin: 0px 0px -19px 1px;
+    font-size: 0.9rem;
+}

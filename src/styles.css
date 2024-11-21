@@ -1,0 +1,16 @@
+
+@import "./assets/css/button.css";
+@import "./assets/css/form.css";
+
+
+:root {
+    --primary-color: #31353d;
+}
+
+* {
+    padding:0;
+    margin:0;
+    box-sizing: border-box;
+    list-style-type: none;
+    text-decoration: none;
+}
