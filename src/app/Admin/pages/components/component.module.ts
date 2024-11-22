@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestComponent } from './test/test.component';
 import { ComponentRoutes } from './component.routing.module';
 import { IndexpageComponent } from './indexpage/indexpage.component';
+import { AddpopupComponent } from './indexpage/addpopup/addpopup.component';
 
 
 
@@ -18,7 +19,8 @@ import { IndexpageComponent } from './indexpage/indexpage.component';
   ],
   declarations: [
     TestComponent,
-    IndexpageComponent
+    IndexpageComponent,
+    AddpopupComponent
   ],
 })
 export class ComponentModule {}

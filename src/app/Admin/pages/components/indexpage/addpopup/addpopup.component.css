@@ -1,0 +1,73 @@
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popup-content {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  min-width: 300px;
+  width: 700px; /* Responsive width for smaller screens */
+  max-height: 90vh; /* Limit height for smaller screens */
+  overflow-y: auto;
+}
+
+/* popup scroll bar */
+
+/* Style the scrollbar for WebKit browsers */
+.popup-content::-webkit-scrollbar {
+    width: 5px; /* Width of the vertical scrollbar */
+  }
+  
+  .popup-content::-webkit-scrollbar-track {
+    background: transparent; /* Transparent track */
+    border-radius: 10px; /* Rounded track */
+  }
+  
+  .popup-content::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #d1d1d1, #a1a1a1); /* Gradient color for thumb */
+    border-radius: 10px; /* Rounded thumb */
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3); /* Inner shadow for a 3D effect */
+  }
+  
+  .popup-content::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #a1a1a1, #787878); /* Darker gradient on hover */
+    box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.5); /* Enhanced shadow on hover */
+  }
+  
+  /* Firefox scrollbar styling */
+  .popup-content {
+    scrollbar-width: thin; /* Thin scrollbar */
+    scrollbar-color: #a1a1a1 transparent; /* Thumb and track colors */
+  }
+
+
+button {
+  margin: 5px;
+}
+
+@media (max-width: 768px) {
+    .popup-content {
+      padding: 15px; /* Reduce padding on smaller screens */
+      max-width: 90%; /* Adjust width for tablets and smaller devices */
+      border-radius: 10px; /* Slightly larger radius for better appearance */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .popup-content {
+      padding: 10px; /* Further reduce padding on very small devices */
+      width: 100%; /* Full width for extremely small screens */
+      max-height: 80vh; /* Adjust height for better usability */
+    }
+  }
