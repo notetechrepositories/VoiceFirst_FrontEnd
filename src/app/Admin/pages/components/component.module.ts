@@ -6,6 +6,7 @@ import { TestComponent } from './test/test.component';
 import { ComponentRoutes } from './component.routing.module';
 import { IndexpageComponent } from './indexpage/indexpage.component';
 import { CountryComponent } from './country/country.component';
+import { AddpopupComponent } from './indexpage/addpopup/addpopup.component';
 
 
 
@@ -20,7 +21,8 @@ import { CountryComponent } from './country/country.component';
   declarations: [
     TestComponent,
     IndexpageComponent,
-    CountryComponent
+    CountryComponent,
+    AddpopupComponent
   ],
 })
 export class ComponentModule {}

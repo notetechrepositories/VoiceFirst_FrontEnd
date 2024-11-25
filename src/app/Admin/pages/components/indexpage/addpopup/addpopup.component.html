@@ -1,0 +1,89 @@
+<div class="popup">
+    <div class="popup-content">
+
+
+            <!-- Changing Part -->
+            <h2>Forms</h2>
+          
+            <form class="row g-3">
+              <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmail4" formControlName="email">
+                <!-- <div *ngIf="form.controls['email'].touched && form.controls['email'].invalid" class="text-danger">
+                  <small *ngIf="form.controls['email'].errors?.['required']">Email is required.</small>
+                  <small *ngIf="form.controls['email'].errors?.['invalidEmail']">Invalid email format.</small>
+                </div> -->
+              </div>
+            
+              <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputPassword4" formControlName="password">
+                <!-- <div *ngIf="form.controls['password'].touched && form.controls['password'].invalid" class="text-danger">
+                  <small *ngIf="form.controls['password'].errors?.['required']">Password is required.</small>
+                  <small *ngIf="form.controls['password'].errors?.['invalidPassword']">
+                    Password must contain uppercase, lowercase, number, and at least 6 characters.
+                  </small>
+                </div> -->
+              </div>
+            
+              <div class="col-12">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="inputAddress" formControlName="address">
+                <!-- <div *ngIf="form.controls['address'].touched && form.controls['address'].invalid" class="text-danger">
+                  <small>Address is required.</small>
+                </div> -->
+              </div>
+            
+              <div class="col-12">
+                <label for="inputAddress2" class="form-label">Address 2</label>
+                <input type="text" class="form-control" id="inputAddress2" formControlName="address2">
+              </div>
+            
+              <div class="col-md-6">
+                <label for="inputCity" class="form-label">City</label>
+                <input type="text" class="form-control" id="inputCity" formControlName="city">
+                <!-- <div *ngIf="form.controls['city'].touched && form.controls['city'].invalid" class="text-danger">
+                  <small>City is required.</small>
+                </div> -->
+              </div>
+            
+              <div class="col-md-4">
+                <label for="inputState" class="form-label">State</label>
+                <select id="inputState" class="form-select" formControlName="state">
+                  <option selected disabled>Choose...</option>
+                  <option value="state1">State 1</option>
+                  <option value="state2">State 2</option>
+                </select>
+                <!-- <div *ngIf="form.controls['state'].touched && form.controls['state'].invalid" class="text-danger">
+                  <small>State is required.</small>
+                </div> -->
+              </div>
+            
+              <div class="col-md-2">
+                <label for="inputZip" class="form-label">Zip</label>
+                <input type="text" class="form-control" id="inputZip" formControlName="zip">
+                <!-- <div *ngIf="form.controls['zip'].touched && form.controls['zip'].invalid" class="text-danger">
+                  <small *ngIf="form.controls['zip'].errors?.['required']">Zip is required.</small>
+                  <small *ngIf="form.controls['zip'].errors?.['pattern']">Invalid zip format.</small>
+                </div> -->
+              </div>
+            
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="gridCheck" formControlName="check">
+                  <label class="form-check-label" for="gridCheck">Check me out</label>
+                  <!-- <div *ngIf="form.controls['check'].touched && form.controls['check'].invalid" class="text-danger">
+                    <small>You must agree to continue.</small>
+                  </div> -->
+                </div>
+              </div>
+            
+              <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="primary-btn">Sign in</button>
+                <button type="submit" class="primary-btn" (click)="onClose()">cancel</button>
+              </div>
+            </form>
+            <!-- ------------- -->
+
+    </div>
+  </div>

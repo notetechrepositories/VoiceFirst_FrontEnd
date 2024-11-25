@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { AddpopupComponent } from './addpopup/addpopup.component';
 
 @Component({
   selector: 'app-indexpage',
@@ -107,9 +108,9 @@ export class IndexpageComponent {
   // ----------------------
 
   searchTerm = '';
-filterDate = '';
-filterStatus = '';
-filteredOrders = [...this.orders];
+  filterDate = '';
+  filterStatus = '';
+  filteredOrders = [...this.orders];
 
 applyFilters() {
   let orders = [...this.orders];
@@ -140,6 +141,30 @@ applyFilters() {
 
   this.filteredOrders = orders;
   this.updatePaginatedOrders();
+}
+
+// ----------------------------------POP UP----------------------------------------
+
+
+@ViewChild('popupContainer', { read: ViewContainerRef })
+popupContainer!: ViewContainerRef;
+
+constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
+
+openAddCompany() {
+  // Clear previous components if necessary
+  this.popupContainer.clear();
+
+  // Create a component factory for AddCompanyComponent
+  const factory = this.componentFactoryResolver.resolveComponentFactory(AddpopupComponent);
+
+  // Create the component dynamically
+  const componentRef = this.popupContainer.createComponent(factory);
+
+  // Listen to events or data changes if necessary
+  componentRef.instance.closePopup = () => {
+    this.popupContainer.clear();
+  };
 }
 
   
