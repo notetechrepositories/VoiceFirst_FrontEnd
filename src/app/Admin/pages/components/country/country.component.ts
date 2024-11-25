@@ -4,7 +4,7 @@ import { ReactiveFormsModule, FormBuilder,FormControl, FormGroup, Validators } f
 @Component({
   selector: 'app-country',
   templateUrl: './country.component.html',
-  styleUrl: './country.component.css'
+  styleUrl: './country.component.css',
 })
 export class CountryComponent {
 
@@ -128,7 +128,67 @@ export class CountryComponent {
     })
     
   }
+  itemsPerPage = 2;
+  currentPage = 1;
+  paginatedOrders = this.locations.slice(0, this.itemsPerPage);
 
+  get totalPages(): number {
+    return Math.ceil(this.locations.length / this.itemsPerPage);
+  }
+/////////////////------Design----------/////////////////
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.updatePaginatedOrders();
+  }
+}
+
+previousPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.updatePaginatedOrders();
+  }
+}
+updatePaginatedOrders() {
+  const start = (this.currentPage - 1) * this.itemsPerPage;
+  const end = start + this.itemsPerPage;
+  this.paginatedOrders = this.locations.slice(start, end);
+}
+
+searchTerm = '';
+filterDate = '';
+filterStatus = '';
+filteredLocations = [...this.locations];
+applyFilters() {
+  let location = [...this.locations];
+
+  // Filter by search term
+  if (this.searchTerm) {
+    const search = this.searchTerm.toLowerCase();
+    location = location.filter(
+      (location) =>
+        location.country.toLowerCase().includes(search) ||
+      location.division1.toLowerCase().includes(search)
+    );
+  }
+
+  // Filter by date
+  // if (this.filterDate) {
+  //   location = location.filter(
+  //     (location) => new Date(location.orderDate).toDateString() === new Date(this.filterDate).toDateString()
+  //   );
+  // }
+
+  // Filter by status
+  // if (this.filterStatus) {
+  //   orders = orders.filter(
+  //     (order) => order.deliveryStatus === this.filterStatus
+  //   );
+  // }
+
+  // this.filteredOrders = orders;
+  this.updatePaginatedOrders();
+}
 
   // Div1
   onStateChange(event: Event) {

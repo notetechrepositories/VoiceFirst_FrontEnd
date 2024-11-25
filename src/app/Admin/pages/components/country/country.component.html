@@ -1,217 +1,90 @@
-<div class="location-table-container">
-    <!-- Header with Create Icon -->
-    <div class="table-header">
-      <h2>Location Details</h2>
-      <!-- File Input for Import -->
-        <input type="file" id="file" (change)="onFileChange($event)" style="display: none;" />
-        <label for="file" class="import-btn">Import Excel</label>
-      <button class="create-btn" (click)="openAddPopup()"><span>+</span></button>
-    </div>
+<div class="card">
   
-    <!-- Table -->
-    <table>
-      <thead>
-        <tr>
-          <th>Country</th>
-          <th>Division 1</th>
-          <th>Division 2</th>   
-          <th>Division 3</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let location of locations">
-          <td>{{ location.country }}</td>
-          <td (click)="divOnePopup()">
-            {{ location.division1 }}
-          </td>
-          <td (click)="divTWoPopup()" >{{ location.division2 }}</td>
-          <td>{{ location.division3 }}</td>
-          <td class="actions">
-            <!-- Edit and Delete buttons/icons -->
-            <button class="edit-btn" (click)="editLocation(location)">✏️</button>
-            <button class="delete-btn" (click)="deleteLocation(location)">🗑️</button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-  
-  <!-- Overlay (visible when `showForm` is true) -->
-  <div *ngIf="showForm" class="overlay" (click)="closeForm()">
-    <div class="form-container" (click)="$event.stopPropagation()">
-      <!-- Close Icon -->
-      <button class="close-btn" (click)="closeForm()">×</button>
-  
-      <h2>Location Input Form</h2>
-      <form [formGroup]="locationForm" (ngSubmit)="onSubmit()">
-        <!-- Country Input -->
-        <div class="form-group">
-          <label for="country">Country</label>
-          <input
-            type="text"
-            id="country"
-            formControlName="country"
-            placeholder="Enter country"
-          />
-          <div class="error" *ngIf="locationForm.get('country')?.invalid && locationForm.get('country')?.touched">
-            Country is required.
-          </div>
-        </div>
-  
-        <!-- Division 1 Input -->
-        <div class="form-group">
-          <label for="div1">Division 1</label>
-          <input
-            type="text"
-            id="div1"
-            formControlName="div1"
-            placeholder="Enter Division 1"
-          />
-        </div>
-  
-        <!-- Division 2 Input -->
-        <div class="form-group">
-          <label for="div2">Division 2</label>
-          <input
-            type="text"
-            id="div2"
-            formControlName="div2"
-            placeholder="Enter Division 2"
-          />
-        </div>
-  
-        <!-- Division 3 Input -->
-        <div class="form-group">
-          <label for="div3">Division 3</label>
-          <input
-            type="text"
-            id="div3"
-            formControlName="div3"
-            placeholder="Enter Division 3"
-          />
-        </div>
-  
-        <div class="form-actions">
-          <button type="submit" [disabled]="locationForm.invalid">
-            Submit
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-  
-  <!-- Popup div1 Modal -->
-   
-  <div *ngIf="showPopup" id="popup" class="overlay">
-    <div class="form-container">
-      <span class="close-btn" (click)="closePopup()">&times;</span>
-      <form [formGroup]="divisionForm" (ngSubmit)="onSubmit()">
-        <!-- Division 1 Input -->
-        <div class="form-group" >
-            <div style="display: flex; align-items: center; gap: 10px;">
-            <input
-              type="text"
-              id="div1" name="div1"
-              formControlName="div1"
-              placeholder="Enter Division 1"
-              style="flex: 1;"
-            />
-            <button type="button" (click)="addItem()">Add</button>
-        </div>
-          </div>
-          
-        <!-- List -->
-        <div>
-            <div 
-               style="border: 1px solid #ccc; padding: 8px; min-height: 50px; border-radius: 4px; display: flex; flex-direction: column; gap: 10px; max-height: 550px; overflow-y: auto;">
-            
-            <!-- Loop through states array and display each state in a span -->
-             
-                    <span *ngFor="let state of states" 
-                        style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 8px; border-radius: 4px; min-width: 300px;">
-                        <div> {{ state }}</div>
-                        <div class="d-flex justify-content-end" >           
-                            <button (click)="editState(state)" style="background-color: transparent; border: none; color: blue; cursor: pointer; ">
-                                ✎
-                            </button>
-                            <button (click)="removeState(state)" style="background-color: transparent; border: none; color: red; cursor: pointer;">&times;</button>
-                        </div>
-
-                    </span>
+    <h3 class="mb-4">Table</h3>
+    <div class="filter-section">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search"
+                [(ngModel)]="searchTerm"
+                (input)="applyFilters()"
+              />
             </div>
-          
-          
-          </div>
-          
-        <div class="form-actions">
-            <button type="submit" [disabled]="locationForm.invalid" 
-            style="position: absolute; bottom: 10px; right: 10px;">
-            Submit
-            </button>
-        </div>
-      </form>
-    </div>
-  </div>
-  
-  <!-- div2 Pop up -->
-  <div *ngIf="divtwoPopup" id="popup" class="overlay">
-    <div class="form-container">
-      <span class="close-btn" (click)="closePopup2()">&times;</span>
-      <form [formGroup]="divisionTwoForm" (ngSubmit)="onSubmitdiv2()">
-                <!-- Division 1 Input -->
-        <div class="form-group">
-          <label for="state">Division 1:</label>
-          <select id="state" formControlName="state" (change)="onStateChange($event)" >
-            <option *ngFor="let state of states" [value]="state">
-              {{ state }}
-            </option>
-          </select>
-        </div>
-        <!-- Division 1 Input -->
-        <div class="form-group" >
-            <div style="display: flex; align-items: center; gap: 10px;">
-            <input
-              type="text"
-              id="div2" name="div2"
-              formControlName="div2"
-              placeholder="Enter Division 2"
-              style="flex: 1;"
-            />
-            <button type="button" (click)="addItem()">Add</button>
-        </div>
-          </div>
-          
-        <!-- List -->
-        <div>
-            <div 
-               style="border: 1px solid #ccc; padding: 8px; min-height: 50px; border-radius: 4px; display: flex; flex-direction: column; gap: 10px; max-height: 500px; overflow-y: auto;">
-            
-            <!-- Loop through states array and display each state in a span -->
-             
-                    <span *ngFor="let district of selectedDistricts" 
-                        style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 8px; border-radius: 4px; min-width: 300px;">
-                        <div> {{ district }}</div>
-                        <div class="d-flex justify-content-end" >           
-                            <button (click)="editDistrict(district)" style="background-color: transparent; border: none; color: blue; cursor: pointer; ">
-                                ✎
-                            </button>
-                            <button (click)="removeDistrict(district)" style="background-color: transparent; border: none; color: red; cursor: pointer;">&times;</button>
-                        </div>
-
-                    </span>
+            <div class="col-md-4">
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="filterDate"
+                (change)="applyFilters()"
+                placeholder="Filter by Date"
+              />
             </div>
-          
-          
+            <div class="col-md-4">
+              <select class="form-select" [(ngModel)]="filterStatus" (change)="applyFilters()">
+                <option value="">All Status</option>
+                <option value="DELIVERED">Delivered</option>
+                <option value="CANCELLED">Cancelled</option>
+                <option value="PENDING">Pending</option>
+                <option value="RETURNS">Returns</option>
+                <option value="PICKUPS">Pickups</option>
+              </select>
+            </div>
           </div>
-          
-        <div class="form-actions">
-            <button type="submit" [disabled]="locationForm.invalid" 
-            style="position: absolute; bottom: 10px; right: 10px;">
-            Submit
-            </button>
         </div>
-      </form>
+  
+        <div class="filter-buttons col-md-6 d-flex justify-content-end">
+          <button class="filter-btn import" data-toggle="tooltip" data-placement="top" title="Import"><i class='bx bx-import'></i></button>
+          <button class="filter-btn export" data-toggle="tooltip" data-placement="top" title="Export"><i class='bx bx-export'></i></button>
+          <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create"><i class='bx bx-plus'></i></button>
+        </div>
+  
+      </div>
+    </div>
+  
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>Country</th>
+            <th>Division 1</th>
+            <th>Division 2</th>   
+            <th>Division 3</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let location of locations">
+                <td>{{ location.country }}</td>
+                <td (click)="divOnePopup()">
+                  {{ location.division1 }}
+                </td>
+                <td (click)="divTWoPopup()" >{{ location.division2 }}</td>
+                <td>{{ location.division3 }}</td>
+                <td class="actions">
+                  <!-- Edit and Delete buttons/icons -->
+                  <button class="edit-btn" (click)="editLocation(location)">✏️</button>
+                  <button class="delete-btn" (click)="deleteLocation(location)">🗑️</button>
+                </td>
+                <!-- <td>
+                    <span class="badge" [ngClass]="getStatusClass(order.deliveryStatus)">
+                      {{ order.deliveryStatus }}
+                    </span>
+                  </td> -->
+            </tr>
+        </tbody>
+      </table>
+    
+      <div class="pagination">
+        
+        <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
+      </div>
     </div>
   </div>
   
+    
