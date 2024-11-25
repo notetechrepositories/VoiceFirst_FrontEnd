@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { TestComponent } from './test/test.component';
 import { IndexpageComponent } from './indexpage/indexpage.component';
+import { CountryComponent } from './country/country.component';
 
 
 export const ComponentRoutes: Routes = [
@@ -14,6 +15,10 @@ export const ComponentRoutes: Routes = [
       {
         path: 'index',
         component: IndexpageComponent,
+      },
+      {
+        path: 'country',
+        component: CountryComponent,
       },
     ],
   },

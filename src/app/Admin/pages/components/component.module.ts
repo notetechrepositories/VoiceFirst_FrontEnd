@@ -5,6 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TestComponent } from './test/test.component';
 import { ComponentRoutes } from './component.routing.module';
 import { IndexpageComponent } from './indexpage/indexpage.component';
+import { CountryComponent } from './country/country.component';
 
 
 
@@ -18,7 +19,8 @@ import { IndexpageComponent } from './indexpage/indexpage.component';
   ],
   declarations: [
     TestComponent,
-    IndexpageComponent
+    IndexpageComponent,
+    CountryComponent
   ],
 })
 export class ComponentModule {}
