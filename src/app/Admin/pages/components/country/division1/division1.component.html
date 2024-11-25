@@ -1,0 +1,53 @@
+<div class="popup">
+    <div class="popup-content">
+
+
+            <!-- Changing Part -->
+            <h2>Division1</h2>
+          
+            <form class="row g-3" [formGroup]="divisionOneForm" (ngSubmit)="onSubmit()">
+              <div class="col-md-12">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="country" formControlName="country" readonly>
+              </div>
+            
+              <div class="col-md-8">
+                <label for="country" class="form-label">Division 1</label>
+                <input type="text" class="form-control" id="div1" formControlName="div1">
+              </div>
+            
+              <div class="col-md-4">
+                
+                <button class="mt-4 primary-btn" (click)="addItem()" type="button" >+</button>
+              </div>
+            
+                <div class="col-12">
+                   <label for="div3" class="form-label"></label>
+                    
+                        <div 
+                        style="border: 1px solid #ccc; padding: 8px; min-height: 50px; border-radius: 4px; display: flex; flex-direction: column; gap: 10px; max-height: 550px; overflow-y: auto;">
+                        
+                        <!-- Loop through states array and display each state in a span -->
+                        
+                                <span *ngFor="let state of states" 
+                                    style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 8px; border-radius: 4px; min-width: 300px;">
+                                    <div> {{ state }}</div>
+                                    <div class="d-flex justify-content-end" >           
+                                        <i class='bx bxs-edit' style="width: 34px;" (click)="editDivisionOne(state)"></i>
+                                        <i class='bx bx-window-close' (click)="removeDivisionOne(state)"></i>
+                                    </div>
+            
+                                </span>
+                        </div>
+                
+                </div>
+            
+              <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="primary-btn">Submit</button>
+                <button type="submit" class="primary-btn" (click)="onClose()">cancel</button>
+              </div>
+            </form>
+            <!-- ------------- -->
+
+    </div>
+  </div>
