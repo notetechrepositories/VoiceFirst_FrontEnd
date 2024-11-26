@@ -167,5 +167,4 @@ openAddCompany() {
   };
 }
 
-  
 }
