@@ -1,5 +1,6 @@
 <div class="card">
 
+
   <h3 class="mb-4">Table</h3>
   <div class="filter-section">
     <div class="row">
@@ -89,6 +90,13 @@
 </div>
 
 
+<div class="d-flex justify-content-between mt-4">
+  <button (click)="show()" label="Show">ADD</button>
+  <button (click)="successtoast()" label="Show">Success</button>
+  <button (click)="deleteFn()">Delete</button>
+</div>
+
+
+
 <ng-container #popupContainer></ng-container>
 
-  
