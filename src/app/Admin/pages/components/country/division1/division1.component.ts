@@ -1,6 +1,9 @@
 import { Component, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CountryService } from '../../../../../Services/countryService/country.service';
+
+
 
 @Component({
   selector: 'app-division1',
@@ -12,55 +15,92 @@ export class Division1Component {
   divisionOneForm: FormGroup;
   @Output() closePopup = () => {};
   @Input() locationData: any;
-  constructor(private router:Router,private fb: FormBuilder)
+  divisionOne:any[]=[];
+
+  constructor(private router:Router,private fb: FormBuilder,private countryService :CountryService)
   {
- 
     this.divisionOneForm = this.fb.group({
-      div1: [''],
+      t2_1_div1_name: ['',Validators.required] ,
       country: [[]],
     });
   }
-  states: string[] = [
-    'Andhra Pradesh', 'Arunachal Pradesh', 'Assam', 'Bihar', 'Chhattisgarh', 'Goa', 
-    'Gujarat', 'Haryana', 'Himachal Pradesh', 'Jharkhand', 'Karnataka', 'Kerala', 
-    'Madhya Pradesh', 'Maharashtra', 'Manipur', 'Meghalaya', 'Mizoram', 'Nagaland', 
-    'Odisha', 'Punjab', 'Rajasthan', 'Sikkim', 'Tamil Nadu', 'Telangana', 'Tripura', 
-    'Uttar Pradesh', 'Uttarakhand', 'West Bengal', 'Andaman and Nicobar Islands', 
-    'Chandigarh', 'Dadra and Nagar Haveli and Daman and Diu', 'Lakshadweep', 'Delhi', 
-    'Puducherry'
-  ];
+  newDivisionOne:any[]=[];
+  division:any[]=[];
+  ngOnInit(): void {
+    if (this.locationData) {
+      this.division = this.locationData.Items;
+      this.divisionOne = []; // Ensure it's an array to store all division names
+    
+      for (let i = 0; i < this.division.length; i++) {
+        this.divisionOne.push(this.division[i].t2_1_div1_name);
+      }
+    }
+  }
+
   onClose() {
     this.closePopup();
     this.router.navigate(['/components/country'])
   }
+  
+  addDivisionOne(): void {
+    if(this.divisionOneForm.valid){
+     const newDivisionOne = this.divisionOneForm.get('t2_1_div1_name')?.value.trim();
+      if ( this. newDivisionOne && !this.newDivisionOne.includes( newDivisionOne)) {
+        this.newDivisionOne.push(newDivisionOne);
+        this.divisionOne.push( this. newDivisionOne);
+        this.divisionOneForm.get('t2_1_div1_name')?.reset();  // Clear the input field
+      }
+       console.log( this. newDivisionOne);
+    }
+    else{
+      this.divisionOneForm.markAllAsTouched();
+    }
 
-  onSubmit(): void {
-      if (this.divisionOneForm.valid) {
-        const newLocation = this.divisionOneForm.value;
-        // this.locations.push(newLocation); // Add new location to the list
-        this.divisionOneForm.reset(); // Reset the form
-      }
     }
-    addItem(): void {
-      const newState = this.divisionOneForm.get('div1')?.value.trim();
-      if (newState && !this.states.includes(newState)) {
-        this.states.push(newState);  // Add new state to the list
-        this.divisionOneForm.get('div1')?.reset();  // Clear the input field
-      }
+
+    onSubmit(): void {
+      
+      this.countryService.insertDivisionOne(this.newDivisionOne).subscribe({
+        next: (response) => {
+          console.log('Location added successfully:', response);
+          this.closePopup();
+          this.divisionOneForm.reset();
+        },
+        error: (error) => {
+          console.error('Error adding location:', error);
+          alert('Failed to add location.');
+        },
+      });
     }
-    editDivisionOne(state: string): void { 
-      const newState = prompt('Edit state:', state);
-      if (newState) {
-        const index = this.states.indexOf(state);
-        if (index !== -1) {
-          this.states[index] = newState;  // Update the state name
-        }
-      }
+
+    editDivisionOne(divisionOne: string): void { 
+      const data=this.divisionOneForm.value;
+      console.log(data);
+      
+      this.countryService.updateDivisionOne(data).subscribe({
+        next: (response) => {
+          console.log('Location updated successfully:', response);
+          this.closePopup();
+          this.divisionOneForm.reset();
+        },
+        error: (error) => {
+          console.error('Error adding location:', error);
+          alert('Failed to add location.');
+        },
+      });
     }
-    removeDivisionOne(state: string): void {
-      const index = this.states.indexOf(state);
-      if (index !== -1) {
-        this.states.splice(index, 1);  // Remove the state from the list
-      }
-   }
+    // ---------------Delete--------------------------------
+    removeDivisionOne(divisionOne: any): void {
+      
+      this.countryService.deleteDivisionOne(divisionOne).subscribe({
+        next: () => {
+          // this.getLocations();  
+          console.log('Location deleted:', location);
+        },
+        error: (error) => {
+          console.error('Failed to delete location:', error);
+        },
+      });
+
+    }
 }

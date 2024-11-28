@@ -7,6 +7,7 @@ import { BlankComponent } from './Admin/layout/blank/blank.component';
 import { FullComponent } from './Admin/layout/full/full.component';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './Services/authService/auth.service';
+import { HttpClientModule } from '@angular/common/http';
 
 export function appInitializer(authService: AuthService): () => Promise<void> {
   return () =>
@@ -20,11 +21,13 @@ export function appInitializer(authService: AuthService): () => Promise<void> {
     AppComponent,
     BlankComponent,
     FullComponent,
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterOutlet,
+    HttpClientModule
   ],
   providers: [
     {

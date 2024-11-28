@@ -10,6 +10,7 @@ import { CountryComponent } from './country/country.component';
 import { CreateCountryComponent } from './country/create-country/create-country.component';
 import { EditCountryComponent } from './country/edit-country/edit-country.component';
 import { Division1Component } from './country/division1/division1.component';
+import { HttpClient } from '@angular/common/http';
 
 
 
@@ -20,6 +21,7 @@ import { Division1Component } from './country/division1/division1.component';
     RouterModule.forChild(ComponentRoutes),
     FormsModule,
     ReactiveFormsModule,
+    
   ],
   declarations: [
     TestComponent,

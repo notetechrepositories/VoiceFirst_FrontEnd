@@ -11,14 +11,18 @@
                 <input type="text" class="form-control" id="country" formControlName="country" readonly>
               </div>
             
-              <div class="col-md-8">
+              <div class="col-md-10">
                 <label for="country" class="form-label">Division 1</label>
-                <input type="text" class="form-control" id="div1" formControlName="div1">
+                <input type="text" class="form-control" id="t2_1_div1_name" name="t2_1_div1_name" formControlName="t2_1_div1_name">
+                <div *ngIf="divisionOneForm.controls['t2_1_div1_name'].touched && divisionOneForm.controls['t2_1_div1_name'].invalid" class="text-danger">
+                  <small *ngIf="divisionOneForm.controls['t2_1_div1_name'].errors?.['required']">Division One is required.</small>
+                  
+                </div>
               </div>
             
-              <div class="col-md-4">
+              <div class="col-md-2">
                 
-                <button class="mt-4 primary-btn" (click)="addItem()" type="button" >+</button>
+                <button class="mt-4 primary-btn w-100 p-2  d-flex justify-content-center" (click)="addDivisionOne()" type="button" ><i class='bx bx-plus'></i></button>
               </div>
             
                 <div class="col-12">
@@ -29,12 +33,12 @@
                         
                         <!-- Loop through states array and display each state in a span -->
                         
-                                <span *ngFor="let state of states" 
+                                <span *ngFor="let division of divisionOne" 
                                     style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 8px; border-radius: 4px; min-width: 300px;">
-                                    <div> {{ state }}</div>
+                                    <div> {{division}}</div>
                                     <div class="d-flex justify-content-end" >           
-                                        <i class='bx bxs-edit' style="width: 34px;" (click)="editDivisionOne(state)"></i>
-                                        <i class='bx bx-window-close' (click)="removeDivisionOne(state)"></i>
+                                        <i class='bx bxs-edit' style="width: 34px;" (click)="editDivisionOne(division)"></i>
+                                        <i class='bx bx-window-close' (click)="removeDivisionOne(division)"></i>
                                     </div>
             
                                 </span>
@@ -43,7 +47,7 @@
                 </div>
             
               <div class="col-12 d-flex justify-content-end">
-                <button type="submit" class="primary-btn">Submit</button>
+                <button type="submit" class="primary-btn">Save Changes</button>
                 <button type="submit" class="primary-btn" (click)="onClose()">cancel</button>
               </div>
             </form>

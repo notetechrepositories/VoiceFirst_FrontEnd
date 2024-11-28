@@ -1,6 +1,16 @@
-import { Component, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { CountryService } from '../../../../../Services/countryService/country.service';
+
+
+export interface Country {
+  t2_1_country_name: string;
+  t2_1_div1_called: string;
+  t2_1_div2_called: string;
+  t2_1_div3_called: string;
+}
+
 
 @Component({
   selector: 'app-create-country',
@@ -8,40 +18,50 @@ import { Router } from '@angular/router';
   styleUrl: './create-country.component.css'
 })
 export class CreateCountryComponent {
+
   locationForm: FormGroup;
   @Output() closePopup = () => {};
+  @Output() countryAdded = new EventEmitter<any>();
+   countries: any[] = [];
 
-  locations = [
-    { country: 'USA', division1: 'County', division2: 'City-Towns' },
-    { country: 'England', division1: 'County', division2: 'District' },
-    { country: 'India', division1: 'State', division2: 'District', division3: 'City-Town-Village' },
-    { country: 'Scotland', division1: 'County', division2: 'City - Town - Village'}
-    
-  ];
-  constructor(private router:Router,private fb: FormBuilder)
- {
+  constructor(private router:Router,private fb: FormBuilder,private countryService :CountryService)
+  {
+
     this.locationForm = this.fb.group({
-      country: ['', Validators.required],
-      div1: [''],
-      div2: [''],
-      div3: [''],
+      t2_1_country_name: ['', Validators.required],
+      t2_1_div1_called: [''],
+      t2_1_div2_called: [''],
+      t2_1_div3_called: [''],
     });
-    this.locationForm = this.fb.group({
-      country: [''],
-    });
+   
   }
+
+  
 
   onClose() {
     this.closePopup();
     this.router.navigate(['/components/country'])
   }
 
+
+
   onSubmit(): void {
-      if (this.locationForm.valid) {
-        const newLocation = this.locationForm.value;
-        this.locations.push(newLocation); // Add new location to the list
-        this.locationForm.reset(); // Reset the form
-      }
-    }
+    const data=this.locationForm.value;
+    this.countryService.insertCountry(data).subscribe({
+      next: (response) => {
+        console.log('Location added successfully:', response);
+        this.closePopup();
+        this.countries.push(data);
+        this.countryAdded.emit(response);
+        this.locationForm.reset();
+      },
+      error: (error) => {
+        console.error('Error adding location:', error);
+        alert('Failed to add location.');
+      },
+    });
+  }
+  
+  
   
 }

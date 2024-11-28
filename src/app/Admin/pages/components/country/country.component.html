@@ -58,16 +58,16 @@
         </thead>
         <tbody>
             <tr *ngFor="let location of locations">
-                <td>{{ location.country }}</td>
-                <td (click)="divOnePopup(location)">
-                  {{ location.division1 }}
+                <td>{{ location.t2_1_country_name }}</td>
+                <td (click)="divOnePopup(location.id_t2_1_country)">
+                  {{ location.t2_1_div1_called }}
                 </td>
-                <td (click)="divTWoPopup()" >{{ location.division2 }}</td>
-                <td>{{ location.division3 }}</td>
+                <td (click)="divTWoPopup()" >{{ location.t2_1_div2_called }}</td>
+                <td>{{ location.t2_1_div3_called }}</td>
                 <td class="actions">
                   <!-- Edit and Delete buttons/icons -->
-                  <i class='bx bxs-edit' style="width: 34px;" (click)="editLocation(location)"></i>
-                  <i class='bx bxs-trash' (click)="deleteLocation(location)"></i>
+                  <i class='bx bxs-edit' style="width: 34px;" (click)="editLocation(location.id_t2_1_country)"></i>
+                  <i class='bx bxs-trash' (click)="deleteLocation(location.id_t2_1_country)"></i>
                 </td>
                 <!-- <td>
                     <span class="badge" [ngClass]="getStatusClass(order.deliveryStatus)">
