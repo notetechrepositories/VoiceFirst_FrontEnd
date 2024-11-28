@@ -197,6 +197,32 @@ successtoast(){
   this.sweetalert.showToast('success','Successfully created.');
 }
 
+ updatePopup() {
+  console.log("workng");
+  
+  (async () => {
+    const inputValue = "input value";
+    const { value: ipAddress } = await Swal.fire({
+      // title: "Enter your IP address",
+      input: "text",
+      inputLabel: "Division One",
+      inputValue,
+      confirmButtonText: "Update",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to write something!";
+        }
+        return null;
+      }
+    });
+    if (ipAddress) {
+      this.sweetalert.showToast('success','Successfully created.');
+    }
+  })()
+}
+
+
 
 
 
