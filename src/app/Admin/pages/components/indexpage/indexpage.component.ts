@@ -1,12 +1,17 @@
 import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 import { AddpopupComponent } from './addpopup/addpopup.component';
+import { SweetalertService } from '../../../../Services/sweetAlertService/sweetalert.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-indexpage',
   templateUrl: './indexpage.component.html',
-  styleUrl: './indexpage.component.css'
+  styleUrl: './indexpage.component.css',
 })
 export class IndexpageComponent {
+
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,private sweetalert:SweetalertService) {}
+
   orders = [
     {
       orderId: '#TBT12',
@@ -143,13 +148,14 @@ applyFilters() {
   this.updatePaginatedOrders();
 }
 
+
 // ----------------------------------POP UP----------------------------------------
 
 
 @ViewChild('popupContainer', { read: ViewContainerRef })
 popupContainer!: ViewContainerRef;
 
-constructor(private componentFactoryResolver: ComponentFactoryResolver) {}
+
 
 openAddCompany() {
   // Clear previous components if necessary
@@ -167,5 +173,58 @@ openAddCompany() {
   };
 }
 
+show() {
+  this.sweetalert.success()
+}
+
+deleteFn(){
+  Swal.fire({
+    title: "Are you sure?",
+    text: "You won't be able to revert this!",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, delete it!"
+  }).then((result) => {
+    if (result.isConfirmed) {
+      this.sweetalert.showToast('success','Succefully deleted');
+    }
+  });
+}
+
+successtoast(){
+  this.sweetalert.showToast('success','Successfully created.');
+}
+
+ updatePopup() {
+  console.log("workng");
   
+  (async () => {
+    const inputValue = "input value";
+    const { value: ipAddress } = await Swal.fire({
+      // title: "Enter your IP address",
+      input: "text",
+      inputLabel: "Division One",
+      inputValue,
+      confirmButtonText: "Update",
+      showCancelButton: true,
+      inputValidator: (value) => {
+        if (!value) {
+          return "You need to write something!";
+        }
+        return null;
+      }
+    });
+    if (ipAddress) {
+      this.sweetalert.showToast('success','Successfully created.');
+    }
+  })()
+}
+
+
+
+
+
+
 }

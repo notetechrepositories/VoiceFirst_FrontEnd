@@ -1,5 +1,6 @@
 <div class="card">
 
+
   <h3 class="mb-4">Table</h3>
   <div class="filter-section">
     <div class="row">
@@ -37,8 +38,8 @@
       </div>
 
       <div class="filter-buttons col-md-6 d-flex justify-content-end">
-        <button class="filter-btn import" data-toggle="tooltip" data-placement="top" title="Import" routerLink="/components/index/addpopup"><i class='bx bx-import'></i></button>
-        <button class="filter-btn export" data-toggle="tooltip" data-placement="top" title="Export" routerLink="/components/index/addpopup"><i class='bx bx-export'></i></button>
+        <button class="filter-btn import" data-toggle="tooltip" data-placement="top" title="Import" ><i class='bx bx-import'></i></button>
+        <button class="filter-btn export" data-toggle="tooltip" data-placement="top" title="Export" ><i class='bx bx-export'></i></button>
         <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="openAddCompany()"><i class='bx bx-plus'></i></button>
       </div>
 
@@ -89,6 +90,14 @@
 </div>
 
 
+<div class="d-flex justify-content-between mt-4">
+  <button (click)="show()" label="Show">ADD</button>
+  <button (click)="successtoast()" label="Show">Success</button>
+  <button (click)="deleteFn()">Delete</button>
+  <button (click)="updatePopup()" label="Show">Update</button>
+</div>
+
+
+
 <ng-container #popupContainer></ng-container>
 
-  

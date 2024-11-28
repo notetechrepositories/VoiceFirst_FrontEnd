@@ -3,7 +3,11 @@
 
 
             <!-- Changing Part -->
-            <h2>Forms</h2>
+             <div class="d-flex justify-content-between mb-3">
+              <h2>Forms</h2>
+              <i class="ti ti-x" (click)="onClose()"></i>
+             </div>
+           
           
             <form class="row g-3">
               <div class="col-md-6">
@@ -80,7 +84,6 @@
             
               <div class="col-12 d-flex justify-content-end">
                 <button type="submit" class="primary-btn">Sign in</button>
-                <button type="submit" class="primary-btn" (click)="onClose()">cancel</button>
               </div>
             </form>
             <!-- ------------- -->
