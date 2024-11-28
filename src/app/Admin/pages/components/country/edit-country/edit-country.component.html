@@ -1,0 +1,40 @@
+<div class="popup">
+    <div class="popup-content">
+
+
+            <!-- Changing Part -->
+            <h2>Country</h2>
+          
+            <form class="row g-3" [formGroup]="locationForm" (ngSubmit)="onSubmit()">
+              <div class="col-md-12">
+                <label for="country" class="form-label">Country</label>
+                <input type="text" class="form-control" id="t2_1_country_name" name="t2_1_country_name" formControlName="t2_1_country_name">
+                <div class="text-danger" *ngIf="locationForm.get('country')?.invalid && locationForm.get('country')?.touched">
+                    Country is required.
+                </div>
+              </div>
+            
+              <div class="col-md-12">
+                <label for="div1" class="form-label">Division 1</label>
+                <input type="text" class="form-control" id="t2_1_div1_called" name="t2_1_div1_called" formControlName="t2_1_div1_called">
+              </div>
+            
+              <div class="col-12">
+                <label for="div2" class="form-label">Division 2</label>
+                <input type="text" class="form-control" id="t2_1_div2_called" name="t2_1_div2_called" formControlName="t2_1_div2_called">
+              </div>
+            
+              <div class="col-12">
+                <label for="div3" class="form-label">Division 3</label>
+                <input type="text" class="form-control" id="t2_1_div3_called" name="t2_1_div3_called" formControlName="t2_1_div3_called">
+              </div>
+            
+              <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="primary-btn">Submit</button>
+                <button type="submit" class="primary-btn" (click)="onClose()">cancel</button>
+              </div>
+            </form>
+            <!-- ------------- -->
+
+    </div>
+  </div>

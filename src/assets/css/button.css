@@ -14,3 +14,7 @@
     transform: scale(0.95); /* Slightly shrink the button */
     box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px 0px; /* Reduced shadow effect */
 }
+.bx {
+    font-size: 20px; 
+    cursor: pointer; 
+}
