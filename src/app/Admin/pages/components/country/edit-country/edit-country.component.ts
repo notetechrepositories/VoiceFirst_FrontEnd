@@ -2,6 +2,7 @@ import { Component, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CountryService } from '../../../../../Services/countryService/country.service';
+import { SweetalertService } from '../../../../../Services/sweetAlertService/sweetalert.service';
 
 export interface Country {
   id_t2_1_country:string;
@@ -20,9 +21,10 @@ export interface Country {
 export class EditCountryComponent {
   locationForm: FormGroup;
   @Output() closePopup = () => {};
+  @Input() locationData: any;
   countries:Country[]=[];
  
-  constructor(private router:Router,private fb: FormBuilder,private countryService:CountryService)
+  constructor(private router:Router,private fb: FormBuilder,private countryService:CountryService,private sweetalert:SweetalertService)
  {
     this.locationForm = this.fb.group({
       t2_1_country_name: ['', Validators.required],
@@ -33,41 +35,47 @@ export class EditCountryComponent {
     });
   
   }
-  @Input() locationData: any;
+ 
   ngOnInit(): void {
-    if (this.locationData) {
-      console.log(this.locationData);
-      const data=this.locationData.Items;
-      this.locationForm.patchValue({
-        t2_1_country_name: data.t2_1_country_name,
-        t2_1_div1_called: data.t2_1_div1_called,
-        t2_1_div2_called: data.t2_1_div2_called,
-        t2_1_div3_called: data.t2_1_div3_called,
-        id_t2_1_country:data.id_t2_1_country
-      });
-    }
+   this.getData();
   }
   
 
-  onClose() {
+  onClose(){
     this.closePopup();
     this.router.navigate(['/components/country'])
   }
+
   onSubmit(): void {
     const data=this.locationForm.value;
-    console.log(data);
-    
     this.countryService.updateCountry(data).subscribe({
       next: (response) => {
-        console.log('Location updated successfully:', response);
-        this.closePopup();
-        this.locationForm.reset();
+        if(response.message=="Success"){
+          this.sweetalert.showToast('success','Successfully created.');
+          this.closePopup();
+          this.locationForm.reset();
+        }
+        else{
+          this.sweetalert.showToast('error',response.message);
+        }
       },
       error: (error) => {
         console.error('Error adding location:', error);
         alert('Failed to add location.');
       },
     });
+    }
+    getData(){
+      if (this.locationData) {
+        const data=this.locationData.Items;
+        this.locationForm.patchValue({
+          t2_1_country_name: data.t2_1_country_name,
+          t2_1_div1_called: data.t2_1_div1_called,
+          t2_1_div2_called: data.t2_1_div2_called,
+          t2_1_div3_called: data.t2_1_div3_called,
+          id_t2_1_country:data.id_t2_1_country
+        });
+      }
     }
     
 }

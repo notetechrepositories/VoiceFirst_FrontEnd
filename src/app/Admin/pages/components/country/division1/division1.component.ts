@@ -2,61 +2,113 @@ import { Component, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CountryService } from '../../../../../Services/countryService/country.service';
+import { SweetalertService } from '../../../../../Services/sweetAlertService/sweetalert.service';
+import Swal from 'sweetalert2';
+import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 
-
-
+export interface Division {
+  id_t2_1_country:string;
+  id_t2_1_div1: string;  
+  t2_1_div1_name: string;
+}
 @Component({
   selector: 'app-division1',
   templateUrl: './division1.component.html',
   styleUrl: './division1.component.css'
 })
+
 export class Division1Component {
 
-  divisionOneForm: FormGroup;
   @Output() closePopup = () => {};
   @Input() locationData: any;
-  divisionOne:any[]=[];
 
-  constructor(private router:Router,private fb: FormBuilder,private countryService :CountryService)
-  {
-    this.divisionOneForm = this.fb.group({
-      t2_1_div1_name: ['',Validators.required] ,
-      country: [[]],
-    });
-  }
+  divisionOneForm: FormGroup;
+  divisionOne:Division[]=[];
   newDivisionOne:any[]=[];
   division:any[]=[];
+  
+  constructor(private router:Router,private fb: FormBuilder,private countryService :CountryService,
+    private sweetalert:SweetalertService
+  )
+  {
+    this.divisionOneForm = this.fb.group({
+      id_t2_1_country: [''],
+      t2_1_div1_name: ['',Validators.required] 
+      
+    });
+  }
+
   ngOnInit(): void {
-    if (this.locationData) {
-      this.division = this.locationData.Items;
-      this.divisionOne = []; // Ensure it's an array to store all division names
-    
-      for (let i = 0; i < this.division.length; i++) {
-        this.divisionOne.push(this.division[i].t2_1_div1_name);
-      }
-    }
+  this.getData();
+ 
   }
 
   onClose() {
     this.closePopup();
     this.router.navigate(['/components/country'])
   }
+  getData(){
+    if (this.locationData) {
+      this.divisionOne = this.locationData.Items.map((item: Division) => {
+        return {
+          id_t2_1_div1: item.id_t2_1_div1,  
+          t2_1_div1_name: item.t2_1_div1_name,
+          id_t2_1_country:item.id_t2_1_country
+        };
+      });
+    }
+  }
+
   
   addDivisionOne(): void {
-    if(this.divisionOneForm.valid){
-     const newDivisionOne = this.divisionOneForm.get('t2_1_div1_name')?.value.trim();
-      if ( this. newDivisionOne && !this.newDivisionOne.includes( newDivisionOne)) {
-        this.newDivisionOne.push(newDivisionOne);
-        this.divisionOne.push( this. newDivisionOne);
-        this.divisionOneForm.get('t2_1_div1_name')?.reset();  // Clear the input field
-      }
-       console.log( this. newDivisionOne);
+
+    let countryId = this.locationData.Items[0].id_t2_1_country;
+    const data=this.divisionOneForm.value;
+    
+    const values:any={
+      t2_1_div1_name:data.t2_1_div1_name,
+      id_t2_1_country:countryId,
+      
     }
-    else{
-      this.divisionOneForm.markAllAsTouched();
-    }
+    console.log(values);
+    this.countryService.insertDivisionOne(values).subscribe({
+      next: (response) => {
+        console.log(response);
+        
+        if(response.message=="Success"){
+          this.sweetalert.showToast('success','Successfully created.');
+          console.log(response.data.Items.id);
+          this.divisionOne.push(data);
+          this.getDivisionById(response.data.Items.countryId);
+          console.log('Location added successfully:', response);
+         
+          console.log(this.divisionOne);
+          this.divisionOneForm.reset();
+        }
+    
+
+
+      },
+      error: (error) => {
+        console.error('Error adding location:', error);
+        alert('Failed to add location.');
+      },
+    });
 
     }
+
+    getDivisionById(divisionOneId:any){
+      this.countryService.getDivisionOneByCountryId(divisionOneId).subscribe({
+        next: (res) => {
+          console.log('Division One:', res);
+
+          this.divisionOne = res.data.Items;
+        },
+        error: (error) => {
+          console.error('Failed to load Division Two:', error);
+        },
+      });
+  }
 
     onSubmit(): void {
       
@@ -73,34 +125,95 @@ export class Division1Component {
       });
     }
 
-    editDivisionOne(divisionOne: string): void { 
-      const data=this.divisionOneForm.value;
-      console.log(data);
+    editDivisionOne(divisionOne:any): void { 
+    console.log(divisionOne);
+    
+      (async () => {
+        const inputValue = divisionOne.t2_1_div1_name;
+        const { value: name } = await Swal.fire({
+
+
+          input: "text",
+          inputLabel: "Division One",
+          inputValue,
+          confirmButtonText: "Update",
+          showCancelButton: true,
+          inputValidator: (value) => {
+            if (!value) {
+              return "You need to write something!";
+            }
+            return null;
+          }
+        });
+        if (name) {
+          const data:any={
+            id_t2_1_country:divisionOne.id_t2_1_country,
+            id_t2_1_div1:divisionOne.id_t2_1_div1,
+            t2_1_div1_name:name
+          }
+          this.countryService.updateDivisionOne(data).subscribe({
+                  next: (response) => {
+                    if(response.message=="Success"){
+                      this.sweetalert.showToast('success','Successfully created.');
+                      const index = this.divisionOne.findIndex(item => item.id_t2_1_div1 === data.id_t2_1_div1);
+                        if (index !== -1) {
+                          this.divisionOne[index] = { ...this.divisionOne[index], ...data };
+                        }
+                    }
+                    else{
+                      this.sweetalert.showToast('error',response.message);
+                    }
+                  },
+                  error: (error) => {
+                    this.sweetalert.showToast('error','Oops! Something went wrong');
+                  },
+                });
+          
+        }
+      })();
       
-      this.countryService.updateDivisionOne(data).subscribe({
-        next: (response) => {
-          console.log('Location updated successfully:', response);
-          this.closePopup();
-          this.divisionOneForm.reset();
-        },
-        error: (error) => {
-          console.error('Error adding location:', error);
-          alert('Failed to add location.');
-        },
-      });
+      // const data=this.divisionOneForm.value;
+      // console.log(data);
+      
+      // this.countryService.updateDivisionOne(data).subscribe({
+      //   next: (response) => {
+      //     console.log('Location updated successfully:', response);
+      //     this.closePopup();
+      //     this.divisionOneForm.reset();
+      //   },
+      //   error: (error) => {
+      //     console.error('Error adding location:', error);
+      //     alert('Failed to add location.');
+      //   },
+      // });
     }
     // ---------------Delete--------------------------------
-    removeDivisionOne(divisionOne: any): void {
-      
-      this.countryService.deleteDivisionOne(divisionOne).subscribe({
-        next: () => {
-          // this.getLocations();  
-          console.log('Location deleted:', location);
-        },
-        error: (error) => {
-          console.error('Failed to delete location:', error);
-        },
-      });
+    removeDivisionOne(id: any): void {
 
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.countryService.deleteDivisionOne(id).subscribe({
+            next: (res) => {
+              if(res.message=="Success"){
+                this.sweetalert.showToast('success','Succefully deleted');
+                this.divisionOne = this.divisionOne.filter(item => item.id_t2_1_div1 !== id);
+              }
+            },
+            error: (error) => {
+              this.sweetalert.showToast('error','Oops! Something went wrong.');
+            },
+          });
+         
+        }
+      });
     }
+
 }

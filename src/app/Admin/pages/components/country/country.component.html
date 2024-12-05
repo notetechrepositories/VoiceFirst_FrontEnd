@@ -59,14 +59,19 @@
         <tbody>
             <tr *ngFor="let location of locations">
                 <td>{{ location.t2_1_country_name }}</td>
-                <td (click)="divOnePopup(location.id_t2_1_country)">
-                  {{ location.t2_1_div1_called }}
+                <td class="div-cell">  
+                  <div>{{ location.t2_1_div1_called }}</div>
+                  <div>
+                    <button class="filter-btn view-icon-btn" data-toggle="tooltip" data-placement="top" title="View" (click)="divOnePopup(location.id_t2_1_country)">
+                      <i class="ti ti-eye bx"></i>
+                    </button>
+                  </div>
                 </td>
-                <td (click)="divTWoPopup()" >{{ location.t2_1_div2_called }}</td>
-                <td>{{ location.t2_1_div3_called }}</td>
+                <td (click)="divTWoPopup(location.id_t2_1_country)" >{{ location.t2_1_div2_called }}   </td>
+                <td (click)="divthreePopup(location.id_t2_1_country)" >{{ location.t2_1_div3_called }}</td>
                 <td class="actions">
                   <!-- Edit and Delete buttons/icons -->
-                  <i class='bx bxs-edit' style="width: 34px;" (click)="editLocation(location.id_t2_1_country)"></i>
+                  <i class='bx bxs-edit' style="width: 34px;" (click)="editLocation(location)"></i>
                   <i class='bx bxs-trash' (click)="deleteLocation(location.id_t2_1_country)"></i>
                 </td>
                 <!-- <td>

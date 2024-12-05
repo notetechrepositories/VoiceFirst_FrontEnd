@@ -18,3 +18,40 @@
     font-size: 20px; 
     cursor: pointer; 
 }
+
+  /*  */
+
+  .filter-btn{
+    padding: 4px;
+    height: 30px;
+    border-radius: 4px 10px 4px 4px;
+    border: none;
+    color: #ece8e8;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+  }
+
+  .filter-btn:active {
+    transform: scale(0.95); /* Slightly shrink the button */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px 0px; /* Reduced shadow effect */
+  }
+
+  .filter-buttons .import{
+    margin-right: 7px;
+    background-color: rgb(52, 152, 219);
+  }
+
+  .filter-buttons .export{
+    margin-right: 7px;
+    background-color: rgb(243, 156, 18);
+  }
+
+  .filter-buttons .create{
+    background-color: rgb(46, 204, 113);
+  }
+
+  /*  */
+    .view-icon-btn{
+        border-radius: 4px;
+        background-color: rgb(46, 145, 226);
+    }

@@ -1,0 +1,58 @@
+<div class="popup">
+    <div class="popup-content">
+
+      <div class="d-flex justify-content-between mb-3">
+        <h2>Division2</h2>
+        <i class="ti ti-x" (click)="onClose()"></i>
+       </div>
+            <!-- Changing Part -->
+            
+          
+            <form class="row g-3" [formGroup]="divisionTwoForm" (ngSubmit)="onSubmit()">
+              <div class="col-md-12">
+                <label for="country" class="form-label">Division 1(select Division one)</label>
+                <select class="form-control" id="id_t2_1_div1" formControlName="id_t2_1_div1" name="id_t2_1_div1" (change)="onChangeDivisiontwo($event)">
+                    <option *ngFor="let division of divisionOne" [value]="division.id_t2_1_div1">{{ division.t2_1_div1_name }}</option>
+                </select>
+                
+              </div>
+            
+                <div class="col-md-10">
+                  <label for="country" class="form-label">Division 2</label>
+                  <input type="text" class="form-control" id="t2_1_div2_name" name="t2_1_div2_name" formControlName="t2_1_div2_name">
+                  <div *ngIf="divisionTwoForm.controls['t2_1_div2_name'].touched && divisionTwoForm.controls['t2_1_div2_name'].invalid" class="text-danger">
+                    <small *ngIf="divisionTwoForm.controls['t2_1_div2_name'].errors?.['required']">Division One is required.</small>
+                    
+                  </div>
+                </div>
+            
+              <div class="col-md-2">
+                
+                <button class="mt-4 primary-btn w-100 p-2  d-flex justify-content-center" (click)="addDivisionTwo()" type="button" ><i class='bx bx-plus'></i></button>
+              </div>
+            
+                <div class="col-12">
+                   <label for="div3" class="form-label"></label>
+                    
+                        <div 
+                        style="border: 1px solid #ccc; padding: 8px; min-height: 50px; border-radius: 4px; display: flex; flex-direction: column; gap: 10px; max-height: 550px; overflow-y: auto;">
+                        
+                        <!-- Loop through states array and display each state in a span -->
+                        
+                                <span *ngFor="let division of divisionTwo" 
+                                    style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 8px; border-radius: 4px; min-width: 300px;">
+                                    <div> {{division.t2_1_div2_name}}</div>
+                                    <div class="d-flex justify-content-end" >           
+                                        <i class='bx bxs-edit' style="width: 34px;" (click)="editDivisionTwo(division)"></i>
+                                        <i class='ti ti-x' (click)="removeDivisionTwo(division.id_t2_1_div2)"></i>
+                                    </div>
+            
+                                </span>
+                        </div>
+                </div>
+
+            </form>
+            <!-- ------------- -->
+
+    </div>
+  </div>
