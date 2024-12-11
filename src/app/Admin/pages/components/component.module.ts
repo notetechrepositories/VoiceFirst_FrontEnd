@@ -13,6 +13,8 @@ import { Division1Component } from './country/division1/division1.component';
 import { HttpClient } from '@angular/common/http';
 import { Division2Component } from './country/division2/division2.component';
 import { Division3Component } from './country/division3/division3.component';
+import { filter } from 'rxjs';
+import { FilterPipe } from '../../../filter.pipe';
 
 
 
@@ -22,7 +24,7 @@ import { Division3Component } from './country/division3/division3.component';
     CommonModule,
     RouterModule.forChild(ComponentRoutes),
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
     
   ],
   declarations: [

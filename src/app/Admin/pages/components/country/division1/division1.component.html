@@ -3,7 +3,12 @@
 
           <div class="d-flex justify-content-between mb-3">
             <h2>Division1</h2>
-            <i class="ti ti-x" (click)="onClose()"></i>
+            <div class="filter-buttons col-md-6 d-flex justify-content-end">
+              <button class="filter-btn import" data-toggle="tooltip" data-placement="top" title="Import" ><i class='bx bx-import' ></i></button>
+              <button class="filter-btn export" data-toggle="tooltip" data-placement="top" title="Export" (click)="exportToExcel()"><i class='bx bx-export' ></i></button>
+              <i class="ti ti-x" (click)="onClose()"></i>
+            </div>
+          
           </div>
             <!-- Changing Part -->
             
@@ -50,7 +55,7 @@
                 </div>
             
               <div class="col-12 d-flex justify-content-end">
-                <button type="submit" class="primary-btn">Save Changes</button>
+                <!-- <button type="submit" class="primary-btn">Save Changes</button> -->
               </div>
             </form>
             <!-- ------------- -->

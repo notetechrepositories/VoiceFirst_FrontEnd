@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, Input, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Input, Pipe, ViewChild, ViewContainerRef } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { ReactiveFormsModule, FormBuilder,FormControl, FormGroup, Validators } from '@angular/forms';
 import { CreateCountryComponent } from './create-country/create-country.component';
@@ -9,6 +9,7 @@ import { Division2Component } from './division2/division2.component';
 import { Division3Component } from './division3/division3.component';
 import { SweetalertService } from '../../../../Services/sweetAlertService/sweetalert.service';
 import Swal from 'sweetalert2';
+import { HttpClient } from '@angular/common/http';
 
 export interface Country {
   id_t2_1_country:string;
@@ -34,11 +35,13 @@ export class CountryComponent {
   division: string[] = []; 
   locations: Country[] = [];
   @Input() countries: any[] = [];
-
-  constructor(private fb: FormBuilder,private countryService:CountryService,
+  selectedFile: File | null = null;
+  //paginatedOrders:Country[]=[];
+  
+  constructor(private fb: FormBuilder,private countryService:CountryService,private http: HttpClient,
    private sweetalert:SweetalertService, private componentFactoryResolver: ComponentFactoryResolver) {
   }
-  itemsPerPage = 2;
+  itemsPerPage = 3;
   currentPage = 1;
   paginatedOrders = this.locations.slice(0, this.itemsPerPage);
 
@@ -60,6 +63,7 @@ nextPage() {
   }
 }
 
+
 previousPage() {
   if (this.currentPage > 1) {
     this.currentPage--;
@@ -70,40 +74,38 @@ updatePaginatedOrders() {
   const start = (this.currentPage - 1) * this.itemsPerPage;
   const end = start + this.itemsPerPage;
   this.paginatedOrders = this.locations.slice(start, end);
+  console.log(this.locations);
+  console.log(this.paginatedOrders);
+  
+  
 }
 
 searchTerm = '';
-filterDate = '';
-filterStatus = '';
+ filterDate = '';
+filterCountry = '';
 filteredLocations = [...this.locations];
 applyFilters() {
-  let location = [...this.locations];
+  let locations = [...this.locations];
+ //Filter by search term
+  if (this.searchTerm) {
+    const search = this.searchTerm.toLowerCase();
+    locations = locations.filter(
+      (location) =>
+        location.t2_1_country_name.toLowerCase().includes(search) 
+      // ||
+      // location.division1.toLowerCase().includes(search)
+    );   
+  }
 
-  // Filter by search term
-  // if (this.searchTerm) {
-  //   const search = this.searchTerm.toLowerCase();
-  //   location = location.filter(
-  //     (location) =>
-  //       location.country.toLowerCase().includes(search) ||
-  //     location.division1.toLowerCase().includes(search)
-  //   );
-  // }
+//  // Filter by Country
 
-  // Filter by date
-  // if (this.filterDate) {
-  //   location = location.filter(
-  //     (location) => new Date(location.orderDate).toDateString() === new Date(this.filterDate).toDateString()
-  //   );
-  // }
+ if (this.filterCountry) {
+  locations = locations.filter(
+    (location) => location.t2_1_country_name === this.filterCountry
+  );
+}
 
-  // Filter by status
-  // if (this.filterStatus) {
-  //   orders = orders.filter(
-  //     (order) => order.deliveryStatus === this.filterStatus
-  //   );
-  // }
-
-  // this.filteredOrders = orders;
+//   // this.filteredOrders = orders;
   this.updatePaginatedOrders();
 }
 
@@ -111,11 +113,15 @@ applyFilters() {
 getLocations(): void {
   this.countryService.getLocations().subscribe({
     next: (res) => {
-      this.locations = res.data.Items;
+      // Assuming `res.data.Items` contains the array of locations
+      this.locations = res.data.Items || [];
       console.log('Locations loaded:', this.locations);
+      this.updatePaginatedOrders(); // Update pagination after data is fetched
     },
     error: (error) => {
       console.error('Failed to load locations:', error);
+      this.locations = []; // Clear locations on error
+      this.updatePaginatedOrders(); // Ensure paginatedOrders is updated
     },
   });
 }
@@ -155,8 +161,6 @@ editLocation(location: any): void {
         this.popupContainer.clear();
         this.getLocations(); 
       };
-
-      console.log('Editing location with fetched data:', response.data);
     },
     error: (error) => {
       console.error('Failed to fetch location details:', error);
@@ -181,7 +185,7 @@ deleteLocation(id: any): void {
         next: (res) => {
           if(res.message=="Success"){
             this.sweetalert.showToast('success','Succefully deleted');
-            this.locations = this.locations.filter(item => item.id_t2_1_country !== id);
+            this.paginatedOrders = this.locations.filter(item => item.id_t2_1_country !== id);
           }
         },
         error: (error) => {
@@ -272,6 +276,100 @@ divthreePopup(location:any){
   },
 });
 }
+exportToExcel(): void {
+  // Map locations to the required data structure
+  const data = this.locations.map((location: any) => ({
+    countryName: location.t2_1_country_name,  
+    divisionOne: location.t2_1_div1_called,  
+    divisionTwo: location.t2_1_div2_called ,
+    divisionThree: location.t2_1_div3_called 
+  }));
 
+  // Create a worksheet from the mapped data
+  const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+
+  // Set the custom header row with capitalized text
+  const headers = ['Country Name', 'Division One', 'Division Two','Division Three'];
+
+
+  // Set the header row in uppercase and bold
+  ws['A1'].v = headers[0].toUpperCase();
+  ws['B1'].v = headers[1].toUpperCase();
+  ws['C1'].v = headers[2].toUpperCase();
+  ws['D1'].v = headers[3].toUpperCase();
+
+
+
+  // Create a new workbook and append the worksheet
+  const wb: XLSX.WorkBook = XLSX.utils.book_new();
+  XLSX.utils.book_append_sheet(wb, ws, 'Locations');
+
+  // Export the Excel file
+  XLSX.writeFile(wb, 'locations.xlsx');
+}
+data: any[] = [];
+@ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
+extractedData: any[] = []; 
+
+// Trigger file input for importing
+triggerFileInput(): void {
+  this.fileInput.nativeElement.click();
+}
+
+// Handle file change event
+onFileChange(event: any): void {
+  const target: DataTransfer = <DataTransfer>(event.target);
+  if (target.files.length !== 1) throw new Error('Cannot use multiple files');
+
+  const reader: FileReader = new FileReader();
+  reader.onload = (e: any) => {
+    const bstr: string = e.target.result;
+    const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+    const wsname: string = wb.SheetNames[0];
+    const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+    // Convert the sheet to JSON using column headers
+    const data: any[] = XLSX.utils.sheet_to_json(ws);
+
+    // Map the Excel data to the `Country` type
+    const formattedData: Country[] = data.map((item) => ({
+      id_t2_1_country: '', // Not available in Excel
+      t2_1_country_name: item['COUNTRY NAME'] || '', // Map to "COUNTRY NAME" column
+      t2_1_div1_called: item['DIVISION ONE'] || '', // Map to "DIVISION ONE" column
+      t2_1_div2_called: item['DIVISION TWO'] || '', // Map to "DIVISION TWO" column
+      t2_1_div3_called: item['DIVISION THREE'] || '', // Map to "DIVISION THREE" column
+    }));
+
+    // Append formatted data to locations and update the view
+    this.locations = this.locations.concat(formattedData);
+    console.log('Formatted Data:', formattedData);
+
+    // Update pagination
+    this.updatePaginatedOrders();
+  };
+  reader.readAsBinaryString(target.files[0]);
+}
+
+
+// Upload data to backend
+// // Upload data to backend
+// uploadData(): void {
+//   if (!this.extractedData || this.extractedData.length === 0) {
+//     console.error('No data available for upload');
+//     return;
+//   }
+//   this.countryService.uploadFile(this.extractedData).subscribe({
+//     next: (response) => {
+//       console.log('Data successfully uploaded:', response);
+//       alert('Data uploaded successfully');
+//     },
+//     error: (error) => {
+//       console.error('Error uploading data:', error);        
+//       alert('Error uploading data. Please try again.');
+//     },
+//   });
+
+// }
+    
 
 }

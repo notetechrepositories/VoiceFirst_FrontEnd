@@ -25,24 +25,23 @@ export class CountryService {
   //Update Country
   updateCountry(data:any){
     const response = this.http.put<any>(this.url, data); 
-    console.log(response); // Log the response
     return response;
   }
 
   //Delete Country
   deleteLocation(countryId:any){
     const url = `${this.url}/${countryId}`;
-    console.log(url);
-    
     return this.http.delete<any>(url);
   }
   //GetById Country
   getCountryById(countryId:number){
     const url = `${this.url}/${countryId}`;
-    console.log(url);
-    
     return this.http.get<any>(url);
    
+  }
+  uploadFile(file:any){
+    const url=`${this.url}/upload`;
+    return url;
   }
 // -------------------------------DivisionOne-------------------------------------------------------------
 

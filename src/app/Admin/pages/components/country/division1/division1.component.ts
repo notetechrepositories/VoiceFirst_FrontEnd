@@ -5,7 +5,7 @@ import { CountryService } from '../../../../../Services/countryService/country.s
 import { SweetalertService } from '../../../../../Services/sweetAlertService/sweetalert.service';
 import Swal from 'sweetalert2';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
-
+import * as XLSX from 'xlsx';
 export interface Division {
   id_t2_1_country:string;
   id_t2_1_div1: string;  
@@ -48,6 +48,8 @@ export class Division1Component {
     this.router.navigate(['/components/country'])
   }
   getData(){
+    console.log(this.locationData);
+    
     if (this.locationData) {
       this.divisionOne = this.locationData.Items.map((item: Division) => {
         return {
@@ -215,5 +217,32 @@ export class Division1Component {
         }
       });
     }
+    exportToExcel(): void {
+      if (!this.locationData?.Items || this.locationData.Items.length === 0) {
+        console.error('No data available to export');
+        return;
+      }
+    
+      const items = this.locationData.Items;
+    
+      const countryId = items[0]?.id_t2_1_country || 'Unknown Country ID';
+
+        // Map items to the required data structure
+        const data = items.map((item: any, index: number) => ({
+          'Country Id': index === 0 ? countryId : '', // Set `Country Id` only for the first row
+          'Division One': item.t2_1_div1_name,       // Populate `Division One` for all rows
+        }));
+    
+      // Create a worksheet from the mapped data
+      const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
+    
+      // Create a new workbook and append the worksheet
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Locations');
+    
+      // Export the Excel file
+      XLSX.writeFile(wb, 'Locations.xlsx');
+    }
+    
 
 }
