@@ -3,6 +3,7 @@ import { TestComponent } from './test/test.component';
 import { IndexpageComponent } from './indexpage/indexpage.component';
 import { AddpopupComponent } from './indexpage/addpopup/addpopup.component';
 import { CountryComponent } from './country/country.component';
+import { CompanyComponent } from './company/company.component';
 
 
 export const ComponentRoutes: Routes = [
@@ -20,6 +21,10 @@ export const ComponentRoutes: Routes = [
       {
         path: 'country',
         component: CountryComponent,
+      },
+      {
+        path: 'company',
+        component: CompanyComponent,
       },
       {
         path: '',
