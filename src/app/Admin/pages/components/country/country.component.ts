@@ -185,7 +185,8 @@ deleteLocation(id: any): void {
         next: (res) => {
           if(res.message=="Success"){
             this.sweetalert.showToast('success','Succefully deleted');
-            this.paginatedOrders = this.locations.filter(item => item.id_t2_1_country !== id);
+            //this.paginatedOrders = this.locations.filter(item => item.id_t2_1_country !== id);
+            this.getLocations();
           }
         },
         error: (error) => {
@@ -314,62 +315,36 @@ extractedData: any[] = [];
 // Trigger file input for importing
 triggerFileInput(): void {
   this.fileInput.nativeElement.click();
+  console.log(this.fileInput);
+  
 }
 
 // Handle file change event
 onFileChange(event: any): void {
+
+  
   const target: DataTransfer = <DataTransfer>(event.target);
+  console.log(target.files);
+  
   if (target.files.length !== 1) throw new Error('Cannot use multiple files');
-
-  const reader: FileReader = new FileReader();
-  reader.onload = (e: any) => {
-    const bstr: string = e.target.result;
-    const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
-    const wsname: string = wb.SheetNames[0];
-    const ws: XLSX.WorkSheet = wb.Sheets[wsname];
-
-    // Convert the sheet to JSON using column headers
-    const data: any[] = XLSX.utils.sheet_to_json(ws);
-
-    // Map the Excel data to the `Country` type
-    const formattedData: Country[] = data.map((item) => ({
-      id_t2_1_country: '', // Not available in Excel
-      t2_1_country_name: item['COUNTRY NAME'] || '', // Map to "COUNTRY NAME" column
-      t2_1_div1_called: item['DIVISION ONE'] || '', // Map to "DIVISION ONE" column
-      t2_1_div2_called: item['DIVISION TWO'] || '', // Map to "DIVISION TWO" column
-      t2_1_div3_called: item['DIVISION THREE'] || '', // Map to "DIVISION THREE" column
-    }));
-
-    // Append formatted data to locations and update the view
-    this.locations = this.locations.concat(formattedData);
-    console.log('Formatted Data:', formattedData);
-
-    // Update pagination
     this.updatePaginatedOrders();
+    this.countryService.uploadFile(target.files[0]).subscribe({
+      next: (response) => {
+       if(response.status==200){
+        this.sweetalert.showToast('success','Data imported succesfully');
+        this.getLocations();
+       }
+       if(response.status==400){
+        this.sweetalert.showToast('error','Failed to import data');
+       }
+      },
+      error: (error) => {
+        this.sweetalert.showToast('error','Something went wrong')
+      },
+    });
   };
-  reader.readAsBinaryString(target.files[0]);
 }
 
 
-// Upload data to backend
-// // Upload data to backend
-// uploadData(): void {
-//   if (!this.extractedData || this.extractedData.length === 0) {
-//     console.error('No data available for upload');
-//     return;
-//   }
-//   this.countryService.uploadFile(this.extractedData).subscribe({
-//     next: (response) => {
-//       console.log('Data successfully uploaded:', response);
-//       alert('Data uploaded successfully');
-//     },
-//     error: (error) => {
-//       console.error('Error uploading data:', error);        
-//       alert('Error uploading data. Please try again.');
-//     },
-//   });
 
-// }
-    
 
-}

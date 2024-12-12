@@ -39,9 +39,16 @@ export class CountryService {
     return this.http.get<any>(url);
    
   }
-  uploadFile(file:any){
-    const url=`${this.url}/upload`;
-    return url;
+  uploadFile(file: File): Observable<any> {
+    const url = `${this.url}/upload`;
+    console.log('Uploading to URL:', url);
+  
+    // Create a FormData object
+    const formData = new FormData();
+    formData.append('file', file); // 'file' should match the expected backend field name
+  
+    // Make the HTTP POST request
+    return this.http.post(url, formData,);
   }
 // -------------------------------DivisionOne-------------------------------------------------------------
 

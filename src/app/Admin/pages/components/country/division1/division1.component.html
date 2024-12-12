@@ -16,7 +16,7 @@
             <form class="row g-3" [formGroup]="divisionOneForm" (ngSubmit)="onSubmit()">
               <div class="col-md-12">
                 <label for="country" class="form-label">Country</label>
-                <input type="text" class="form-control" id="id_t2_1_country" name="id_t2_1_country" formControlName="id_t2_1_country">
+                <input type="text" class="form-control" [value]="divisionOne[0].id_t2_1_country" id="id_t2_1_country" name="id_t2_1_country" formControlName="id_t2_1_country" >
               </div>
             
               <div class="col-md-10">
