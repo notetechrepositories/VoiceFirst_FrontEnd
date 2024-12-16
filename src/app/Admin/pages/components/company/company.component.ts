@@ -53,13 +53,13 @@ export class CompanyComponent {
       status: 'active'
     }
   ];
-
+  filteredCompanies = [...this.companies];
   itemsPerPage = 2;
   currentPage = 1;
-  paginatedCompanies = this.companies.slice(0, this.itemsPerPage);
+  paginatedCompanies = this.filteredCompanies.slice(0, this.itemsPerPage);
 
   get totalPages(): number {
-    return Math.ceil(this.companies.length / this.itemsPerPage);
+    return Math.ceil(this.filteredCompanies.length / this.itemsPerPage);
   }
 
   getStatusClass(status: string): string {
@@ -90,7 +90,7 @@ export class CompanyComponent {
   updatePaginatedCompanies() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    this.paginatedCompanies = this.companies.slice(start, end);
+    this.paginatedCompanies = this.filteredCompanies.slice(start, end);
   }
 
   // ----------------------
@@ -98,7 +98,7 @@ export class CompanyComponent {
   searchTerm = '';
   filterDate = '';
   filterStatus = '';
-  filteredCompanies = [...this.companies];
+  
 
 applyFilters() {
   let temporaryCompanies = [...this.companies];
