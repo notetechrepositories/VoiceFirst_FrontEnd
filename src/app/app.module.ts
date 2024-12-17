@@ -8,6 +8,7 @@ import { FullComponent } from './Admin/layout/full/full.component';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './Services/authService/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { SubscriptionComponent } from './Admin/layout/subscription/subscription.component';
 
 export function appInitializer(authService: AuthService): () => Promise<void> {
   return () =>
@@ -21,7 +22,7 @@ export function appInitializer(authService: AuthService): () => Promise<void> {
     AppComponent,
     BlankComponent,
     FullComponent,
-    
+    SubscriptionComponent,
   ],
   imports: [
     BrowserModule,
