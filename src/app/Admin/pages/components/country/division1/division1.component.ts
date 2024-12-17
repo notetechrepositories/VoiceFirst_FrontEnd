@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, ElementRef, Input, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CountryService } from '../../../../../Services/countryService/country.service';
@@ -6,11 +6,18 @@ import { SweetalertService } from '../../../../../Services/sweetAlertService/swe
 import Swal from 'sweetalert2';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
 import * as XLSX from 'xlsx';
+
 export interface Division {
-  id_t2_1_country:string;
+  id_t2_1_country:string;  
   id_t2_1_div1: string;  
   t2_1_div1_name: string;
+  t2_1_country_name:string;
 }
+export interface DivisionImport {
+  t2_1_country_name:string;
+  t2_1_div1_name: string;
+}
+
 @Component({
   selector: 'app-division1',
   templateUrl: './division1.component.html',
@@ -20,8 +27,8 @@ export interface Division {
 export class Division1Component {
 
   @Output() closePopup = () => {};
-  @Input() locationData: any;
-
+  @Input() countryId !:string;
+  @Input() countryName !:string;
   divisionOneForm: FormGroup;
   divisionOne:Division[]=[];
   newDivisionOne:any[]=[];
@@ -35,61 +42,57 @@ export class Division1Component {
       id_t2_1_country: [''],
       t2_1_div1_name: ['',Validators.required] 
       
+    
     });
   }
 
   ngOnInit(): void {
-  this.getData();
- 
+   this.getDivisionOneByCountryId(this.countryId);
   }
 
   onClose() {
     this.closePopup();
     this.router.navigate(['/components/country'])
   }
-  getData(){
-    console.log(this.locationData);
+
+  // -----------------Get Division One-------------------------------------
+  getDivisionOneByCountryId(countryId:any){ 
     
-    if (this.locationData) {
-      this.divisionOne = this.locationData.Items.map((item: Division) => {
-        return {
-          id_t2_1_div1: item.id_t2_1_div1,  
-          t2_1_div1_name: item.t2_1_div1_name,
-          id_t2_1_country:item.id_t2_1_country
-        };
-      });
-    }
+    this.countryService.getDivisionOneByCountryId(countryId).subscribe({
+      next: (response) => { 
+      
+        this.divisionOne=response.data.Items.map((item: Division) => {
+          return {
+            id_t2_1_div1: item.id_t2_1_div1,  
+            t2_1_div1_name: item.t2_1_div1_name,
+            id_t2_1_country:item.id_t2_1_country,
+            t2_1_country_name:item.t2_1_country_name
+          };
+        });
+       },});
   }
 
-  
+  // --------------------------Insert+----------------------------------
   addDivisionOne(): void {
-
-    let countryId = this.locationData.Items[0].id_t2_1_country;
     const data=this.divisionOneForm.value;
     
     const values:any={
-      t2_1_div1_name:data.t2_1_div1_name,
-      id_t2_1_country:countryId,
+      id_t2_1_country:this.countryId,
+      t2_1_div1_name:data.t2_1_div1_name
       
     }
-    console.log(values);
     this.countryService.insertDivisionOne(values).subscribe({
       next: (response) => {
-        console.log(response);
-        
+
         if(response.message=="Success"){
           this.sweetalert.showToast('success','Successfully created.');
-          console.log(response.data.Items.id);
           this.divisionOne.push(data);
-          this.getDivisionById(response.data.Items.countryId);
-          console.log('Location added successfully:', response);
-         
-          console.log(this.divisionOne);
+          this.getDivisionOneByCountryId(this.countryId);
           this.divisionOneForm.reset();
         }
-    
-
-
+        else{
+          this.sweetalert.showToast('error',response.message);
+        }
       },
       error: (error) => {
         console.error('Error adding location:', error);
@@ -99,24 +102,22 @@ export class Division1Component {
 
     }
 
-    getDivisionById(divisionOneId:any){
-      this.countryService.getDivisionOneByCountryId(divisionOneId).subscribe({
-        next: (res) => {
-          console.log('Division One:', res);
-
-          this.divisionOne = res.data.Items;
-        },
-        error: (error) => {
-          console.error('Failed to load Division Two:', error);
-        },
-      });
-  }
-
+// ------------------------Get------------------------------------------------------------------
+  //   getDivisionById(divisionOneId:any){
+  //     this.countryService.getDivisionOneByCountryId(divisionOneId).subscribe({
+  //       next: (res) => {
+  //         this.divisionOne = res.data.Items;
+  //       },
+  //       error: (error) => {
+  //         console.error('Failed to load Division Two:', error);
+  //       },
+  //     });
+  // }
+// -------------------------------------------------------------------------
     onSubmit(): void {
       
       this.countryService.insertDivisionOne(this.newDivisionOne).subscribe({
         next: (response) => {
-          console.log('Location added successfully:', response);
           this.closePopup();
           this.divisionOneForm.reset();
         },
@@ -126,9 +127,8 @@ export class Division1Component {
         },
       });
     }
-
+// -----------------------------Edit----------------------------------------
     editDivisionOne(divisionOne:any): void { 
-    console.log(divisionOne);
     
       (async () => {
         const inputValue = divisionOne.t2_1_div1_name;
@@ -173,7 +173,7 @@ export class Division1Component {
           
         }
       })();
-      
+      // -----------------------------------------------------------------------------------------------
       // const data=this.divisionOneForm.value;
       // console.log(data);
       
@@ -189,6 +189,7 @@ export class Division1Component {
       //   },
       // });
     }
+
     // ---------------Delete--------------------------------
     removeDivisionOne(id: any): void {
 
@@ -217,31 +218,81 @@ export class Division1Component {
         }
       });
     }
+     
+    // ------------------------Export---------------------------------------------
+
     exportToExcel(): void {
-      if (!this.locationData?.Items || this.locationData.Items.length === 0) {
+      console.log(this.divisionOne);
+      
+      if (!this.divisionOne || this.divisionOne.length === 0) {
         console.error('No data available to export');
         return;
       }
-    
-      const items = this.locationData.Items;
-    
-      const countryId = items[0]?.id_t2_1_country || 'Unknown Country ID';
-
-        // Map items to the required data structure
+      const items = this.divisionOne;
+      
         const data = items.map((item: any, index: number) => ({
-          'Country Id': index === 0 ? countryId : '', // Set `Country Id` only for the first row
-          'Division One': item.t2_1_div1_name,       // Populate `Division One` for all rows
+          'Country Name': index === 0 ? this.countryName : '', 
+          'Division One': item.t2_1_div1_name,       
         }));
-    
-      // Create a worksheet from the mapped data
+
       const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-    
-      // Create a new workbook and append the worksheet
       const wb: XLSX.WorkBook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, 'Locations');
-    
-      // Export the Excel file
       XLSX.writeFile(wb, 'Locations.xlsx');
+    }
+    // --------------------Import---------------------------------------------
+    @ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
+
+    triggerFileInput(): void {
+      this.fileInput.nativeElement.click();
+    }
+    onFileChange(event: any): void {
+      const target = event.target as HTMLInputElement;
+    
+      if (!target.files || target.files.length !== 1) {
+        throw new Error('Cannot use multiple files');
+      }
+    
+      const file: File = target.files[0];
+      const reader: FileReader = new FileReader();
+    
+      reader.onload = (e: any) => {
+        const binaryString: string = e.target.result;
+        const workbook: XLSX.WorkBook = XLSX.read(binaryString, { type: 'binary' });
+        const sheetName: string = workbook.SheetNames[0];
+        const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
+        
+        // Parse data
+        const data: any[] = XLSX.utils.sheet_to_json(worksheet);
+        console.log(data);
+        
+        const formattedData: DivisionImport[] = data.map((item) => ({
+          t2_1_country_name: item['Country Name'] || '',
+          t2_1_div1_name: item['Division One'] || ''
+        }));
+    
+        console.log(formattedData);
+    
+        // Call API to upload data
+        this.countryService.uploadFileDivisionOne(formattedData).subscribe({
+          next: (response) => {
+            console.log(response);
+            if (response.status === 200) {
+              this.sweetalert.showToast('success', 'Data imported successfully');
+              this.getDivisionOneByCountryId(this.countryId)
+            } else if (response.status === 400) {
+              this.sweetalert.showToast('error', 'Failed to import data');
+            }
+          },
+          error: (error) => {
+            console.error(error);
+            this.sweetalert.showToast('error', 'Something went wrong');
+          },
+        });
+      };
+    
+      // Read the file as binary
+      reader.readAsBinaryString(file);
     }
     
 

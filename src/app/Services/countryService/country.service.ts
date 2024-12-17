@@ -39,17 +39,11 @@ export class CountryService {
     return this.http.get<any>(url);
    
   }
-  uploadFile(file: File): Observable<any> {
-    const url = `${this.url}/upload`;
-    console.log('Uploading to URL:', url);
-  
-    // Create a FormData object
-    const formData = new FormData();
-    formData.append('file', file); // 'file' should match the expected backend field name
-  
-    // Make the HTTP POST request
-    return this.http.post(url, formData,);
+  uploadFile(file:any): Observable<any> {
+    const url = `${this.url}/import`;
+    return this.http.post(url, file);
   }
+
 // -------------------------------DivisionOne-------------------------------------------------------------
 
    divOneUrl="https://localhost:7027/api/DivisionOne";
@@ -76,6 +70,13 @@ deleteDivisionOne(id:any){
 getDivisionOneId(divisionOneId:any){
   const apiUrl=`${this.divOneUrl}/${divisionOneId}`
   return this.http.get<any>(apiUrl);
+}
+uploadFileDivisionOne(file:any): Observable<any> {
+  const url = `${this.divOneUrl}/import`;
+  console.log(url);
+  console.log(file);
+  
+  return this.http.post(url, file);
 }
 
 // ----------------------DivisionTwo--------------------------------------------------------------------------------

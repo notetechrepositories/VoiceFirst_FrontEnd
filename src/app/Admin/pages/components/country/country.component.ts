@@ -18,6 +18,16 @@ export interface Country {
   t2_1_div2_called: string;
   t2_1_div3_called: string;
 }
+export interface CountryImport {
+  t2_1_country_name: string;
+  t2_1_div1_called: string;
+  t2_1_div2_called: string;
+  t2_1_div3_called: string;
+}
+export interface DivisionImport {
+  t2_1_country_name:string;
+  t2_1_div1_name: string;
+}
 
 @Component({
   selector: 'app-country',
@@ -41,7 +51,7 @@ export class CountryComponent {
   constructor(private fb: FormBuilder,private countryService:CountryService,private http: HttpClient,
    private sweetalert:SweetalertService, private componentFactoryResolver: ComponentFactoryResolver) {
   }
-  itemsPerPage = 3;
+  itemsPerPage = 10;
   currentPage = 1;
   paginatedOrders = this.locations.slice(0, this.itemsPerPage);
 
@@ -74,9 +84,6 @@ updatePaginatedOrders() {
   const start = (this.currentPage - 1) * this.itemsPerPage;
   const end = start + this.itemsPerPage;
   this.paginatedOrders = this.locations.slice(start, end);
-  console.log(this.locations);
-  console.log(this.paginatedOrders);
-  
   
 }
 
@@ -95,9 +102,8 @@ applyFilters() {
       // ||
       // location.division1.toLowerCase().includes(search)
     );   
-  }
-
-//  // Filter by Country
+  } 
+ // Filter by Country
 
  if (this.filterCountry) {
   locations = locations.filter(
@@ -113,15 +119,13 @@ applyFilters() {
 getLocations(): void {
   this.countryService.getLocations().subscribe({
     next: (res) => {
-      // Assuming `res.data.Items` contains the array of locations
       this.locations = res.data.Items || [];
-      console.log('Locations loaded:', this.locations);
-      this.updatePaginatedOrders(); // Update pagination after data is fetched
+      this.updatePaginatedOrders(); 
     },
     error: (error) => {
       console.error('Failed to load locations:', error);
-      this.locations = []; // Clear locations on error
-      this.updatePaginatedOrders(); // Ensure paginatedOrders is updated
+      this.locations = [];
+      this.updatePaginatedOrders(); 
     },
   });
 }
@@ -152,7 +156,6 @@ editLocation(location: any): void {
   this.popupContainer.clear();
   this.countryService.getCountryById(location.id_t2_1_country).subscribe({
     next: (response) => {
-      console.log(response);
       
       const factory = this.componentFactoryResolver.resolveComponentFactory(EditCountryComponent);
       const componentRef = this.popupContainer.createComponent(factory);
@@ -201,28 +204,15 @@ deleteLocation(id: any): void {
 // ---------------divOne-----------------------
 divOnePopup(location: any): void {
 
-
   this.popupContainer.clear();
-   
-  this.countryService.getDivisionOneByCountryId(location).subscribe({
-  next: (response) => {
-    console.log(response);
-    
-    const factory = this.componentFactoryResolver.resolveComponentFactory(Division1Component);
-    const componentRef = this.popupContainer.createComponent(factory);
-    componentRef.instance.locationData = response.data;
-    componentRef.instance.closePopup = () => {
-      this.popupContainer.clear();
-    };
-  
-    // Log to verify data flow
-    console.log('Popup created with location data:', location);
-    // this.states;
-  },
-  error: (error) => {
-    console.error('Failed to fetch location details:', error);
-  },
-});
+
+  const factory = this.componentFactoryResolver.resolveComponentFactory(Division1Component);
+  const componentRef = this.popupContainer.createComponent(factory);
+  componentRef.instance.countryId = location.id_t2_1_country;
+  componentRef.instance.countryName = location.t2_1_country_name;
+  componentRef.instance.closePopup = () => {
+    this.popupContainer.clear();
+  };
 
 }
 
@@ -230,26 +220,13 @@ divOnePopup(location: any): void {
 divTWoPopup(location:any):void {
 
     this.popupContainer.clear();
-    
-    this.countryService.getDivisionOneByCountryId(location).subscribe({
-    next: (response) => {
-      console.log(response);
-      
-      const factory = this.componentFactoryResolver.resolveComponentFactory(Division2Component);
-      const componentRef = this.popupContainer.createComponent(factory);
-      componentRef.instance.locationData = response.data;
-      componentRef.instance.closePopup = () => {
-        this.popupContainer.clear();
-      };
-    
-      // Log to verify data flow
-      console.log('Popup created with location data:', location);
-      // this.states;
-    },
-    error: (error) => {
-      console.error('Failed to fetch location details:', error);
-    },
-  });
+
+    const factory = this.componentFactoryResolver.resolveComponentFactory(Division2Component);
+    const componentRef = this.popupContainer.createComponent(factory);
+    componentRef.instance.countryId = location;
+    componentRef.instance.closePopup = () => {
+      this.popupContainer.clear();
+    };
 }
 
 // -------------Div Three--------------------------------------
@@ -259,7 +236,6 @@ divthreePopup(location:any){
     
   this.countryService.getDivisionOneByCountryId(location).subscribe({
   next: (response) => {
-    console.log(response);
     
     const factory = this.componentFactoryResolver.resolveComponentFactory(Division3Component);
     const componentRef = this.popupContainer.createComponent(factory);
@@ -277,58 +253,52 @@ divthreePopup(location:any){
   },
 });
 }
+
+// ------------Export---------------------------------------------------
+
 exportToExcel(): void {
-  // Map locations to the required data structure
+ 
   const data = this.locations.map((location: any) => ({
     countryName: location.t2_1_country_name,  
     divisionOne: location.t2_1_div1_called,  
     divisionTwo: location.t2_1_div2_called ,
     divisionThree: location.t2_1_div3_called 
   }));
-
-  // Create a worksheet from the mapped data
   const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
-
-  // Set the custom header row with capitalized text
   const headers = ['Country Name', 'Division One', 'Division Two','Division Three'];
-
-
-  // Set the header row in uppercase and bold
   ws['A1'].v = headers[0].toUpperCase();
   ws['B1'].v = headers[1].toUpperCase();
   ws['C1'].v = headers[2].toUpperCase();
   ws['D1'].v = headers[3].toUpperCase();
-
-
-
-  // Create a new workbook and append the worksheet
   const wb: XLSX.WorkBook = XLSX.utils.book_new();
   XLSX.utils.book_append_sheet(wb, ws, 'Locations');
-
-  // Export the Excel file
   XLSX.writeFile(wb, 'locations.xlsx');
 }
-data: any[] = [];
-@ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
-extractedData: any[] = []; 
 
-// Trigger file input for importing
+
+// -----------------------Import country--------------------------------
+@ViewChild('fileInput', { static: false }) fileInput!: ElementRef;
+
 triggerFileInput(): void {
   this.fileInput.nativeElement.click();
-  console.log(this.fileInput);
-  
 }
-
-// Handle file change event
 onFileChange(event: any): void {
-
-  
   const target: DataTransfer = <DataTransfer>(event.target);
-  console.log(target.files);
-  
   if (target.files.length !== 1) throw new Error('Cannot use multiple files');
-    this.updatePaginatedOrders();
-    this.countryService.uploadFile(target.files[0]).subscribe({
+  const reader: FileReader = new FileReader();
+  reader.onload = (e: any) => {
+    const bstr: string = e.target.result;
+    const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+    const wsname: string = wb.SheetNames[0];
+    const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+    const data: any[] = XLSX.utils.sheet_to_json(ws);
+    const formattedData: CountryImport[] = data.map((item) => ({
+      t2_1_country_name: item['COUNTRY NAME'] || '', 
+      t2_1_div1_called: item['DIVISION ONE'] || '', 
+      t2_1_div2_called: item['DIVISION TWO'] || '', 
+      t2_1_div3_called: item['DIVISION THREE'] || '', 
+    }));
+    this.countryService.uploadFile(formattedData).subscribe({
       next: (response) => {
        if(response.status==200){
         this.sweetalert.showToast('success','Data imported succesfully');
@@ -342,7 +312,58 @@ onFileChange(event: any): void {
         this.sweetalert.showToast('error','Something went wrong')
       },
     });
+    this.updatePaginatedOrders();
   };
+  reader.readAsBinaryString(target.files[0]);
+}
+// ---------------Import Division One----------------------------------------
+
+@ViewChild('fileInput1', { static: false }) fileInput1!: ElementRef;
+triggerFile(): void {
+  this.fileInput1.nativeElement.click();
+}
+
+onFileChangeDivisionOne(event: any): void {
+  const target = event.target as HTMLInputElement;
+
+  if (!target.files || target.files.length !== 1) {
+    throw new Error('Cannot use multiple files');
+  }
+
+  const file: File = target.files[0];
+  const reader: FileReader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const binaryString: string = e.target.result;
+    const workbook: XLSX.WorkBook = XLSX.read(binaryString, { type: 'binary' });
+    const sheetName: string = workbook.SheetNames[0];
+    const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
+    
+    // Parse data
+    const data: any[] = XLSX.utils.sheet_to_json(worksheet);
+    const formattedData: DivisionImport[] = data.map((item) => ({
+      t2_1_country_name: item['Country Name'] || '',
+      t2_1_div1_name: item['Division One'] || ''
+    }));
+
+    this.countryService.uploadFileDivisionOne(formattedData).subscribe({
+      next: (response) => {
+        if (response.status === 200) {
+          this.sweetalert.showToast('success', 'Data imported successfully');
+        } else if (response.status === 400) {
+          this.sweetalert.showToast('error', 'Failed to import data');
+        }
+      },
+      error: (error) => {
+        console.error(error);
+        this.sweetalert.showToast('error', 'Something went wrong');
+      },
+    });
+  };
+
+  // Read the file as binary
+  reader.readAsBinaryString(file);
+}
 }
 
 

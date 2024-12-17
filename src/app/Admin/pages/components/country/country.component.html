@@ -60,17 +60,24 @@
         <tr>
           <th>#</th>
           <th>Country</th>
-          <th>Division 1</th>
+          <th class="d-flex justify-content-between"><span>Division 1</span><i class='bx bx-import' (click)="triggerFile()"></i></th>
           <th>Division 2</th>
           <th>Division 3</th>
           <th>Action</th>
         </tr>
+        <input
+        type="file"
+        #fileInput1
+        (change)="onFileChangeDivisionOne($event)"
+        accept=".xlsx, .xls, .csv"
+        style="display: none;"
+      />
       </thead>
       <tbody>
         <tr *ngFor="let location of paginatedOrders; let i = index">
           <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
           <td>{{ location.t2_1_country_name }}</td>
-          <td (click)="divOnePopup(location.id_t2_1_country)">{{ location.t2_1_div1_called }}</td>
+          <td (click)="divOnePopup(location)">{{ location.t2_1_div1_called }}</td>
           <td (click)="divTWoPopup(location.id_t2_1_country)">{{ location.t2_1_div2_called }}</td>
           <td (click)="divthreePopup(location.id_t2_1_country)">{{ location.t2_1_div3_called }}</td>
           <td class="actions">

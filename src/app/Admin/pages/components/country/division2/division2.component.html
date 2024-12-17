@@ -9,9 +9,10 @@
           
             <form class="row g-3" [formGroup]="divisionTwoForm" (ngSubmit)="onSubmit()">
               <div class="col-md-12">
-                <label for="country" class="form-label">Division 1(select Division one)</label>
+                <label for="country" class="form-label">Division 1</label>
                 <select class="form-control" id="id_t2_1_div1" formControlName="id_t2_1_div1" name="id_t2_1_div1" (change)="onChangeDivisiontwo($event)">
-                    <option *ngFor="let division of divisionOne" [value]="division.id_t2_1_div1">{{ division.t2_1_div1_name }}</option>
+                  <option value="" disabled>Select division one</option>  
+                  <option *ngFor="let division of divisionOne" [value]="division.id_t2_1_div1">{{ division.t2_1_div1_name }}</option>
                 </select>
                 
               </div>

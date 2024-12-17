@@ -19,8 +19,7 @@ export interface Division {
 export class Division2Component {
 
   @Output() closePopup = () => {};
-  @Input() locationData: any;
-
+  @Input() countryId !:string;
   divisionTwoForm:FormGroup;
   divisionTwo:Division[]=[];
   divisionOne:Division[]=[];
@@ -37,7 +36,7 @@ export class Division2Component {
   }
 
   ngOnInit():void{
-   this.getDivisionOneData();
+  this.getDivisionOneByCountryId(this.countryId);
    
    
   }
@@ -139,17 +138,20 @@ export class Division2Component {
       }
     });
   }
-
-  getDivisionOneData():void{
-    if (this.locationData) {
-      this.divisionOne = this.locationData.Items.map((item: Division) => {
-        return {
-          id_t2_1_div1: item.id_t2_1_div1,  
-          t2_1_div1_name: item.t2_1_div1_name
-        };
-      });
-    }
+  getDivisionOneByCountryId(countryId:any){ 
+    
+    this.countryService.getDivisionOneByCountryId(countryId).subscribe({
+      next: (response) => { 
+        
+        this.divisionOne=response.data.Items.map((item: Division) => {
+          return {
+            id_t2_1_div1: item.id_t2_1_div1,  
+            t2_1_div1_name: item.t2_1_div1_name
+          };
+        });
+       },});
   }
+
 
   onChangeDivisiontwo(event: Event): void {
     const selectElement = event.target as HTMLSelectElement; 
