@@ -9,6 +9,7 @@ import { RouterOutlet } from '@angular/router';
 import { AuthService } from './Services/authService/auth.service';
 import { HttpClientModule } from '@angular/common/http';
 import { SubscriptionComponent } from './Admin/layout/subscription/subscription.component';
+import { FilterPipe } from './filter.pipe';
 
 export function appInitializer(authService: AuthService): () => Promise<void> {
   return () =>
@@ -23,6 +24,8 @@ export function appInitializer(authService: AuthService): () => Promise<void> {
     BlankComponent,
     FullComponent,
     SubscriptionComponent,
+    FilterPipe,
+    
   ],
   imports: [
     BrowserModule,
