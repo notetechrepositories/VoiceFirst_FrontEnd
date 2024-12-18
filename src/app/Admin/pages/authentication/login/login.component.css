@@ -1,18 +1,26 @@
+.auth-container {
+    height: 100vh;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
 .login-wrap{
 	width:100%;
 	margin:auto;
 	max-width:525px;
-	min-height:670px;
+	min-height:687px;
 	position:relative;
-	background:url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat center;
-	box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+	/* background:url(https://raw.githubusercontent.com/khadkamhn/day-01-login-form/master/img/bg.jpg) no-repeat center; */
+	/* box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19); */
+	border-radius: 10px;
 }
 .login-html{
 	width:100%;
 	height:100%;
 	position:absolute;
-	padding:90px 70px 50px 70px;
-	background:rgba(40,57,101,.9);
+	padding:53px 70px 50px 70px;
+	/* background:rgba(54, 54, 54, 0.932); */
+
 }
 .login-html .sign-in-htm,
 .login-html .sign-up-htm{
@@ -42,10 +50,11 @@
 	margin:0 15px 10px 0;
 	display:inline-block;
 	border-bottom:2px solid transparent;
+	color: #7e7e7e;
 }
 .login-html .sign-in:checked + .tab,
 .login-html .sign-up:checked + .tab{
-	color:#fff;
+	color:#363636;
 	border-color:#1161ee;
 }
 .login-form{
@@ -61,15 +70,18 @@
 .login-form .group .input,
 .login-form .group .button{
 	width:100%;
-	color:#fff;
+	color:#4b4b4b;
 	display:block;
 }
 .login-form .group .input,
 .login-form .group .button{
 	border:none;
 	padding:15px 20px;
-	border-radius:25px;
-	background:rgba(255,255,255,.1);
+	border-radius:13px;
+	background:#e8f0fe  ;
+}
+.login-form .group .input:active{
+	border: 1px solid white;
 }
 .login-form .group input[data-type="password"]{
 	-webkit-text-security:circle;
@@ -80,6 +92,7 @@
 }
 .login-form .group .button{
 	background:#1161ee;
+	color: #fff;
 }
 .login-form .group label .icon{
 	width:15px;
@@ -87,7 +100,7 @@
 	border-radius:2px;
 	position:relative;
 	display:inline-block;
-	background:rgba(255,255,255,.1);
+	background:rgb(241 241 241);
 }
 .login-form .group label .icon:before,
 .login-form .group label .icon:after{
@@ -110,7 +123,7 @@
 	transform:scale(0) rotate(0);
 }
 .login-form .group .check:checked + label{
-	color:#fff;
+	color:black;
 }
 .login-form .group .check:checked + label .icon{
 	background:#1161ee;
@@ -130,8 +143,8 @@
 
 .hr{
 	height:2px;
-	margin:60px 0 50px 0;
-	background:rgba(255,255,255,.2);
+	margin:35px 0 23px 0;
+	background:rgba(121, 121, 121, 0.2);
 }
 .foot-lnk{
 	text-align:center;

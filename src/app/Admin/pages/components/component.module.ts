@@ -11,6 +11,8 @@ import { CreateCountryComponent } from './country/create-country/create-country.
 import { EditCountryComponent } from './country/edit-country/edit-country.component';
 import { Division1Component } from './country/division1/division1.component';
 import { HttpClient } from '@angular/common/http';
+import { AddRoleComponent } from './role/add-role/add-role.component';
+import { RoleComponent } from './role/role.component';
 import { Division2Component } from './country/division2/division2.component';
 import { Division3Component } from './country/division3/division3.component';
 import { filter } from 'rxjs';
@@ -35,6 +37,8 @@ import { FilterPipe } from '../../../filter.pipe';
     CreateCountryComponent,
     EditCountryComponent,
     Division1Component,
+    RoleComponent,
+    AddRoleComponent,
     Division2Component,
     Division3Component
   ],

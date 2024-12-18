@@ -1,7 +1,7 @@
 
 <!--=========================== FORMS =========================== -->
 
-<div class="card" style="width:50%">
+<!-- <div class="card" style="width:50%">
   <h2>Forms</h2>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row g-3">
@@ -81,11 +81,59 @@
     <button type="submit" class="primary-btn">Sign in</button>
   </div>
 </form>
-</div>
+</div> -->
 
 
 
   <!-- ============================================================== -->
 
 
-
+  <div class="container">
+    <H2>Stepper</H2>
+    <div id="stepper1" class="bs-stepper">
+      <div class="bs-stepper-header">
+        <div class="step" data-target="#test-l-1">
+          <button class="step-trigger">
+            <span class="bs-stepper-circle">1</span>
+            <span class="bs-stepper-label">Email</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#test-l-2">
+          <button class="step-trigger">
+            <span class="bs-stepper-circle">2</span>
+            <span class="bs-stepper-label">Password</span>
+          </button>
+        </div>
+        <div class="line"></div>
+        <div class="step" data-target="#test-l-3">
+          <button class="step-trigger">
+            <span class="bs-stepper-circle">3</span>
+            <span class="bs-stepper-label">Validate</span>
+          </button>
+        </div>
+      </div>
+      <div class="bs-stepper-content">
+        <form (ngSubmit)="onSubmit()">
+          <div id="test-l-1" class="content">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" />
+            </div>
+            <button (click)="next()" class="btn btn-primary">Next</button>
+          </div>
+          <div id="test-l-2" class="content">
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" />
+            </div>
+            <button (click)="next()" class="btn btn-primary">Next</button>
+          </div>
+          <div id="test-l-3" class="content text-center">
+            <button type="submit" class="btn btn-primary mt-5">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
