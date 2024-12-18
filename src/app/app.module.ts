@@ -8,6 +8,7 @@ import { FullComponent } from './Admin/layout/full/full.component';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './Services/authService/auth.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FilterPipe } from './filter.pipe';
 
 export function appInitializer(authService: AuthService): () => Promise<void> {
   return () =>
@@ -21,6 +22,7 @@ export function appInitializer(authService: AuthService): () => Promise<void> {
     AppComponent,
     BlankComponent,
     FullComponent,
+    FilterPipe,
     
   ],
   imports: [
