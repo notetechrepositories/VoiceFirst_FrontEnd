@@ -73,9 +73,6 @@ getDivisionOneId(divisionOneId:any){
 }
 uploadFileDivisionOne(file:any): Observable<any> {
   const url = `${this.divOneUrl}/import`;
-  console.log(url);
-  console.log(file);
-  
   return this.http.post(url, file);
 }
 
@@ -91,8 +88,6 @@ uploadFileDivisionOne(file:any): Observable<any> {
     ///Insert Division Two-----------------
     insertDivisionTwo(data:any){
       return this.http.post<any>(this.divTwourl, data); 
-      console.log(this.divTwourl);
-      
     }
     // ---------Update Division Two-----------------
     updateDivisionTwo(data:any){
@@ -101,6 +96,10 @@ uploadFileDivisionOne(file:any): Observable<any> {
     // -----------Delete Division Two-------------------
     deleteDivisionTwo(id:any){
       return this.http.delete<any>(`${this.divTwourl}/${id}`); 
+    }
+    uploadFileDivisionTwo(file:any): Observable<any> {
+      const url = `${this.divTwourl}/import`;
+      return this.http.post(url, file);
     }
 // ----------------------DivisionThree--------------------------------------------------------------------------------
   divThreeurl="https://localhost:7027/api/DivisionThree";
@@ -129,5 +128,14 @@ uploadFileDivisionOne(file:any): Observable<any> {
     const apiUrl=`${this.divThreeurl}?id_t2_1_div2=${divisionTwoId}`
     console.log(apiUrl);
     return this.http.get<any>(apiUrl);
+  }
+  // ---------------Import----------------------------------
+  uploadFileDivisionThree(file:any): Observable<any> {
+    const url = `${this.divThreeurl}/import`;
+    console.log(url);
+    console.log(file);
+    
+    
+    return this.http.post(url, file);
   }
 }

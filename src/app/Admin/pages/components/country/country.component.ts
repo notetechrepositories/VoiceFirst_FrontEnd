@@ -28,6 +28,18 @@ export interface DivisionImport {
   t2_1_country_name:string;
   t2_1_div1_name: string;
 }
+export interface DivisiontwoImport {
+  t2_1_country_name: string;
+   t2_1_div1_name: string;
+  t2_1_div2_name:string;
+}
+export interface DivisionthreeImport {
+  t2_1_country_name: string;
+  t2_1_div1_name: string;
+  t2_1_div2_name:string;
+  t2_1_div3_name:string;
+
+}
 
 @Component({
   selector: 'app-country',
@@ -233,25 +245,15 @@ divTWoPopup(location:any):void {
 divthreePopup(location:any){
   
   this.popupContainer.clear();
+
+  const factory = this.componentFactoryResolver.resolveComponentFactory(Division3Component);
+  const componentRef = this.popupContainer.createComponent(factory);
+  componentRef.instance.countryId = location;
+  componentRef.instance.closePopup = () => {
+    this.popupContainer.clear();
+  };
     
-  this.countryService.getDivisionOneByCountryId(location).subscribe({
-  next: (response) => {
-    
-    const factory = this.componentFactoryResolver.resolveComponentFactory(Division3Component);
-    const componentRef = this.popupContainer.createComponent(factory);
-    componentRef.instance.locationData = response.data;
-    componentRef.instance.closePopup = () => {
-      this.popupContainer.clear();
-    };
   
-    // Log to verify data flow
-    console.log('Popup created with location data:', location);
-    // this.states;
-  },
-  error: (error) => {
-    console.error('Failed to fetch location details:', error);
-  },
-});
 }
 
 // ------------Export---------------------------------------------------
@@ -347,6 +349,103 @@ onFileChangeDivisionOne(event: any): void {
     }));
 
     this.countryService.uploadFileDivisionOne(formattedData).subscribe({
+      next: (response) => {
+        if (response.status === 200) {
+          this.sweetalert.showToast('success', 'Data imported successfully');
+        } else if (response.status === 400) {
+          this.sweetalert.showToast('error', 'Failed to import data');
+        }
+      },
+      error: (error) => {
+        console.error(error);
+        this.sweetalert.showToast('error', 'Something went wrong');
+      },
+    });
+  };
+
+  // Read the file as binary
+  reader.readAsBinaryString(file);
+}
+// --------------Import Division Two--------------------------
+@ViewChild('fileInput2', { static: false }) fileInput2!: ElementRef;
+
+triggerFileDivisionTwo(): void {
+  this.fileInput2.nativeElement.click();
+}
+
+onFileChangeDivisionTwo(event: any): void {
+  const target = event.target as HTMLInputElement;
+
+  if (!target.files || target.files.length !== 1) {
+    throw new Error('Cannot use multiple files');
+  }
+
+  const file: File = target.files[0];
+  const reader: FileReader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const binaryString: string = e.target.result;
+    const workbook: XLSX.WorkBook = XLSX.read(binaryString, { type: 'binary' });
+    const sheetName: string = workbook.SheetNames[0];
+    const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
+    
+    // Parse data
+    const data: any[] = XLSX.utils.sheet_to_json(worksheet);
+    const formattedData: DivisiontwoImport[] = data.map((item) => ({
+      t2_1_country_name:item['Country Name'] ||'',
+      t2_1_div1_name: item['Division One'] || '',
+      t2_1_div2_name: item['Division Two'] || ''
+    }));
+    this.countryService.uploadFileDivisionTwo(formattedData).subscribe({
+      next: (response) => {
+        if (response.status === 200) {
+          this.sweetalert.showToast('success', 'Data imported successfully');
+        } else if (response.status === 400) {
+          this.sweetalert.showToast('error', 'Failed to import data');
+        }
+      },
+      error: (error) => {
+        console.error(error);
+        this.sweetalert.showToast('error', 'Something went wrong');
+      },
+    });
+  };
+
+  // Read the file as binary
+  reader.readAsBinaryString(file);
+}
+// --------------Import Division Three--------------------------
+@ViewChild('fileInput3', { static: false }) fileInput3!: ElementRef;
+
+triggerFileDivisionThree(): void {
+  this.fileInput3.nativeElement.click();
+}
+
+onFileChangeDivisionThree(event: any): void {
+  const target = event.target as HTMLInputElement;
+
+  if (!target.files || target.files.length !== 1) {
+    throw new Error('Cannot use multiple files');
+  }
+
+  const file: File = target.files[0];
+  const reader: FileReader = new FileReader();
+
+  reader.onload = (e: any) => {
+    const binaryString: string = e.target.result;
+    const workbook: XLSX.WorkBook = XLSX.read(binaryString, { type: 'binary' });
+    const sheetName: string = workbook.SheetNames[0];
+    const worksheet: XLSX.WorkSheet = workbook.Sheets[sheetName];
+    
+    // Parse data
+    const data: any[] = XLSX.utils.sheet_to_json(worksheet);
+    const formattedData: DivisionthreeImport[] = data.map((item) => ({
+      t2_1_country_name:item['Country Name'] ||'',
+      t2_1_div1_name: item['Division One'] || '',
+      t2_1_div2_name: item['Division Two'] || '',
+      t2_1_div3_name:item['Division Three'] ||''
+    }));
+    this.countryService.uploadFileDivisionThree(formattedData).subscribe({
       next: (response) => {
         if (response.status === 200) {
           this.sweetalert.showToast('success', 'Data imported successfully');

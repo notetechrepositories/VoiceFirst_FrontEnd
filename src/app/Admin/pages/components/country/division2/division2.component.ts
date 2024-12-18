@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { SweetalertService } from '../../../../../Services/sweetAlertService/sweetalert.service';
 
 export interface Division {
-  id_t2_1_div1: string;  // Adjust the type as per your actual data structure
+  id_t2_1_div1: string;  
   t2_1_div1_name: string;
   t2_1_div2_name:string;
   id_t2_1_div2:string;
@@ -30,17 +30,14 @@ export class Division2Component {
     this.divisionTwoForm = this.fb.group({
         id_t2_1_div1: [''],
         t2_1_div2_name:[''],
-        id_t2_1_div2:['']
+       
       
     });
   }
 
   ngOnInit():void{
   this.getDivisionOneByCountryId(this.countryId);
-   
-   
   }
-
   onSubmit(){
  
   }
@@ -49,6 +46,8 @@ export class Division2Component {
     const data=this.divisionTwoForm.value;
         this.countryService.insertDivisionTwo(data).subscribe({
       next: (response) => {
+        console.log(response);
+        
         if(response.message=="Success"){
           this.sweetalert.showToast('success','Successfully created.');
           this.divisionTwo.push(data);

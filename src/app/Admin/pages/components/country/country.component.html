@@ -60,18 +60,21 @@
         <tr>
           <th>#</th>
           <th>Country</th>
-          <th class="d-flex justify-content-between"><span>Division 1</span><i class='bx bx-import' (click)="triggerFile()"></i></th>
-          <th>Division 2</th>
-          <th>Division 3</th>
+          <th class="d-flex justify-content-between"><span>Division 1</span><i class='bx bx-import' (click)="triggerFile()"></i></th>      
+          <input type="file" #fileInput1 (change)="onFileChangeDivisionOne($event)" accept=".xlsx, .xls, .csv" style="display: none;" />
+          <th ><span>Division 2</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='bx bx-import' (click)="triggerFileDivisionTwo()"></i></th>
+          <input type="file" #fileInput2 (change)="onFileChangeDivisionTwo($event)" accept=".xlsx, .xls, .csv" style="display: none;" />
+          <th><span>Division 3</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='bx bx-import' (click)="triggerFileDivisionThree()"></i></th>
+          <input type="file" #fileInput3 (change)="onFileChangeDivisionThree($event)" accept=".xlsx, .xls, .csv" style="display: none;" />
           <th>Action</th>
         </tr>
-        <input
+        <!-- <input
         type="file"
         #fileInput1
         (change)="onFileChangeDivisionOne($event)"
         accept=".xlsx, .xls, .csv"
         style="display: none;"
-      />
+      /> -->
       </thead>
       <tbody>
         <tr *ngFor="let location of paginatedOrders; let i = index">

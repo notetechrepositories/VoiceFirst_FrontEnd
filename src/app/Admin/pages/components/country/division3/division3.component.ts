@@ -22,6 +22,7 @@ export class Division3Component {
   
   @Output() closePopup = () => {};
   @Input() locationData: any;
+  @Input() countryId!:string;
   divisionThreeForm:FormGroup;
   divisionThree:any[]=[];
   divisionTwo:Division[]=[];
@@ -42,16 +43,13 @@ export class Division3Component {
   }
   ngOnInit():void{
     this.getDivisionTwoData();
-    console.log(this.locationData);
-    this.getDivisionOneData();
-    console.log(this.divisionTwo);
+    this.getDivisionOneByCountryId(this.countryId);
    }
  
   addDivisionThree(){
     const data=this.divisionThreeForm.value;
         this.countryService.insertDivisionThree(data).subscribe({
       next: (response) => {
-        console.log(response);
         if(response.message=="Success"){
           this.sweetalert.showToast('success','Successfully created.');
           this.divisionTwo.push(data);
@@ -71,17 +69,21 @@ export class Division3Component {
       },
     });
   }
-  //----------------Get    ------------------------------------
-  getDivisionOneData():void{
-    if (this.locationData) {
-      this.divisionOne = this.locationData.Items.map((item: Division) => {
-        return {
-          id_t2_1_div1: item.id_t2_1_div1,  
-          t2_1_div1_name: item.t2_1_div1_name
-        };
-      });
+  // -----------------Get Division One-------------------------------------
+    getDivisionOneByCountryId(countryId:any){ 
+      
+      this.countryService.getDivisionOneByCountryId(countryId).subscribe({
+        next: (response) => { 
+          
+          this.divisionOne=response.data.Items.map((item: Division) => {
+            return {
+              id_t2_1_div1: item.id_t2_1_div1,  
+              t2_1_div1_name: item.t2_1_div1_name
+            };
+          });
+         },});
     }
-  }
+ 
 
   editDivisionThree(divisionthree:any){
     (async () => {
