@@ -11,6 +11,8 @@ import { CreateCountryComponent } from './country/create-country/create-country.
 import { EditCountryComponent } from './country/edit-country/edit-country.component';
 import { Division1Component } from './country/division1/division1.component';
 import { HttpClient } from '@angular/common/http';
+import { AddRoleComponent } from './role/add-role/add-role.component';
+import { RoleComponent } from './role/role.component';
 
 
 
@@ -30,7 +32,9 @@ import { HttpClient } from '@angular/common/http';
     CountryComponent,
     CreateCountryComponent,
     EditCountryComponent,
-    Division1Component
+    Division1Component,
+    RoleComponent,
+    AddRoleComponent
   ],
 })
 export class ComponentModule {}
