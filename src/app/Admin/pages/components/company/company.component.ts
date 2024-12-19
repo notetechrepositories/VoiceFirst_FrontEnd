@@ -154,9 +154,9 @@ openAddCompany() {
   const componentRef = this.popupContainer.createComponent(factory);
 
   // Listen to events or data changes if necessary
-  // componentRef.instance.closePopup = () => {
-  //   this.popupContainer.clear();
-  // };
+   componentRef.instance.closePopup = () => {
+     this.popupContainer.clear();
+   };
 }
 
 show() {
