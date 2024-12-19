@@ -15,6 +15,7 @@ import { Division2Component } from './country/division2/division2.component';
 import { Division3Component } from './country/division3/division3.component';
 import { filter } from 'rxjs';
 import { FilterPipe } from '../../../filter.pipe';
+import { CompanyTypeComponent } from './constant/company-type/company-type.component';
 
 
 
@@ -36,7 +37,8 @@ import { FilterPipe } from '../../../filter.pipe';
     EditCountryComponent,
     Division1Component,
     Division2Component,
-    Division3Component
+    Division3Component,
+    CompanyTypeComponent
   ],
 })
 export class ComponentModule {}

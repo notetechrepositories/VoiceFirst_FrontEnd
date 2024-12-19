@@ -1,0 +1,83 @@
+<div class="card">
+
+
+    <h3 class="mb-4">Company Type </h3>
+    <div class="filter-section">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search"
+                [(ngModel)]="searchTerm"
+                (input)="applyFilters()"
+              />
+            </div>
+          </div>
+        </div>
+  
+        <div class="filter-buttons col-md-6 d-flex justify-content-end">
+          <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="togglePopup(true)" ><i class='bx bx-plus'></i></button>
+        </div>
+  
+      </div>
+    </div>
+  
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>#</th>
+            <th>Company Type</th>
+            <th> Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of paginatedOrders; let i = index">
+            <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
+            <td>{{ order.productName }}</td>
+            <td class="actions">
+              <i class='bx bxs-edit' style="width: 34px;" (click)="editCompanyType()"></i>
+              <i class='bx bxs-trash' ></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <div class="pagination">
+        
+        <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
+      </div>
+    </div>
+  </div>
+  <!---------------------------  Popup--------------------------------------->
+  <div class="popup" *ngIf="isPopupVisible">
+    <div class="popup-content">
+
+          <div class="d-flex justify-content-between mb-3">
+            <h2>Company Type</h2>
+            <i class="ti ti-x" (click)="togglePopup(false)"></i>
+          </div>
+            <!-- Changing Part -->
+            <form class="row g-3" [formGroup]="companyTypeForm" (ngSubmit)="onSubmit()">
+              <div class="col-md-12">
+                <label for="country" class="form-label">Company Type</label>
+                <input type="text" class="form-control" id="t2_1_country_name" name="t2_1_country_name" formControlName="t2_1_country_name">
+                <!-- <div *ngIf="companyTypeForm.controls['t2_1_country_name'].touched && companyTypeForm.controls['t2_1_country_name'].invalid" class="text-danger">
+                  <small *ngIf="companyTypeForm.controls['t2_1_country_name'].errors?.['required']">Division One is required.</small>
+                </div> -->
+              </div>
+              <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="primary-btn">Submit</button>
+              </div>
+            </form>
+    </div>
+  </div>
+  <!--  -->
+  <ng-container #popupContainer></ng-container>
+  
+  
