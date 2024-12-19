@@ -13,6 +13,12 @@ import { Division1Component } from './country/division1/division1.component';
 import { HttpClient } from '@angular/common/http';
 import { CompanyComponent } from './company/company.component';
 import { CompanyAddComponent } from './company/company-add/company-add.component';
+import { AddRoleComponent } from './role/add-role/add-role.component';
+import { RoleComponent } from './role/role.component';
+import { Division2Component } from './country/division2/division2.component';
+import { Division3Component } from './country/division3/division3.component';
+import { filter } from 'rxjs';
+import { FilterPipe } from '../../../filter.pipe';
 
 
 
@@ -22,7 +28,7 @@ import { CompanyAddComponent } from './company/company-add/company-add.component
     CommonModule,
     RouterModule.forChild(ComponentRoutes),
     FormsModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
     
   ],
   declarations: [
@@ -32,6 +38,11 @@ import { CompanyAddComponent } from './company/company-add/company-add.component
     CountryComponent,
     CreateCountryComponent,
     EditCountryComponent,
+    Division1Component,
+    RoleComponent,
+    AddRoleComponent,
+    Division2Component,
+    Division3Component,
     Division1Component,
     CompanyComponent,
     CompanyAddComponent

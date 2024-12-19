@@ -1,6 +1,7 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID, AfterViewInit, Input } from '@angular/core';
 import { AuthService } from '../../../Services/authService/auth.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -63,7 +64,21 @@ export class FullComponent implements AfterViewInit{
   }
 
   logout(){
-    this.authService.logout();
+
+      Swal.fire({
+        title: "Are you sure?",
+        // text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, logout!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.authService.logout();
+        }
+      });
+    
   }
   
 }

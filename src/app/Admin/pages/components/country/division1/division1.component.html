@@ -1,19 +1,34 @@
 <div class="popup">
     <div class="popup-content">
 
-
-            <!-- Changing Part -->
+          <div class="d-flex justify-content-between mb-3">
             <h2>Division1</h2>
+            <div class="filter-buttons col-md-6 d-flex justify-content-end">
+              <button class="filter-btn import" data-toggle="tooltip" data-placement="top" title="Import" (click)="triggerFileInput()" ><i class='bx bx-import' ></i></button>
+              <button class="filter-btn export" data-toggle="tooltip" data-placement="top" title="Export" ><i class='bx bx-export' (click)="exportToExcel()"></i></button>
+              <input
+              type="file"
+              #fileInput
+              (change)="onFileChange($event)"
+              accept=".xlsx, .xls, .csv"
+              style="display: none;"
+            />
+              <i class="ti ti-x" (click)="onClose()"></i>
+            </div>
+          
+          </div>
+            <!-- Changing Part -->
+            
           
             <form class="row g-3" [formGroup]="divisionOneForm" (ngSubmit)="onSubmit()">
               <div class="col-md-12">
                 <label for="country" class="form-label">Country</label>
-                <input type="text" class="form-control" id="country" formControlName="country" readonly>
+                <input type="text" class="form-control"  id="t2_1_country_name"  [value]="countryName" readonly>
               </div>
             
               <div class="col-md-10">
-                <label for="country" class="form-label">Division 1</label>
-                <input type="text" class="form-control" id="t2_1_div1_name" name="t2_1_div1_name" formControlName="t2_1_div1_name">
+                <label for="division" class="form-label">Division 1</label>
+                <input type="text" class="form-control" id="t2_1_div1_name" formControlName="t2_1_div1_name" >
                 <div *ngIf="divisionOneForm.controls['t2_1_div1_name'].touched && divisionOneForm.controls['t2_1_div1_name'].invalid" class="text-danger">
                   <small *ngIf="divisionOneForm.controls['t2_1_div1_name'].errors?.['required']">Division One is required.</small>
                   
@@ -35,10 +50,10 @@
                         
                                 <span *ngFor="let division of divisionOne" 
                                     style="display: flex; align-items: center; justify-content: space-between; border: 1px solid #ddd; padding: 8px; border-radius: 4px; min-width: 300px;">
-                                    <div> {{division}}</div>
+                                    <div> {{division.t2_1_div1_name}}</div>
                                     <div class="d-flex justify-content-end" >           
                                         <i class='bx bxs-edit' style="width: 34px;" (click)="editDivisionOne(division)"></i>
-                                        <i class='bx bx-window-close' (click)="removeDivisionOne(division)"></i>
+                                        <i class='ti ti-x' (click)="removeDivisionOne(division.id_t2_1_div1)"></i>
                                     </div>
             
                                 </span>
@@ -47,8 +62,7 @@
                 </div>
             
               <div class="col-12 d-flex justify-content-end">
-                <button type="submit" class="primary-btn">Save Changes</button>
-                <button type="submit" class="primary-btn" (click)="onClose()">cancel</button>
+                <!-- <button type="submit" class="primary-btn">Save Changes</button> -->
               </div>
             </form>
             <!-- ------------- -->

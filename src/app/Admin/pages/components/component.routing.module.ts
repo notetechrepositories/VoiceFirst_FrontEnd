@@ -4,6 +4,7 @@ import { IndexpageComponent } from './indexpage/indexpage.component';
 import { AddpopupComponent } from './indexpage/addpopup/addpopup.component';
 import { CountryComponent } from './country/country.component';
 import { CompanyComponent } from './company/company.component';
+import { RoleComponent } from './role/role.component';
 
 
 export const ComponentRoutes: Routes = [
@@ -21,6 +22,10 @@ export const ComponentRoutes: Routes = [
       {
         path: 'country',
         component: CountryComponent,
+      },
+      {
+        path: 'role',
+        component: RoleComponent,
       },
       {
         path: 'company',

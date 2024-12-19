@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FullComponent } from './Admin/layout/full/full.component';
 import { BlankComponent } from './Admin/layout/blank/blank.component';
 import { AuthGuard } from './authGuard/auth.guard';
+import { SubscriptionComponent } from './Admin/layout/subscription/subscription.component';
 
 export const routes: Routes = [
   {
@@ -37,6 +38,10 @@ export const routes: Routes = [
           import('./Admin/pages/authentication/authentication.module').then(
             (m) => m.AuthenticationModule
           ),
+      },
+      {
+        path: 'subscription',
+        component: SubscriptionComponent,
       },
     ],
   },

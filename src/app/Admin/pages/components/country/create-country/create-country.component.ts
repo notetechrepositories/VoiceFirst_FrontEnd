@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CountryService } from '../../../../../Services/countryService/country.service';
+import { SweetalertService } from '../../../../../Services/sweetAlertService/sweetalert.service';
 
 
 export interface Country {
@@ -21,10 +22,9 @@ export class CreateCountryComponent {
 
   locationForm: FormGroup;
   @Output() closePopup = () => {};
-  @Output() countryAdded = new EventEmitter<any>();
    countries: any[] = [];
 
-  constructor(private router:Router,private fb: FormBuilder,private countryService :CountryService)
+  constructor(private router:Router,private fb: FormBuilder,private countryService :CountryService,private sweetalert:SweetalertService)
   {
 
     this.locationForm = this.fb.group({
@@ -49,16 +49,19 @@ export class CreateCountryComponent {
     const data=this.locationForm.value;
     this.countryService.insertCountry(data).subscribe({
       next: (response) => {
-        console.log('Location added successfully:', response);
+      if(response.message=="Success"){
+        this.sweetalert.showToast('success','Successfully created.');
         this.closePopup();
-        this.countries.push(data);
-        this.countryAdded.emit(response);
         this.locationForm.reset();
+      }
+      else{
+        this.sweetalert.showToast('error',response.message);
+      }
+
       },
       error: (error) => {
-        console.error('Error adding location:', error);
-        alert('Failed to add location.');
-      },
+        this.sweetalert.showToast('error','Oops! Something went wrong.');
+      }
     });
   }
   
