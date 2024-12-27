@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { CompanyTypeComponent } from './company-type.component';
+import { SelectionComponent } from './selection.component';
 
-describe('CompanyTypeComponent', () => {
-  let component: CompanyTypeComponent;
-  let fixture: ComponentFixture<CompanyTypeComponent>;
+describe('SelectionComponent', () => {
+  let component: SelectionComponent;
+  let fixture: ComponentFixture<SelectionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [CompanyTypeComponent]
+      declarations: [SelectionComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(CompanyTypeComponent);
+    fixture = TestBed.createComponent(SelectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

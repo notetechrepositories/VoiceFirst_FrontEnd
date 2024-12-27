@@ -1,25 +1,31 @@
 <div class="card">
 
 
-    <h3 class="mb-4">Company Type </h3>
+    <h3 class="mb-4">Selection Values</h3>
     <div class="filter-section">
       <div class="row">
         <div class="col-md-6">
           <div class="row">
             <div class="col-md-4">
-              <input
+                <select  class="form-select" [(ngModel)]="filterStatus" (change)="onChangeSelection($event)">
+                    <option value="" disabled>Choose Selection</option>
+                    <option  *ngFor="let selection of selection" [value]="selection.id_t4_selection">{{selection.t4_selection_name}}</option>
+                </select>
+              </div>
+            <div class="col-md-4">
+              <!-- <input
                 type="text"
                 class="form-control"
                 placeholder="Search"
                 [(ngModel)]="searchTerm"
                 (input)="applyFilters()"
-              />
+              /> -->
             </div>
           </div>
         </div>
   
         <div class="filter-buttons col-md-6 d-flex justify-content-end">
-          <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="togglePopup(true)" ><i class='bx bx-plus'></i></button>
+          <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="togglePopup()" ><i class='bx bx-plus'></i></button>
         </div>
   
       </div>
@@ -30,17 +36,17 @@
         <thead class="thead-light">
           <tr>
             <th>#</th>
-            <th>Company Type</th>
-            <th> Action</th>
+            <th>Name</th>
+            <th>Action</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let order of paginatedOrders; let i = index">
+          <tr *ngFor="let selection of selectionValues; let i = index">
             <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
-            <td>{{ order.productName }}</td>
+            <td >{{selection.t4_1_selection_values_name}}</td>
             <td class="actions">
-              <i class='bx bxs-edit' style="width: 34px;" (click)="editCompanyType()"></i>
-              <i class='bx bxs-trash' ></i>
+              <i class='bx bxs-edit' style="width: 34px;" (click)="editSelection(selection)"></i>
+              <i class='bx bxs-archive' (click)="archiveSelection(selection.id_t4_1_selection_values)"></i>
             </td>
           </tr>
         </tbody>
@@ -57,19 +63,19 @@
   <!---------------------------  Popup--------------------------------------->
   <div class="popup" *ngIf="isPopupVisible">
     <div class="popup-content">
-
+  
           <div class="d-flex justify-content-between mb-3">
-            <h2>Company Type</h2>
-            <i class="ti ti-x" (click)="togglePopup(false)"></i>
+            <h2>Add Selection</h2>
+            <i class="ti ti-x" (click)="onClose()"></i>
           </div>
             <!-- Changing Part -->
-            <form class="row g-3" [formGroup]="companyTypeForm" (ngSubmit)="onSubmit()">
+            <form class="row g-3" [formGroup]="selectionForm" (ngSubmit)="onSubmit()">
               <div class="col-md-12">
-                <label for="country" class="form-label">Company Type</label>
-                <input type="text" class="form-control" id="t2_1_country_name" name="t2_1_country_name" formControlName="t2_1_country_name">
-                <!-- <div *ngIf="companyTypeForm.controls['t2_1_country_name'].touched && companyTypeForm.controls['t2_1_country_name'].invalid" class="text-danger">
-                  <small *ngIf="companyTypeForm.controls['t2_1_country_name'].errors?.['required']">Division One is required.</small>
-                </div> -->
+                <label for="country" class="form-label">Selection</label>
+                <input type="text" class="form-control" id="t4_selection_name" name="t4_selection_name" formControlName="t4_selection_name">
+                <div *ngIf="selectionForm.controls['t4_selection_name'].touched && selectionForm.controls['t4_selection_name'].invalid" class="text-danger">
+                  <small *ngIf="selectionForm.controls['t4_selection_name'].errors?.['required']">Division One is required.</small>
+                </div>
               </div>
               <div class="col-12 d-flex justify-content-end">
                 <button type="submit" class="primary-btn">Submit</button>

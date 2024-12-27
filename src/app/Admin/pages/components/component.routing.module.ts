@@ -3,7 +3,8 @@ import { TestComponent } from './test/test.component';
 import { IndexpageComponent } from './indexpage/indexpage.component';
 import { AddpopupComponent } from './indexpage/addpopup/addpopup.component';
 import { CountryComponent } from './country/country.component';
-import { CompanyTypeComponent } from './constant/company-type/company-type.component';
+import { SelectionComponent } from './constant/selection/selection.component';
+import { SelectionValuesComponent } from './constant/selection-values/selection-values.component';
 
 
 export const ComponentRoutes: Routes = [
@@ -23,8 +24,8 @@ export const ComponentRoutes: Routes = [
         component: CountryComponent,
       },
       {
-        path: 'company-type',
-        component: CompanyTypeComponent,
+        path: 'selection-values',
+        component: SelectionValuesComponent,
       },
       
       {
