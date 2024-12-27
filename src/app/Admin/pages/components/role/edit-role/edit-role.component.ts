@@ -18,6 +18,9 @@ export class EditRoleComponent {
   form: FormGroup;
   selectedPermissions: string[] = [];
   roleType:any[]=[];
+  roleTypeName:any[]=[]
+  filteredNames: Array<any> = [];
+  selectedName: string | null = null;
 
   constructor(private fb: FormBuilder, private router: Router, private roleService:RoleService, private sweetalert:SweetalertService) {
     this.form = this.fb.group({
@@ -36,16 +39,22 @@ export class EditRoleComponent {
   getData(): void {
     if (this.roleData) {
       const data = this.roleData;
-
-      // Populate the form
       this.form.patchValue({
         role: data.Role.t5_1_m_user_roles_name,
         t5_1_m_type_id: data.Role.t5_1_m_type_id,
         id_t4_1_selection_values: data.Role.id_t4_1_selection_values
       });
-      // Initialize permissions
       this.selectedPermissions = data.Items;
-      this.form.setControl('checkboxes', this.fb.array(this.initializeCheckboxes())); // Reinitialize checkboxes
+      this.form.setControl('checkboxes', this.fb.array(this.initializeCheckboxes()));
+      const selectedRole = this.roleType.find(
+        (role) => role.id_t4_1_selection_values === data.Role.t5_1_m_type_id
+      );
+      this.filteredNames = selectedRole ? selectedRole.role_type_data : [];
+      if (this.filteredNames.length === 1) {
+        this.form.get('id_t4_1_selection_values')?.setValue(this.filteredNames[0].type_id);
+      } else {
+        this.form.get('id_t4_1_selection_values')?.reset();
+      }
     }
   }
 
@@ -117,15 +126,14 @@ export class EditRoleComponent {
       this.roleService.getRoleType().subscribe({
         next:res=>{
           this.roleType=res.data.Items;
-          
+          console.log(this.roleType);
         },
         error:error=>{
           console.log(error);
         }
       })
     }
-    filteredNames: Array<any> = [];
-    selectedName: string | null = null;
+
   
   
     onRoleTypeChange(event: Event): void {
@@ -152,6 +160,8 @@ export class EditRoleComponent {
 
 
 
+
+
   onClose() {
     this.closePopup();
     this.router.navigate(['/components/role']);
@@ -173,20 +183,20 @@ export class EditRoleComponent {
     console.log(requestBody);
     
 
-    this.roleService.updateRoleandPermission(requestBody).subscribe({
-      next:res=>{
-        if(res.status==200){
-          this.sweetalert.showToast('success','Succefully Inserted');
-          this.closePopup();
-        }
-        else{
-          this.sweetalert.showToast('error',res.message);
-        }
-      },
-      error:error=>{
-        this.sweetalert.showToast('error','Oops!Something went wrong');
-      }
-    })
+    // this.roleService.updateRoleandPermission(requestBody).subscribe({
+    //   next:res=>{
+    //     if(res.status==200){
+    //       this.sweetalert.showToast('success','Succefully Inserted');
+    //       this.closePopup();
+    //     }
+    //     else{
+    //       this.sweetalert.showToast('error',res.message);
+    //     }
+    //   },
+    //   error:error=>{
+    //     this.sweetalert.showToast('error','Oops!Something went wrong');
+    //   }
+    // })
   }
   
 

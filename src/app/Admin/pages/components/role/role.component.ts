@@ -135,6 +135,7 @@ export class RoleComponent {
         componentRef.instance.closePopup = () => {
           this.popupContainer.clear();
           this.getAllRole();
+          
         };
       },
       error: (error) => {},
