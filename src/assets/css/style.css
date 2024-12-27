@@ -5,6 +5,11 @@
 i{
   cursor:pointer;
 }
+
+.actions i{
+  font-size: 13px;
+  color: #fff;
+}
 .pagination {
     display: flex;
     justify-content: center;
@@ -46,12 +51,16 @@ i{
 
 
 
-  /*-------------------------  */
+  /*------------Table-------------  */
   
-  
+
+  table{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
   .table thead,tbody{
     font-size: .8rem;
   }
+
 
 
   /* ------------------------- */
@@ -68,3 +77,7 @@ i{
     background-color: #d79b9b69;
     padding: 5px;
  }
+
+
+ /* --------- Spinner --------= */
+ 
