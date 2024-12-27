@@ -1,5 +1,7 @@
 import { Component, ComponentFactoryResolver, Output, ViewChild, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
+import Stepper from 'bs-stepper';
+
 
 
 @Component({
@@ -12,9 +14,35 @@ export class CompanyAddComponent {
 
   constructor(private router:Router){}
 
+  private stepper!: Stepper;
+
+  next() {
+    this.stepper.next();
+  }
+
+  onSubmit() {
+    return false;
+  }
+
+  ngOnInit() {
+    const stepperElement = document.querySelector('#stepper1');
+    if (stepperElement) {
+      this.stepper = new Stepper(stepperElement, {
+        linear: false,
+        animation: true
+      });
+    } else {
+      console.error("Stepper element not found!");
+    }
+  }
+
+
+
   onClose() {
+    alert('Are sure you want to stop registering company');
     this.closePopup();
     this.router.navigate(['/components/company'])
+    
   }
 
   onSave() {
