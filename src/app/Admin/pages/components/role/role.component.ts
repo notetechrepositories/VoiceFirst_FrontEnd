@@ -135,7 +135,6 @@ export class RoleComponent {
         componentRef.instance.closePopup = () => {
           this.popupContainer.clear();
           this.getAllRole();
-          
         };
       },
       error: (error) => {},
@@ -153,7 +152,17 @@ export class RoleComponent {
       confirmButtonText: 'Yes, delete it!',
     }).then((result) => {
       if (result.isConfirmed) {
-        this.sweetalert.showToast('success', 'Succefully deleted');
+        this.roleService.delete(id).subscribe({
+          next:res=>{
+            if(res.status==200){
+              this.getAllRole();
+              this.sweetalert.showToast('success', 'Succefully deleted');
+            }
+            else{
+              this.sweetalert.showToast('error', res.message);
+            }
+          }
+        })
       }
     });
   }

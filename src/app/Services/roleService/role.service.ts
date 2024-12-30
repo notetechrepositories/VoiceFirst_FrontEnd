@@ -30,4 +30,8 @@ export class RoleService {
     return this.http.get<any>(`${this.apiUrl}/SelectionValues/get-all-role-type`);
   }
 
+  delete(id:string){
+    return this.http.delete<any>(`${this.apiUrl}/Role/${id}`);
+  }
+
 }
