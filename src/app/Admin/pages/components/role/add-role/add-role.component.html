@@ -1,0 +1,49 @@
+<div class="popup">
+    <div class="popup-content">
+
+
+            <!-- Changing Part -->
+             <div class="d-flex justify-content-between mb-3">
+              <h2>Role</h2>
+              <i class="ti ti-x" (click)="onClose()"></i>
+             </div>
+           
+          
+            <form class="row g-3">
+              <div class="col-md-12">
+                <label for="inputEmail4" class="form-label">Role</label>
+                <input type="text" class="form-control" formControlName="role">
+                <!-- <div *ngIf="form.controls['email'].touched && form.controls['email'].invalid" class="text-danger">
+                  <small *ngIf="form.controls['email'].errors?.['required']">Email is required.</small>
+                  <small *ngIf="form.controls['email'].errors?.['invalidEmail']">Invalid email format.</small>
+                </div> -->
+              </div>
+            
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="gridCheck" formControlName="check">
+                  <label class="form-check-label" for="gridCheck">Check me out</label>
+                  <!-- <div *ngIf="form.controls['check'].touched && form.controls['check'].invalid" class="text-danger">
+                    <small>You must agree to continue.</small>
+                  </div> -->
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="gridCheck" formControlName="check">
+                  <label class="form-check-label" for="gridCheck">Check me out</label>
+                  <!-- <div *ngIf="form.controls['check'].touched && form.controls['check'].invalid" class="text-danger">
+                    <small>You must agree to continue.</small>
+                  </div> -->
+                </div>
+              </div>
+            
+              <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="primary-btn">Submit</button>
+              </div>
+            </form>
+            <!-- ------------- -->
+
+    </div>
+  </div>
