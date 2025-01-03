@@ -2,34 +2,27 @@ import { Injectable } from '@angular/core';
 import { Observable, of, throwError } from 'rxjs';
 import { LocalstorageService } from '../localStorageService/localstorage.service';
 import { Router } from '@angular/router';
+import { environment } from '../../../environment/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
+  
+  private apiUrl = environment.apiUrl;
+
   token!: string | null;
 
   constructor(
     private localStorageService:LocalstorageService,
-    private router:Router
+    private router:Router,
+    private http: HttpClient
     ) { }
 
-  login(user_name: string, password: string): Observable<any> {
-    const loginPayload = {
-      user_name,
-      password,
-    };
-    const randomToken = Math.random().toString(36).substring(2); // Generate a random string for the token
-
-    if (user_name === 'admin@notetech.com' && password === '12345') {
-      console.log("Admin login");
-      return of({ message: 'Login successful', role: 'admin' , token :randomToken});
-    } else if (user_name === 'company@gmail.com' && password === '12345') {
-      return of({ message: 'Login successful', role: 'company', token :randomToken });
-    } else {
-      return throwError(() => new Error('Invalid login credentials'));
+    login(data:any){
+      return this.http.post<any>(`${this.apiUrl}/Auth/login`,data);
     }
-  }
 
   isLoggedIn(): boolean {
       this.token = this.localStorageService.getItem('token');
@@ -47,7 +40,6 @@ export class AuthService {
     this.router.navigate(['/authentication/login']);
   }
 
-
   validateToken(): Promise<void> {
     return new Promise((resolve) => {
       if (this.token) {
@@ -58,5 +50,19 @@ export class AuthService {
     });
   }
 
+  // ---------- Forgot Password--------------
+
+  forgotPassword(username:string){
+    return this.http.post<any>(`${this.apiUrl}/Auth/forgot-password?userName=${username}`,{});
+  }
+
+  verifyOtp(data:any){
+    return this.http.post<any>(`${this.apiUrl}/Auth/verification-otp`,data);
+  }
+
+  resetPassword(data:any){
+    return this.http.post<any>(`${this.apiUrl}/Auth/reset-password`,data);
+  }
+ 
   
 }

@@ -143,6 +143,7 @@ getLocations(): void {
 }
 
 // ------------GetById------------------------------
+
 getCountryById(id_t2_1_country:number){
   this.countryService.getCountryById(id_t2_1_country).subscribe({
     next:(response)=>{
@@ -150,7 +151,8 @@ getCountryById(id_t2_1_country:number){
     }
   })
 }
-  ///------------------create----------------------
+
+///------------------create----------------------
 
 
   openAddCountry(){

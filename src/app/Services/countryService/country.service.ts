@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
+import { environment } from '../../../environment/environment';
 
 
 @Injectable({
@@ -8,9 +9,11 @@ import { catchError, Observable, throwError } from 'rxjs';
 })
 export class CountryService {
 
+  private apiUrl = environment.apiUrl;
+
   constructor(private http: HttpClient) { }
 
-  url="https://localhost:7027/api/Country";
+  url=`${this.apiUrl}/Country`;
           
     // Get all locations
     getLocations(){
@@ -101,7 +104,7 @@ uploadFileDivisionOne(file:any): Observable<any> {
       const url = `${this.divTwourl}/import`;
       return this.http.post(url, file);
     }
-// ----------------------DivisionThree--------------------------------------------------------------------------------
+// ------------------------------------ DivisionThree -------------------------------------------
   divThreeurl="https://localhost:7027/api/DivisionThree";
 
   //Insert Division Two-----------------
@@ -129,6 +132,8 @@ uploadFileDivisionOne(file:any): Observable<any> {
     console.log(apiUrl);
     return this.http.get<any>(apiUrl);
   }
+
+  
   // ---------------Import----------------------------------
   uploadFileDivisionThree(file:any): Observable<any> {
     const url = `${this.divThreeurl}/import`;

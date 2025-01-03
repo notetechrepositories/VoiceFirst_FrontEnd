@@ -1,7 +1,7 @@
 
 <!--=========================== FORMS =========================== -->
 
-<!-- <div class="card" style="width:50%">
+<div class="card" style="width:50%">
   <h2>Forms</h2>
 
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="row g-3">
@@ -10,7 +10,7 @@
     <input type="email" class="form-control" id="inputEmail4" formControlName="email">
     <div *ngIf="form.controls['email'].touched && form.controls['email'].invalid" class="text-danger">
       <small *ngIf="form.controls['email'].errors?.['required']">Email is required.</small>
-      <small *ngIf="form.controls['email'].errors?.['invalidEmail']">Invalid email format.</small>
+      <small *ngIf="!form.controls['email'].errors?.['required'] && form.controls['email'].errors?.['invalidEmail']">Invalid email format.</small>
     </div>
   </div>
 
@@ -81,7 +81,7 @@
     <button type="submit" class="primary-btn">Sign in</button>
   </div>
 </form>
-</div> -->
+</div>
 
 
 
