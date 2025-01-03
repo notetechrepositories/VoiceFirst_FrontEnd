@@ -6,3 +6,12 @@ td {
   justify-content: space-between;
   cursor:default;
 }
+
+.division-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+th{
+  min-width: 115px;
+}

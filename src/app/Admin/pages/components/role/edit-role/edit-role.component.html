@@ -1,0 +1,83 @@
+<div class="popup">
+    <div class="popup-content">
+      <!-- Header -->
+      <div class="d-flex justify-content-between mb-3">
+        <h4>Update Role</h4>
+        <i class="ti ti-x" (click)="onClose()"></i>
+      </div>
+  
+      <!-- Form -->
+      <form [formGroup]="form" (ngSubmit)="onSave()">
+        <!-- Role Input -->
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <label class="form-label mb-1">Role</label>
+            <input type="text" id="inputRole" class="form-control" formControlName="role">
+          </div>
+  
+  
+          <div class="col-md-6 mb-3">
+            <label class="form-label mb-1">Role Type</label>
+            <select class="form-select" (change)="onRoleTypeChange($event)" formControlName="t5_1_m_type_id">
+              <option selected disabled>Choose...</option>
+              <option *ngFor="let roletype of roleType" [value]="roletype.id_t4_1_selection_values">
+                {{ roletype.t4_1_selection_values_name }}
+              </option>
+            </select>
+          </div>
+          
+          <div class="col-md-6 mb-3">
+            <label class="form-label mb-1">Name</label>
+            <select class="form-select" formControlName="id_t4_1_selection_values">
+              <option [value]="" disabled>Choose...</option>
+              <option *ngFor="let name of filteredNames" [value]="name.type_id">
+                {{ name.type_name }}
+              </option>
+            </select>
+          </div>
+          
+        </div>
+  
+  
+       <!-- Dynamic Labels and Actions -->
+       <div *ngFor="let labelGroup of checkboxes.controls; let i = index" class="col-12 mb-3">
+        <div class="row d-flex justify-content-between">
+          <!-- Row Label -->
+          <div class="col-12 col-sm-3 col-md-2 mb-2 mb-sm-0 mx-2">
+              <input 
+                type="checkbox" 
+                class="form-check-input" 
+                (change)="toggleRowSelection(i, $event)" 
+                [checked]="isRowSelected(i)"
+              />
+              <label class="form-check-label"></label>
+            <label class="form-label fw-bold">{{ labels[i] }}</label>
+          </div>
+  
+      
+          <!-- Actions (Checkboxes) -->
+          <div class="col-12 col-sm-9 col-md-8 d-flex flex-wrap justify-content-between">
+            <div *ngFor="let action of actions; let j = index" class="form-check me-3 mb-2">
+              <input 
+                type="checkbox" 
+                class="form-check-input" 
+                [formControl]="getActionControl(i, j)"
+                (change)="onCheckboxChange(labels[i], action, $event)"
+              />
+              <label class="form-check-label">{{ action }}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+  
+        
+  
+        <!-- Submit Button -->
+        <div class="col-12 d-flex justify-content-end mt-3">
+          <button type="submit" class="primary-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

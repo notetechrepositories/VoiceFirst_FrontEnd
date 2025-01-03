@@ -19,6 +19,7 @@ import { filter } from 'rxjs';
 import { FilterPipe } from '../../../filter.pipe';
 import { SelectionComponent } from './constant/selection/selection.component';
 import { SelectionValuesComponent } from './constant/selection-values/selection-values.component';
+import { EditRoleComponent } from './role/edit-role/edit-role.component';
 
 
 
@@ -44,7 +45,8 @@ import { SelectionValuesComponent } from './constant/selection-values/selection-
     Division2Component,
     Division3Component,
     SelectionComponent,
-    SelectionValuesComponent
+    SelectionValuesComponent,
+    EditRoleComponent
   ],
 })
 export class ComponentModule {}
