@@ -10,15 +10,15 @@ background-attachment: fixed;">
             <div class="login-form ">
                 <form class="sign-in-htm mt-5" [formGroup]="loginForm">
                     <div class="group">
-                        <label for="user" class="label">Username</label>
-                        <input id="user" type="text" class="input" formControlName="user_name">
+                        <label class="label">Username</label>
+                        <input type="text" class="input" formControlName="username">
                     </div>
                     <div class="group">
-                        <label for="pass" class="label">Password</label>
-                        <input id="pass" type="password" class="input" data-type="password" formControlName="password">
+                        <label class="label">Password</label>
+                        <input type="password" class="input" data-type="password" formControlName="password">
                     </div>
                     <div class="group">
-                        <input id="check" type="checkbox" class="check" checked>
+                        <input id="check" type="checkbox" class="check">
                         <label for="check"><span class="icon"></span> Keep me Signed in</label>
                     </div>
                     <div class="group">
@@ -26,32 +26,32 @@ background-attachment: fixed;">
                     </div>
                     <div class="hr"></div>
                     <div class="foot-lnk">
-                        <a href="#forgot">Forgot Password?</a>
+                        <a style="color: var(--primary-color);" routerLink="/authentication/forgot-password">Forgot Password?</a>
                     </div>
                 </form>
                 <div class="sign-up-htm mt-2">
                     <div class="group">
-                        <label for="user" class="label">Username</label>
-                        <input id="user" type="text" class="input">
+                        <label class="label">Username</label>
+                        <input type="text" class="input">
                     </div>
                     <div class="group">
-                        <label for="pass" class="label">Password</label>
-                        <input id="pass" type="password" class="input" data-type="password">
+                        <label class="label">Password</label>
+                        <input type="password" class="input" data-type="password">
                     </div>
                     <div class="group">
-                        <label for="pass" class="label">Repeat Password</label>
-                        <input id="pass" type="password" class="input" data-type="password">
+                        <label class="label">Repeat Password</label>
+                        <input type="password" class="input" data-type="password">
                     </div>
                     <div class="group">
-                        <label for="pass" class="label">Email Address</label>
-                        <input id="pass" type="text" class="input">
+                        <label class="label">Email Address</label>
+                        <input type="text" class="input">
                     </div>
                     <div class="group mt-4">
                         <input type="submit" class="button" value="Sign Up">
                     </div>
                     <div class="hr"></div>
                     <div class="foot-lnk">
-                        <a href="#forgot">Already a member?</a>
+                        <a href="#forgot" style="color: var(--primary-color);">Already a member?</a>
                     </div>
                 </div>
             </div>

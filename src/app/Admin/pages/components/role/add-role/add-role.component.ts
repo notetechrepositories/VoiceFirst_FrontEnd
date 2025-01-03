@@ -13,45 +13,48 @@ export class AddRoleComponent {
   @Output() closePopup = () => {};
 
   labels = ['User', 'Country', 'Company']; // Dynamic labels
-  actions = ['Create', 'View', 'Update', 'Delete' ,'Print']; // Actions (checkboxes)
+  actions = ['Create', 'View', 'Update', 'Delete', 'Print']; // Actions (checkboxes)
   form: FormGroup;
 
-  selectedPermissions: string[] = []; 
+  selectedPermissions: string[] = [];
+  roleType: any[] = [];
 
-  roleType:any[]=[];
-
-  constructor(private fb: FormBuilder, 
-              private router: Router,
-              private roleService:RoleService,
-              private sweetalert:SweetalertService) {
+  constructor(
+    private fb: FormBuilder,
+    private router: Router,
+    private roleService: RoleService,
+    private sweetalert: SweetalertService
+  ) {
     this.form = this.fb.group({
       role: [''],
-      t5_1_m_type_id:[''],
-      id_t4_1_selection_values:[''], 
+      t5_1_m_type_id: [''],
+      id_t4_1_selection_values: [''],
       checkboxes: this.fb.array(this.initializeCheckboxes())
     });
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.getRoleType();
   }
 
   get checkboxes() {
     return this.form.get('checkboxes') as FormArray;
   }
-  
+
   getActionControl(labelIndex: number, actionIndex: number): FormControl {
     return (this.checkboxes.at(labelIndex) as FormArray).at(actionIndex) as FormControl;
   }
-  
+
   createActionGroup() {
     return this.fb.array(this.actions.map(() => false)); // Initialize actions as unchecked
   }
 
   onCheckboxChange(label: string, action: string, event: any) {
-    const permission = `${action} ${label}`;
+    const permission = `${action} ${label}`; // Consistent format
     if (event.target.checked) {
-      this.selectedPermissions.push(permission);
+      if (!this.selectedPermissions.includes(permission)) {
+        this.selectedPermissions.push(permission);
+      }
     } else {
       this.selectedPermissions = this.selectedPermissions.filter(p => p !== permission);
     }
@@ -61,7 +64,7 @@ export class AddRoleComponent {
     return this.labels.map(label =>
       this.fb.array(
         this.actions.map(action => {
-          const permission = `${action} ${label}`;
+          const permission = `${action} ${label}`; // Consistent format
           return new FormControl(this.selectedPermissions.includes(permission));
         })
       )
@@ -86,34 +89,33 @@ export class AddRoleComponent {
     // Update selected permissions
     if (isChecked) {
       this.actions.forEach(action => {
-        const permission = `${this.labels[rowIndex]} ${action}`;
+        const permission = `${action} ${this.labels[rowIndex]}`;
         if (!this.selectedPermissions.includes(permission)) {
           this.selectedPermissions.push(permission);
         }
       });
     } else {
       this.actions.forEach(action => {
-        const permission = `${this.labels[rowIndex]} ${action}`;
+        const permission = `${action} ${this.labels[rowIndex]}`;
         this.selectedPermissions = this.selectedPermissions.filter(p => p !== permission);
       });
     }
   }
 
-  getRoleType(){
+  getRoleType() {
     this.roleService.getRoleType().subscribe({
-      next:res=>{
-        this.roleType=res.data.Items;
+      next: res => {
+        this.roleType = res.data.Items;
         console.log(this.roleType);
-        
       },
-      error:error=>{
+      error: error => {
         console.log(error);
       }
-    })
+    });
   }
+
   filteredNames: Array<any> = [];
   selectedName: string | null = null;
-
 
   onRoleTypeChange(event: Event): void {
     const target = event.target as HTMLSelectElement;
@@ -126,16 +128,15 @@ export class AddRoleComponent {
     }
 
     const selectedRole = this.roleType.find(
-      (role) => role.id_t4_1_selection_values === selectedValue
+      role => role.id_t4_1_selection_values === selectedValue
     );
     this.filteredNames = selectedRole ? selectedRole.role_type_data : [];
     if (this.filteredNames.length === 1) {
       this.form.get('id_t4_1_selection_values')?.setValue(this.filteredNames[0].type_id);
     } else {
-      this.form.get('id_t4_1_selection_values')?.reset(); 
+      this.form.get('id_t4_1_selection_values')?.reset();
     }
   }
-  
 
   onClose() {
     this.closePopup();
@@ -144,8 +145,10 @@ export class AddRoleComponent {
 
   onSave() {
     console.log(this.form.value);
-    
-    const formdata=this.form.value;
+
+    const formdata = this.form.value;
+    const uniquePermissions = Array.from(new Set(this.selectedPermissions)); // Remove duplicates
+
     const requestBody = {
       t5_1_m_user_roles_name: formdata.role,
       t5_1_m_all_location_access: 0,
@@ -153,28 +156,25 @@ export class AddRoleComponent {
       t5_1_m_only_assigned_location: 0,
       id_t4_1_selection_values: formdata.id_t4_1_selection_values,
       t5_1_m_type_id: formdata.t5_1_m_type_id,
-      permissions: this.selectedPermissions
+      permissions: uniquePermissions
     };
 
     console.log(requestBody);
 
-
     this.roleService.insertRole(requestBody).subscribe({
-      next:res=>{
-        if(res.status==200){
-          this.sweetalert.showToast('success','Succefully Inserted');
+      next: res => {
+        if (res.status === 200) {
+          this.sweetalert.showToast('success', 'Successfully Inserted');
           this.closePopup();
-        }
-        else{
-          this.sweetalert.showToast('error',res.message);
+        } else {
+          this.sweetalert.showToast('error', res.message);
         }
       },
-      error:error=>{
-        this.sweetalert.showToast('error','Oops!Something went wrong');
+      error: error => {
+        this.sweetalert.showToast('error', 'Oops! Something went wrong');
+        console.log(error);
+        
       }
-    })
-    
+    });
   }
-
-
 }

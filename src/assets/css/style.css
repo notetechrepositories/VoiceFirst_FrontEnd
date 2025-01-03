@@ -79,5 +79,26 @@ i{
  }
 
 
- /* --------- Spinner --------= */
+ /* --------- border --------= */
+
+ .border-red {
+  border: 2px solid red !important;
+}
+
+.border-green {
+  border: 2px solid green !important;
+}
+
+/* ---------- Spinner --------- */
+
+.spinner-border {
+  --bs-spinner-width: 1.2rem;
+  --bs-spinner-height: 1.2rem;
+  --bs-spinner-vertical-align: -0.125em;
+  --bs-spinner-border-width: 0.22em;
+  --bs-spinner-animation-speed: 0.80s;
+  --bs-spinner-animation-name: spinner-border;
+  border: var(--bs-spinner-border-width) solid currentcolor;
+  border-right-color: transparent;
+}
  

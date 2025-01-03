@@ -94,6 +94,7 @@ export class RoleComponent {
       next: (res) => {
         if (res.status == 200) {
           this.roles = res.data.Items;
+          console.log(this.roles);
           this.filteredRoles = [...this.roles];
           this.updatePaginatedOrders();
         }

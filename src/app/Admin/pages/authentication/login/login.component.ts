@@ -19,7 +19,7 @@ export class LoginComponent {
     private localStorageService:LocalstorageService
   ) {
     this.loginForm = this.fb.group({
-      user_name: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(5)]],
     });
   }
@@ -31,13 +31,17 @@ export class LoginComponent {
   }
 
   onLogin(): void {
-    if (this.loginForm.valid) {
-      const { user_name, password } = this.loginForm.value;
-      this.authService.login(user_name, password).subscribe({
+    if (this.loginForm.valid) { 
+      const loginData = this.loginForm.value;
+      this.authService.login(loginData).subscribe({
         next: (res) => {
-          this.localStorageService.setItem('token', res.token);
-          this.localStorageService.setItem('role', res.role);
-          this.router.navigate(['/dashboard']);
+          console.log(res);
+          if(res.status==200){
+            this.localStorageService.setItem('token', res.data.token);
+            this.localStorageService.setItem('role', res.data.role);
+            this.router.navigate(['/dashboard']);
+          }
+
         },
         error: (error) => {
           console.error(error);

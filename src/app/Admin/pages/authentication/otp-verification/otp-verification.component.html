@@ -1,0 +1,101 @@
+
+
+<div class="d-flex justify-content-center align-items-center auth-container" 
+style="background: url(assets/images/loginbg.jpg);height: 100vh;
+background-size: cover;
+background-attachment: fixed;">
+    <div class="reset-wrap">
+
+        <div class="reset-html">
+          @if(otpPage){
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <h3 class="tab mt-1">Verify your OTP</h3>
+              <p class="text-center">Enter 6-digit OTP sent to email or phone</p>
+          </div>
+          
+          <form class="reset-form mt-3" [formGroup]="otpForm" (ngSubmit)="onVerifyOtp()">
+              <div class="d-flex justify-content-center gap-2">
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="input-otp text-center"
+                  formControlName="digit1"
+                  (keydown)="moveToNext($event, 'digit2', '')"
+                >
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="input-otp text-center"
+                  formControlName="digit2"
+                  (keydown)="moveToNext($event, 'digit3', 'digit1')"
+                >
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="input-otp text-center"
+                  formControlName="digit3"
+                  (keydown)="moveToNext($event, 'digit4', 'digit2')"
+                >
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="input-otp text-center"
+                  formControlName="digit4"
+                  (keydown)="moveToNext($event, 'digit5', 'digit3')"
+                >
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="input-otp text-center"
+                  formControlName="digit5"
+                  (keydown)="moveToNext($event, 'digit6', 'digit4')"
+                >
+                <input
+                  type="text"
+                  maxlength="1"
+                  class="input-otp text-center"
+                  formControlName="digit6"
+                  (keydown)="moveToNext($event, '', 'digit5')"
+                >
+              </div>
+              <div class="mt-4 text-center">
+                  <p>Time remaining: <strong>{{ timeLeft }}</strong> seconds</p>
+              </div>
+
+              <div class="group mt-4">
+                @if(verifyButton){
+                  <button type="button" class="button" [disabled]="loading" (click)="onVerifyOtp()">
+                    <span *ngIf="!loading">Verify OTP</span>
+                    <div class="spinner-border" role="status" *ngIf="loading">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </button>                      }
+                @else {
+                  <button type="button" class="button" [disabled]="loading" (click)="onResendOtp()">
+                    <span *ngIf="!loading">Resend OTP</span>
+                    <div class="spinner-border" role="status" *ngIf="loading">
+                      <span class="sr-only">Loading...</span>
+                    </div>
+                  </button>
+                }
+                  
+                </div>
+            </form>
+          }
+          @else {
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <h3 class="tab mt-1">OTP Page Unavailable</h3>
+              <a class="text-center" routerLink="/authentication/login">Back to login</a>
+          </div>
+          }
+
+
+                
+                           
+        </div>
+    </div>
+</div>
+
+
+
+
