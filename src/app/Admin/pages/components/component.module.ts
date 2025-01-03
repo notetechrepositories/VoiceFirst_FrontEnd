@@ -18,6 +18,8 @@ import { Division3Component } from './country/division3/division3.component';
 import { filter } from 'rxjs';
 import { FilterPipe } from '../../../filter.pipe';
 import { EditRoleComponent } from './role/edit-role/edit-role.component';
+import { CompanyComponent } from './company/company.component';
+import { CompanyAddComponent } from './company/company-add/company-add.component';
 
 
 
@@ -42,7 +44,9 @@ import { EditRoleComponent } from './role/edit-role/edit-role.component';
     AddRoleComponent,
     Division2Component,
     Division3Component,
-    EditRoleComponent
+    EditRoleComponent,
+    CompanyComponent,
+    CompanyAddComponent
   ],
 })
 export class ComponentModule {}

@@ -1,0 +1,90 @@
+<h3 class="mb-4">Company</h3>
+<div class="filter-buttons col-md-12 d-flex justify-content-end">
+  <button class="filter-btn import" data-toggle="tooltip" data-placement="top" title="Import" ><i class='bx bx-import'></i></button>
+  <button class="filter-btn export" data-toggle="tooltip" data-placement="top" title="Export" ><i class='bx bx-export'></i></button>
+  <button  class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="openAddCompany()" ><i class='bx bx-plus'></i></button>
+</div>
+<div>
+    <div class="filter-section">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search"
+                [(ngModel)]="searchTerm"
+                (input)="applyFilters()"
+              />
+            </div>
+            <!-- <div class="col-md-4">
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="filterDate"
+                (change)="applyFilters()"
+                placeholder="Filter by Date"
+              />
+            </div> -->
+            <div class="col-md-4">
+              <select class="form-select" [(ngModel)]="filterStatus" (change)="applyFilters()">
+                <option value="">All Status</option>
+                <option value="active">Active</option>
+                <option value="inactive">Inactive</option>
+               
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="table-responsive">
+      <table class="table table-bordered p-1">
+        <thead class="thead-light">
+          <tr>
+            <th>#</th>
+            <th>Company Name</th>
+            <th>Company Type</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let company of paginatedCompanies; let i = index">
+            <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
+            
+            <td>{{ company.companyName }}</td>
+            <td>{{ company.companyType }}</td>
+            <td>
+              <span class="badge" [ngClass]="getStatusClass(company.status)">
+                {{ company.status }}
+              </span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <div class="pagination">
+        
+        <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <div class="d-flex justify-content-between mt-4">
+    <!-- <button (click)="show()" label="Show">ADD</button> -->
+    <!-- <button (click)="successtoast()" label="Show">Success</button> -->
+    <!-- <button (click)="deleteFn()">Delete</button> -->
+    <!-- <button (click)="updatePopup()" label="Show">Update</button> -->
+  </div>
+  
+  
+  
+  <ng-container #popupContainer></ng-container>
+  
+  
