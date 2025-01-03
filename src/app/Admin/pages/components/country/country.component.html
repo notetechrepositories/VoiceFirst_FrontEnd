@@ -1,30 +1,7 @@
-<div class="card">
-  <h3 class="mb-4">Country</h3>
-  <div class="filter-section">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="row">
-          <!-- <div class="col-md-4">
-            <input
-              type="text"
-              class="form-control"
-              placeholder="Search"
-            />
-          </div> -->
-          <!-- Filter Dropdown -->
-          <!-- <div class="col-md-4">
-            <select class="form-select">
-              <option value="">Select Country</option>
-              <option *ngFor="let location of locations" [value]="location.t2_1_country_name">
-                {{ location.t2_1_country_name }}
-              </option>
-            </select>
-          </div> -->
-        </div>
-      </div>
+<h3 class="mb-4">Country</h3>
 
       <!-- Action Buttons -->
-      <div class="filter-buttons col-md-6 d-flex justify-content-end">
+      <div class="filter-buttons col-md-12 d-flex justify-content-end">
         <!-- Trigger file input for importing -->
         <button class="filter-btn import" data-toggle="tooltip" data-placement="top" title="Import" (click)="triggerFileInput()">
           <i class='bx bx-import'></i>
@@ -50,23 +27,78 @@
           Upload
         </button> -->
       </div>  
+
+<div>
+  <div class="filter-section">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-4">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Search"
+            />
+          </div>
+          <!-- Filter Dropdown -->
+          <!-- <div class="col-md-4">
+            <select class="form-select">
+              <option value="">Select Country</option>
+              <option *ngFor="let location of locations" [value]="location.t2_1_country_name">
+                {{ location.t2_1_country_name }}
+              </option>
+            </select>
+          </div> -->
+        </div>
+      </div>
+
+
     </div>
   </div>
 
   <!-- Table Section -->
-  <div class="table-responsive">
-    <table class="table table-bordered">
+  <div class="table-responsive" style="padding: 1px;">
+    <table class="table">
       <thead class="thead-light">
         <tr>
           <th>#</th>
           <th>Country</th>
-          <th class="d-flex justify-content-between"><span>Division 1</span><i class='bx bx-import' (click)="triggerFile()"></i></th>      
-          <input type="file" #fileInput1 (change)="onFileChangeDivisionOne($event)" accept=".xlsx, .xls, .csv" style="display: none;" />
-          <th ><span>Division 2</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='bx bx-import' (click)="triggerFileDivisionTwo()"></i></th>
-          <input type="file" #fileInput2 (change)="onFileChangeDivisionTwo($event)" accept=".xlsx, .xls, .csv" style="display: none;" />
-          <th><span>Division 3</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i class='bx bx-import' (click)="triggerFileDivisionThree()"></i></th>
+          <th>
+            <div class="division-header">
+              <span>Division 1</span>
+              <i class='bx bx-import' (click)="triggerFile()"></i>
+            </div>
+            <input
+              type="file"
+              #fileInput1
+              (change)="onFileChangeDivisionOne($event)"
+              accept=".xlsx, .xls, .csv"
+              style="display: none;"
+            />
+          </th>
+          
+          <th>
+            <div class="division-header">
+              <span>Division 2</span>
+              <i class='bx bx-import' (click)="triggerFileDivisionTwo()"></i>
+            </div>
+            <input
+              type="file"
+              #fileInput2
+              (change)="onFileChangeDivisionTwo($event)"
+              accept=".xlsx, .xls, .csv"
+              style="display: none;"
+            />
+          </th>
+          
+          <th>
+            <div class="division-header">
+              <span>Division 3</span>
+              <i class='bx bx-import' (click)="triggerFileDivisionThree()"></i>
+            </div>
+          </th>
           <input type="file" #fileInput3 (change)="onFileChangeDivisionThree($event)" accept=".xlsx, .xls, .csv" style="display: none;" />
-          <th>Action</th>
+          <th class="text-end">Action</th>
         </tr>
         <!-- <input
         type="file"
@@ -83,7 +115,7 @@
           <td (click)="divOnePopup(location)">{{ location.t2_1_div1_called }}</td>
           <td (click)="divTWoPopup(location.id_t2_1_country)">{{ location.t2_1_div2_called }}</td>
           <td (click)="divthreePopup(location.id_t2_1_country)">{{ location.t2_1_div3_called }}</td>
-          <td class="actions">
+          <td class="actions text-end">
             <i class='bx bxs-edit' style="width: 34px;" (click)="editLocation(location)"></i>
             <i class='bx bxs-trash' (click)="deleteLocation(location.id_t2_1_country)"></i>
           </td>
