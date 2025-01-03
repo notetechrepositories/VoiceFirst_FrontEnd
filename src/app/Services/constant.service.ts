@@ -1,18 +1,25 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environment/environment';
+import { LocalstorageService } from './localStorageService/localstorage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConstantService {
-
-    constructor(private http: HttpClient) { }
   
-    url="https://localhost:7027/api/Selection";
+   private apiUrl = environment.apiUrl;
+    constructor(private http: HttpClient,private localStorageService:LocalstorageService) { }
+  
+        accessToken = this.localStorageService.getItem('token'); 
+        headers = new HttpHeaders({
+          'Authorization': `Bearer ${this.accessToken}`
+        });
+        url=`${this.apiUrl}/Selection`;
             
       // Get all selection
       getSelection(){
-        return this.http.get<any>(this.url);  
+        return this.http.get<any>(this.url,{headers:this.headers});  
       }
   
      //Insert selection
@@ -38,8 +45,7 @@ export class ConstantService {
      
     }
     // ------------------------Selection Values-----------------------------------------
-
-    apiurl="https://localhost:7027/api/SelectionValues"
+      apiurl=`${this.apiUrl}/SelectionValues`;
 
           // Get all selection Values
           getSelectionValues(){
@@ -48,12 +54,12 @@ export class ConstantService {
       
          //Insert selection Values
          insertSelectionValues(data: any){
-          return this.http.post<any>(this.apiurl, data);   
+          return this.http.post<any>(this.apiurl, data,{headers:this.headers});   
         }
       
         //Update selection Values
         updateSelectionValues(data:any){
-          const response = this.http.put<any>(this.apiurl, data); 
+          const response = this.http.put<any>(this.apiurl, data,{headers:this.headers}); 
           return response;
         }
       

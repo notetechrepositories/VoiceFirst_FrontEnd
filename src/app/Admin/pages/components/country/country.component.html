@@ -96,8 +96,9 @@
               <span>Division 3</span>
               <i class='bx bx-import' (click)="triggerFileDivisionThree()"></i>
             </div>
+            <input type="file" #fileInput3 (change)="onFileChangeDivisionThree($event)" accept=".xlsx, .xls, .csv" style="display: none;" />
+
           </th>
-          <input type="file" #fileInput3 (change)="onFileChangeDivisionThree($event)" accept=".xlsx, .xls, .csv" style="display: none;" />
           <th class="text-end">Action</th>
         </tr>
         <!-- <input

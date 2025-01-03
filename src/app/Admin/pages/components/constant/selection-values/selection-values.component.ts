@@ -264,6 +264,7 @@ export class SelectionValuesComponent {
     this.constantService.getSelection().subscribe({
       next: (res) => {
         
+        console.log(res);
         
         this.selection = res.data.Items || [];
         console.log( this.selection);
