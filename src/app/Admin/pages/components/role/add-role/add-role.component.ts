@@ -18,6 +18,9 @@ export class AddRoleComponent {
 
   selectedPermissions: string[] = [];
   roleType: any[] = [];
+  programWithPermission:any[]=[];
+  actionsList: { [key: string]: Array<{ actionName: string; actionId: string }> } = {};
+
 
   constructor(
     private fb: FormBuilder,
@@ -35,71 +38,93 @@ export class AddRoleComponent {
 
   ngOnInit() {
     this.getRoleType();
+    this.getProgramWithPermissions();
   }
 
-  get checkboxes() {
-    return this.form.get('checkboxes') as FormArray;
+  getProgramWithPermissions() {
+    this.roleService.getProgramWithPermission().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.programWithPermission = res?.data?.Items || [];
+  
+        // Map the labels (program names) and actions from API response
+        this.labels = this.programWithPermission.map((item: any) => item.t6_program_name);
+        this.actionsList = this.programWithPermission.reduce((acc, item) => {
+          acc[item.t6_program_name] = item.programActions.map((action: any) => ({
+            actionName: action.t6_action,
+            actionId: action.id_t6_link_program_with_program_action,
+          }));
+          return acc;
+        }, {});
+  
+        // Reinitialize the checkboxes
+        this.form = this.fb.group({
+          role: [''],
+          t5_1_m_type_id: [''],
+          id_t4_1_selection_values: [''],
+          checkboxes: this.fb.array(this.initializeCheckboxes())
+        });
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
   }
-
+  
+  initializeCheckboxes() {
+    return this.programWithPermission.map((item) => {
+      const programActions = item.programActions.map((action: any) => ({
+        actionName: action.t6_action,
+        actionId: action.id_t6_link_program_with_program_action,
+      }));
+  
+      return this.fb.array(
+        programActions.map(() => new FormControl(false))
+      );
+    });
+  }
+  
+  onCheckboxChange(label: string, action: any, event: any) {
+    const permissionId = action.actionId; // Store action ID
+    if (event.target.checked) {
+      if (!this.selectedPermissions.includes(permissionId)) {
+        this.selectedPermissions.push(permissionId);
+      }
+    } else {
+      this.selectedPermissions = this.selectedPermissions.filter((id) => id !== permissionId);
+    }
+  }
+  
+  toggleRowSelection(rowIndex: number, event: any): void {
+    const rowGroup = this.checkboxes.at(rowIndex) as FormArray;
+    const programName = this.labels[rowIndex];
+    const actionsForProgram = this.actionsList[programName];
+    const isChecked = event.target.checked;
+  
+    rowGroup.controls.forEach((control, i) => {
+      control.setValue(isChecked);
+      const action = actionsForProgram[i];
+      if (isChecked) {
+        if (!this.selectedPermissions.includes(action.actionId)) {
+          this.selectedPermissions.push(action.actionId);
+        }
+      } else {
+        this.selectedPermissions = this.selectedPermissions.filter((id) => id !== action.actionId);
+      }
+    });
+  }
+  
   getActionControl(labelIndex: number, actionIndex: number): FormControl {
     return (this.checkboxes.at(labelIndex) as FormArray).at(actionIndex) as FormControl;
   }
-
-  createActionGroup() {
-    return this.fb.array(this.actions.map(() => false)); // Initialize actions as unchecked
-  }
-
-  onCheckboxChange(label: string, action: string, event: any) {
-    const permission = `${action} ${label}`; // Consistent format
-    if (event.target.checked) {
-      if (!this.selectedPermissions.includes(permission)) {
-        this.selectedPermissions.push(permission);
-      }
-    } else {
-      this.selectedPermissions = this.selectedPermissions.filter(p => p !== permission);
-    }
-  }
-
-  initializeCheckboxes() {
-    return this.labels.map(label =>
-      this.fb.array(
-        this.actions.map(action => {
-          const permission = `${action} ${label}`; // Consistent format
-          return new FormControl(this.selectedPermissions.includes(permission));
-        })
-      )
-    );
-  }
-
+  
   isRowSelected(rowIndex: number): boolean {
     const rowGroup = this.checkboxes.at(rowIndex) as FormArray;
-    return rowGroup.controls.every(control => control.value === true);
+    return rowGroup.controls.every((control) => control.value === true);
   }
-
-  toggleRowSelection(rowIndex: number, event: any): void {
-    const rowGroup = this.checkboxes.at(rowIndex) as FormArray;
-    const isChecked = event.target.checked;
-
-    rowGroup.controls.forEach(control => {
-      if (control instanceof FormControl) {
-        control.setValue(isChecked);
-      }
-    });
-
-    // Update selected permissions
-    if (isChecked) {
-      this.actions.forEach(action => {
-        const permission = `${action} ${this.labels[rowIndex]}`;
-        if (!this.selectedPermissions.includes(permission)) {
-          this.selectedPermissions.push(permission);
-        }
-      });
-    } else {
-      this.actions.forEach(action => {
-        const permission = `${action} ${this.labels[rowIndex]}`;
-        this.selectedPermissions = this.selectedPermissions.filter(p => p !== permission);
-      });
-    }
+  
+  get checkboxes() {
+    return this.form.get('checkboxes') as FormArray;
   }
 
   getRoleType() {
@@ -113,6 +138,8 @@ export class AddRoleComponent {
       }
     });
   }
+
+ 
 
   filteredNames: Array<any> = [];
   selectedName: string | null = null;
@@ -148,6 +175,8 @@ export class AddRoleComponent {
 
     const formdata = this.form.value;
     const uniquePermissions = Array.from(new Set(this.selectedPermissions)); // Remove duplicates
+    console.log(uniquePermissions);
+    
 
     const requestBody = {
       t5_1_m_user_roles_name: formdata.role,
@@ -176,5 +205,5 @@ export class AddRoleComponent {
         
       }
     });
-  }
+   }
 }

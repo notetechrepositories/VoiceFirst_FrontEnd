@@ -35,10 +35,10 @@ export class ResetPasswordComponent {
     }
 
     ngOnInit() {
-      this.route.queryParams.subscribe((params) => {
-        this.userId = params['userId'];
-        console.log('User Id:', this.userId);
-      });
+      this.userId=this.authService.userId;
+      if(!this.userId){
+        this.router.navigate(['/authentication/forgot-password']);
+      }
     }
 
     passwordsMatchValidator(form: FormGroup) {
@@ -57,14 +57,14 @@ export class ResetPasswordComponent {
           user_id: this.userId,
           password:this.resetForm.value.password2
         }
-        console.log(requestBody);
+
         
         this.authService.resetPassword(requestBody).subscribe({
           next:res=>{
             console.log(res);
             if(res.status==200){
               this.sweetalert.showToast('success','Password reset successfully')
-              this.router.navigate(['/authentication/login'], { queryParams: { userId: this.userId } });
+              this.router.navigate(['/authentication/login']);
             }
           },
           error:error=>{

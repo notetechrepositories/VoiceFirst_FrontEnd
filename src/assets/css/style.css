@@ -102,3 +102,26 @@ i{
   border-right-color: transparent;
 }
  
+
+/* alert */
+
+.alert {
+    padding: 15px;
+    color: #663300;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+    font-size: .7rem;
+  }
+
+.alert-warning{
+  background-color: #ffd83d80;
+  border: 2px solid #ffd83dfc;
+  
+}
+
+.alert-error{
+  background-color: #ff3d3d52;
+  border: 2px solid #ff7c7cfc;
+  color: #a32121;
+}
