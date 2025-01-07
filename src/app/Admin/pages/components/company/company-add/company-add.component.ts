@@ -4,6 +4,7 @@ import Stepper from 'bs-stepper';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from '../../../../../Services/validationService/validation.service';
 import { HttpClient } from '@angular/common/http';
+import { CompanyService } from '../../../../../Services/companyService/company.service';
 
 
 
@@ -18,35 +19,41 @@ export class CompanyAddComponent implements OnInit{
   
   @Output() closePopup = () => {};
 
-  constructor(private router:Router, private fb: FormBuilder, private http: HttpClient){}
+  constructor(
+    private router:Router, 
+    private fb: FormBuilder, 
+    private http: HttpClient,
+    private companyService:CompanyService)
+  {
+    this.formcompanyadd = this.fb.group({
+      companyname: ['', [Validators.required]],
+      companytype: ['', [Validators.required]],
+      branchname: ['',[Validators.required]],
+      branchtype: ['',[Validators.required]],
+      branchemail: ['', [Validators.required, ValidationService.email]],
+      branchmobile: ['', [Validators.required, ValidationService.phone]],
+      branchphone: ['',[ValidationService.phone]],
+      branchaddress: ['',[Validators.required]], 
+      useremail: ['', [Validators.required, ValidationService.email]],
+
+      
+    });
+  }
 
   formcompanyadd!: FormGroup;
-  companyType!: string[];
+  companyType: any[]=[];
+  branchType: any[]=[];
   selectedType!: string;
 
   ngOnInit(): void {
-    this.formcompanyadd = this.fb.group({
-      companyname: ['', [Validators.required]],
-      email: ['', [Validators.required, ValidationService.email]],
-      useremail: ['', [Validators.required, ValidationService.email]],
-      inputBranchMobile: ['', [Validators.required, Validators.pattern(/^\d{10}$/)]],
-    });
+   this.stepperFn();
+   this.getCompanyType();
+   this.getBranchType();
+  }
 
-    // Fetch data from the API
-    this.http
-      .get<string[]>('https://localhost:7027/api/SelectionValues?id_t4_selection=43E256AF-AC0F-4A89-AE2C-B0EAB8860C61')
-      .subscribe({
-        next: (data) => {
-          this.companyType = data; // Initialize the array
-        },
-        error: (err) => {
-          console.error('Error fetching company types:', err);
-        },
-      });
+  private stepper!: Stepper;
 
-    
-
-
+  stepperFn(){
     const stepperElement = document.querySelector('#stepper1');
     if (stepperElement) {
       this.stepper = new Stepper(stepperElement, {
@@ -56,12 +63,51 @@ export class CompanyAddComponent implements OnInit{
     } else {
       console.error("Stepper element not found!");
     }
-  };
-
-  private stepper!: Stepper;
+  }
 
   next() {
     this.stepper.next();
+  }
+
+  getCompanyType(){
+    this.companyService.getCompanyType().subscribe({
+      next:res=>{
+        if(res.status==200){
+          this.companyType=res.data.Items;
+          console.log(this.companyType); 
+        }
+        else{
+          console.log(res);
+          
+        }
+        
+      },
+      error:error=>{
+        console.log(error);
+        
+      }
+    })
+  }
+
+  getBranchType(){
+    this.companyService.getBranchType().subscribe({
+      next:res=>{
+        if(res.status==200){
+          this.branchType=res.data.Items;
+          console.log(this.branchType); 
+        }
+        else{
+          console.log(res);
+          
+        }
+        
+      },
+      error:error=>{
+        console.log(error);
+        
+      } 
+      
+    })
   }
 
   
@@ -77,9 +123,9 @@ export class CompanyAddComponent implements OnInit{
   }
 
   // Helper method to check if a control has a specific error
-  hasError(controlName: string, errorName: string): boolean {
-    return this.formcompanyadd.get(controlName)?.hasError(errorName) ?? false;
-  }
+  // hasError(controlName: string, errorName: string): boolean {
+  //   return this.formcompanyadd.get(controlName)?.hasError(errorName) ?? false;
+  // }
   
 
   

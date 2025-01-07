@@ -12,6 +12,10 @@ export class ValidationService {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(control.value) ? null : { invalidEmail: true };
   }
+  static phone(control: AbstractControl): ValidationErrors | null{
+    const phoneRegex= /^\+?\d+$/;
+    return phoneRegex.test(control.value) ? null : {invalidPhone: true};
+  }
 
   static password(control: AbstractControl): ValidationErrors | null {
     const value = control.value || '';
