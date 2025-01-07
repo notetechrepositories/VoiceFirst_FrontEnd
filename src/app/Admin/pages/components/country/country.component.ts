@@ -129,7 +129,13 @@ applyFilters() {
 
 // ------------------Get---------------------------
 getLocations(): void {
-  this.countryService.getLocations().subscribe({
+  const body = { 
+    filters: { 
+
+    }
+  };
+
+  this.countryService.getLocations(body).subscribe({
     next: (res) => {
       this.locations = res.data.Items || [];
       this.updatePaginatedOrders(); 
@@ -145,8 +151,15 @@ getLocations(): void {
 // ------------GetById------------------------------
 
 getCountryById(id_t2_1_country:number){
-  this.countryService.getCountryById(id_t2_1_country).subscribe({
+  const body = { 
+    filters: { 
+      id_t2_1_country: id_t2_1_country
+    }
+  };
+  this.countryService.getLocations(body).subscribe({
     next:(response)=>{
+      console.log(response);
+      
       this.countries=response;
     }
   })
@@ -167,22 +180,17 @@ getCountryById(id_t2_1_country:number){
 
 // ---------------------Edit-Icon-----------------
 editLocation(location: any): void {
+  console.log(location);
+  
   this.popupContainer.clear();
-  this.countryService.getCountryById(location.id_t2_1_country).subscribe({
-    next: (response) => {
-      
       const factory = this.componentFactoryResolver.resolveComponentFactory(EditCountryComponent);
       const componentRef = this.popupContainer.createComponent(factory);
-      componentRef.instance.locationData = response.data;
+      componentRef.instance.locationData = location;
       componentRef.instance.closePopup = () => {
         this.popupContainer.clear();
         this.getLocations(); 
       };
-    },
-    error: (error) => {
-      console.error('Failed to fetch location details:', error);
-    },
-  });
+
 }
 
 // ---------------Delete--------------------------------

@@ -36,8 +36,10 @@ export class EditCountryComponent {
   
   }
  
-  ngOnInit(): void {
+  ngOnInit() {
    this.getData();
+
+   
   }
   
 
@@ -66,8 +68,10 @@ export class EditCountryComponent {
     });
     }
     getData(){
+      console.log(this.locationData);
+      
       if (this.locationData) {
-        const data=this.locationData.Items;
+        const data=this.locationData;
         this.locationForm.patchValue({
           t2_1_country_name: data.t2_1_country_name,
           t2_1_div1_called: data.t2_1_div1_called,

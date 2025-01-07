@@ -69,10 +69,10 @@ export class EditRoleComponent {
   getData(): void {
     if (this.roleData) {
       const data = this.roleData;
-      console.log(data);
+      console.log("role",data);
       
       this.selectedPermissions = data.Items;
-      console.log(this.selectedPermissions);
+
       
       this.form.patchValue({
         role: data.Role.t5_1_m_user_roles_name,

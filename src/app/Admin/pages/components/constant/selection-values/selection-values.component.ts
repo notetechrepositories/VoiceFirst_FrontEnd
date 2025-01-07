@@ -22,6 +22,7 @@ export class SelectionValuesComponent {
     selectionForm: FormGroup;
     isPopupVisible:boolean=false;
     selection:Selection[]=[];
+    isLoading: boolean = false;
     selectionValues:SelectionValues[]=[];
     constructor(private componentFactoryResolver: ComponentFactoryResolver,private sweetalert:SweetalertService,
       private router:Router,private fb: FormBuilder,private constantService:ConstantService
@@ -171,6 +172,7 @@ export class SelectionValuesComponent {
   togglePopup() {
     this.isPopupVisible =true;
   }
+
   editSelection(selection:any){
     (async () => {
       const inputValue = selection.t4_1_selection_values_name;
@@ -261,16 +263,18 @@ export class SelectionValuesComponent {
     });
   }
   getSelection(){
+    this.isLoading=true;
     this.constantService.getSelection().subscribe({
       next: (res) => {
         
         console.log(res);
-        
+        this.isLoading=false;
         this.selection = res.data.Items || [];
         console.log( this.selection);
         this.updatePaginatedOrders(); 
       },
       error: (error) => {
+        this.isLoading=false;
         console.error('Failed to load locations:', error);
         this.selection = [];
         this.updatePaginatedOrders(); 
