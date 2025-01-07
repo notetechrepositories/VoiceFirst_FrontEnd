@@ -35,8 +35,11 @@
         <tbody>
           <!-- Show loading spinner -->
           <tr *ngIf="isLoading">
-            <td colspan="2" class="text-center">
-              <i class='bx bx-loader bx-spin bx-lg'></i> Loading... 
+            <td colspan="2" class="position-relative p-0" style="height: 150px;">
+              <div class="d-flex flex-column justify-content-center align-items-center position-absolute top-50 start-50 translate-middle w-100">
+                <div class="loader mb-2"></div>
+                <span>Loading...</span>
+              </div>
             </td>
           </tr>
         

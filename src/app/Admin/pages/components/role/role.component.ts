@@ -107,7 +107,6 @@ export class RoleComponent {
       },
       error: (error) => {
         console.log(error);
-        
         this.sweetalert.showToast('error', 'Oops! Something went wrong');
         this.isLoading = false; 
       },
