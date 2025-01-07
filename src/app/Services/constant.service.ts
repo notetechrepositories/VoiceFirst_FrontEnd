@@ -76,7 +76,7 @@ export class ConstantService {
         }
 
         getSelectionValuesBySelectionId(selectionId:number){
-          const url = `https://localhost:7027/api/SelectionValues?id_t4_selection=${selectionId}`;
+          const url = `${this.apiurl}?id_t4_selection=${selectionId}`;
           return this.http.get<any>(url);
         }
    
