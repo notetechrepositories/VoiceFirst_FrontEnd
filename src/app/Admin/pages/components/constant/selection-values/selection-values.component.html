@@ -1,0 +1,89 @@
+<div class="card">
+
+
+    <h3 class="mb-4">Selection Values</h3>
+    <div class="filter-section">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+                <select  class="form-select" [(ngModel)]="filterStatus" (change)="onChangeSelection($event)">
+                    <option value="" disabled>Choose Selection</option>
+                    <option  *ngFor="let selection of selection" [value]="selection.id_t4_selection">{{selection.t4_selection_name}}</option>
+                </select>
+              </div>
+            <div class="col-md-4">
+              <!-- <input
+                type="text"
+                class="form-control"
+                placeholder="Search"
+                [(ngModel)]="searchTerm"
+                (input)="applyFilters()"
+              /> -->
+            </div>
+          </div>
+        </div>
+  
+        <div class="filter-buttons col-md-6 d-flex justify-content-end">
+          <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="togglePopup()" ><i class='bx bx-plus'></i></button>
+        </div>
+  
+      </div>
+    </div>
+  
+    <div class="table-responsive">
+      <table class="table table-bordered table-hover">
+        <thead class="thead-light">
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let selection of selectionValues; let i = index">
+            <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
+            <td >{{selection.t4_1_selection_values_name}}</td>
+            <td class="actions">
+              <i class='bx bxs-edit' style="width: 34px;" (click)="editSelection(selection)"></i>
+              <i class='bx bxs-archive' (click)="archiveSelection(selection.id_t4_1_selection_values)"></i>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    
+      <div class="pagination">
+        
+        <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
+      </div>
+    </div>
+  </div>
+  <!---------------------------  Popup--------------------------------------->
+  <div class="popup" *ngIf="isPopupVisible">
+    <div class="popup-content">
+  
+          <div class="d-flex justify-content-between mb-3">
+            <h2>Add Selection</h2>
+            <i class="ti ti-x" (click)="onClose()"></i>
+          </div>
+            <!-- Changing Part -->
+            <form class="row g-3" [formGroup]="selectionForm" (ngSubmit)="onSubmit()">
+              <div class="col-md-12">
+                <label for="country" class="form-label">Selection</label>
+                <input type="text" class="form-control" id="t4_selection_name" name="t4_selection_name" formControlName="t4_selection_name">
+                <div *ngIf="selectionForm.controls['t4_selection_name'].touched && selectionForm.controls['t4_selection_name'].invalid" class="text-danger">
+                  <small *ngIf="selectionForm.controls['t4_selection_name'].errors?.['required']">Division One is required.</small>
+                </div>
+              </div>
+              <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="primary-btn">Submit</button>
+              </div>
+            </form>
+    </div>
+  </div>
+  <!--  -->
+  <ng-container #popupContainer></ng-container>
+  
+  

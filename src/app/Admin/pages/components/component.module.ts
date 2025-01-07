@@ -17,6 +17,8 @@ import { Division2Component } from './country/division2/division2.component';
 import { Division3Component } from './country/division3/division3.component';
 import { filter } from 'rxjs';
 import { FilterPipe } from '../../../filter.pipe';
+import { SelectionComponent } from './constant/selection/selection.component';
+import { SelectionValuesComponent } from './constant/selection-values/selection-values.component';
 import { EditRoleComponent } from './role/edit-role/edit-role.component';
 import { CompanyComponent } from './company/company.component';
 import { CompanyAddComponent } from './company/company-add/company-add.component';
@@ -44,6 +46,8 @@ import { CompanyAddComponent } from './company/company-add/company-add.component
     AddRoleComponent,
     Division2Component,
     Division3Component,
+    SelectionComponent,
+    SelectionValuesComponent,
     EditRoleComponent,
     CompanyComponent,
     CompanyAddComponent
