@@ -24,6 +24,9 @@ background-attachment: fixed;">
                     <div class="group">
                         <input type="submit" class="button" value="Sign In" (click)="onLogin()">
                     </div>
+                    <div class="alert alert-error" style="margin-bottom: 15px;" *ngIf="error">
+                        {{error}}
+                      </div>
                     <div class="hr"></div>
                     <div class="foot-lnk">
                         <a style="color: var(--primary-color);" routerLink="/authentication/forgot-password">Forgot Password?</a>
@@ -55,6 +58,9 @@ background-attachment: fixed;">
                     </div>
                 </div>
             </div>
+
+
         </div>
+        
     </div>
 </div>

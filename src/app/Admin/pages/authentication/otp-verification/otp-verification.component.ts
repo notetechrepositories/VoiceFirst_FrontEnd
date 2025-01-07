@@ -29,7 +29,9 @@ export class OtpVerificationComponent {
 
   loading=false;
 
-  otpPage=true;
+  remainingTime: number = 10;
+
+
 
 
   constructor(
@@ -53,24 +55,40 @@ export class OtpVerificationComponent {
     }
 
     ngOnInit() {
-      this.route.queryParams.subscribe((params) => {
-        this.encryptedOtp = params['otp'];
-        this.username = params['username'];
-      });
+      this.encryptedOtp=this.authService.encryptedOtp;
+      this.username=this.authService.username;
+      console.log(this.username);
+      
        this.startTimer();
        if(!this.encryptedOtp){
-        this.otpPage=false
-       }
+         this.router.navigate(['/authentication/forgot-password']);
+       };
     }
 
     startTimer(){
         this.utilityService.startTimer(60).subscribe((time) => {
           this.timeLeft = time;
-          if(this.timeLeft==0){
+          if(this.timeLeft<=0){
             this.verifyButton=false;
+            this.otpForm.reset();
           }
         });
     }
+
+    // startTimer() {
+    //   const storedTime = this.authService.getRemainingTime();
+    //   if (storedTime > 0) {
+    //     this.remainingTime = storedTime;
+    //   }
+  
+    //   const interval = setInterval(() => {
+    //     this.remainingTime--;
+    //     if (this.remainingTime <= 0) {
+    //       clearInterval(interval);
+    //       this.verifyButton=false;
+    //     }
+    //   }, 1000);
+    // }
 
 
     moveToNext(event: KeyboardEvent, nextControlName: string, prevControlName: string): void {
@@ -101,7 +119,8 @@ export class OtpVerificationComponent {
             console.log(res);
             if(res.status==200){
               this.userId=res.data.userData;
-              this.router.navigate(['/authentication/reset-password'],{ queryParams: { userId: this.userId } });
+              this.authService.setUserId(this.userId);
+              this.router.navigate(['/authentication/reset-password']);
               this.loading = false; 
             }
             else{
@@ -123,12 +142,16 @@ export class OtpVerificationComponent {
       if (this.loading) return; // Prevent multiple clicks
       this.loading = true;
       this.encryptedOtp='';
+      console.log(this.username);
+      
       if(this.username){
         this.authService.forgotPassword(this.username).subscribe({
           next: (res) => {
             if (res.status === 200) {
               this.encryptedOtp = res.data.encryptedOtp;
               this.loading = false;
+              this.startTimer();
+              this.verifyButton=true;
             }
             else{
               this.sweetalert.showToast('error',res.message);

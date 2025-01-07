@@ -89,18 +89,24 @@ export class RoleComponent {
   // -------------------------------------------------------------------------------
 
   getAllRole() {
-    this.isLoading = true; 
-    this.roleService.getRole().subscribe({
+    this.isLoading = true;
+    const body = { 
+      filters: { 
+        is_active: "1" 
+      }
+    };  
+    this.roleService.getRole(body).subscribe({
       next: (res) => {
         if (res.status == 200) {
           this.roles = res.data.Items;
-          console.log(this.roles);
+          console.log(res);
           this.filteredRoles = [...this.roles];
-          this.updatePaginatedOrders();
+          this.updatePaginatedOrders(); 
         }
         this.isLoading = false; 
       },
       error: (error) => {
+        console.log(error);
         this.sweetalert.showToast('error', 'Oops! Something went wrong');
         this.isLoading = false; 
       },

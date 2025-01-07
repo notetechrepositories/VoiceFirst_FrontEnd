@@ -41,12 +41,8 @@ export class ForgotPasswordComponent {
       next: (res) => {
         if (res.status == 200) {
           this.encryptedOtp = res.data.encryptedOtp;
-          this.router.navigate(['/authentication/otp-verification'], { 
-            queryParams: { 
-              otp: this.encryptedOtp,
-              username: this.username 
-            } 
-          });
+          this.router.navigate(['/authentication/otp-verification']);
+          this.authService.setEncryptedOtp(this.encryptedOtp,this.username,10); 
           this.loading = false;
         }
         else{

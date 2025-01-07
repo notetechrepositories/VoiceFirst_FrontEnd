@@ -11,7 +11,7 @@ import { LocalstorageService } from '../../../../Services/localStorageService/lo
 })
 export class LoginComponent {
   loginForm!:FormGroup;
-
+  error:string='';
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -19,12 +19,13 @@ export class LoginComponent {
     private localStorageService:LocalstorageService
   ) {
     this.loginForm = this.fb.group({
-      username: ['', [Validators.required, Validators.email]],
+      username: ['', [Validators.required]],
       password: ['', [Validators.required, Validators.minLength(5)]],
     });
   }
 
   ngOnInit(): void {
+    this.error='';
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']); // Redirect to dashboard if already logged in
     }
@@ -41,7 +42,9 @@ export class LoginComponent {
             this.localStorageService.setItem('role', res.data.role);
             this.router.navigate(['/dashboard']);
           }
-
+          else{
+            this.error=res.message;
+          }
         },
         error: (error) => {
           console.error(error);
