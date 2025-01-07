@@ -3,6 +3,8 @@ import { TestComponent } from './test/test.component';
 import { IndexpageComponent } from './indexpage/indexpage.component';
 import { AddpopupComponent } from './indexpage/addpopup/addpopup.component';
 import { CountryComponent } from './country/country.component';
+import { SelectionComponent } from './constant/selection/selection.component';
+import { SelectionValuesComponent } from './constant/selection-values/selection-values.component';
 import { RoleComponent } from './role/role.component';
 import { CompanyComponent } from './company/company.component';
 
@@ -27,6 +29,11 @@ export const ComponentRoutes: Routes = [
         path: 'role',
         component: RoleComponent,
       },
+      {
+        path: 'selection-values',
+        component: SelectionValuesComponent,
+      },
+      
       {
         path: '',
         children: [

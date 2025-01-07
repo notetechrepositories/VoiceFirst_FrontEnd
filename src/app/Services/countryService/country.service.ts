@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { environment } from '../../../environment/environment';
+import { LocalstorageService } from '../localStorageService/localstorage.service';
 
 
 @Injectable({
@@ -11,7 +12,12 @@ export class CountryService {
 
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private localStorageService:LocalstorageService) { }
+
+    accessToken = this.localStorageService.getItem('token'); 
+    headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.accessToken}`
+    });
 
   url=`${this.apiUrl}/Country`;
           
@@ -22,12 +28,12 @@ export class CountryService {
 
    //Insert Country
    insertCountry(data: any){
-    return this.http.post<any>(this.url, data); 
+    return this.http.post<any>(this.url, data,{headers:this.headers}); 
   }
 
   //Update Country
   updateCountry(data:any){
-    const response = this.http.put<any>(this.url, data); 
+    const response = this.http.put<any>(this.url, data,{headers:this.headers}); 
     return response;
   }
 
@@ -49,9 +55,7 @@ export class CountryService {
 
 // -------------------------------DivisionOne-------------------------------------------------------------
 
-   divOneUrl="https://localhost:7027/api/DivisionOne";
-
-
+   divOneUrl=`${this.apiUrl}/DivisionOne`;
   getDivisionOneByCountryId(countryId:string){
     const apiUrl=`${this.divOneUrl}?id_t2_1_country=${countryId}`
     return this.http.get<any>(apiUrl);
@@ -59,11 +63,11 @@ export class CountryService {
   
   ///Insert Division One-----------------
   insertDivisionOne(data:any){
-    return this.http.post<any>(this.divOneUrl, data); 
+    return this.http.post<any>(this.divOneUrl, data,{headers:this.headers}); 
   }
 // ---------Update Division One-----------------
 updateDivisionOne(data:any){
-  return this.http.put<any>(this.divOneUrl, data); 
+  return this.http.put<any>(this.divOneUrl, data,{headers:this.headers}); 
 }
 // -----------Delete Division One-------------------
 deleteDivisionOne(id:any){
@@ -80,7 +84,8 @@ uploadFileDivisionOne(file:any): Observable<any> {
 }
 
 // ----------------------DivisionTwo--------------------------------------------------------------------------------
-   divTwourl="https://localhost:7027/api/DivisionTwo";
+  
+   divTwourl=`${this.apiUrl}/DivisionTwo`;
 
    getDivisionTwoByDivisionOneId(divisionOneId:string){
     const apiUrl=`${this.divTwourl}?id_t2_1_div1=${divisionOneId}`
@@ -90,11 +95,11 @@ uploadFileDivisionOne(file:any): Observable<any> {
   }
     ///Insert Division Two-----------------
     insertDivisionTwo(data:any){
-      return this.http.post<any>(this.divTwourl, data); 
+      return this.http.post<any>(this.divTwourl, data,{headers:this.headers}); 
     }
     // ---------Update Division Two-----------------
     updateDivisionTwo(data:any){
-      return this.http.put<any>(this.divTwourl, data); 
+      return this.http.put<any>(this.divTwourl, data,{headers:this.headers}); 
     }
     // -----------Delete Division Two-------------------
     deleteDivisionTwo(id:any){
@@ -105,18 +110,18 @@ uploadFileDivisionOne(file:any): Observable<any> {
       return this.http.post(url, file);
     }
 // ------------------------------------ DivisionThree -------------------------------------------
-  divThreeurl="https://localhost:7027/api/DivisionThree";
+  divThreeurl=`${this.apiUrl}/DivisionThree`;
 
   //Insert Division Two-----------------
 
     insertDivisionThree(data:any){
-        return this.http.post<any>(this.divThreeurl, data); 
+        return this.http.post<any>(this.divThreeurl, data,{headers:this.headers}); 
     }
 
   // ---------Update Division Three-----------------
 
   updateDivisionThree(data:any){
-    return this.http.put<any>(this.divThreeurl, data); 
+    return this.http.put<any>(this.divThreeurl, data,{headers:this.headers}); 
   }
     // -----------Delete Division Two-------------------
 
