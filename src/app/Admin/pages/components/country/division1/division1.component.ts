@@ -56,11 +56,14 @@ export class Division1Component {
   }
 
   // -----------------Get Division One-------------------------------------
-  getDivisionOneByCountryId(countryId:any){ 
-    
-    this.countryService.getDivisionOneByCountryId(countryId).subscribe({
-      next: (response) => { 
-      
+  getDivisionOneByCountryId(countryId:string){ 
+    const body = { 
+      filters: { 
+        id_t2_1_country: countryId
+      }
+    };
+    this.countryService.getDivisionOneByCountryId(body).subscribe({
+      next: (response) => {    
         this.divisionOne=response.data.Items.map((item: Division) => {
           return {
             id_t2_1_div1: item.id_t2_1_div1,  

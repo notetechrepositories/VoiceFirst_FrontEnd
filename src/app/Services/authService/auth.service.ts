@@ -21,7 +21,7 @@ export class AuthService {
     ) { }
 
     login(data:any){
-      return this.http.post<any>(`${this.apiUrl}/Auth/login`,data);
+      return this.http.post<any>(`${this.apiUrl}/auth/login`,data);
     }
 
   isLoggedIn(): boolean {
@@ -53,15 +53,15 @@ export class AuthService {
   // ---------- Forgot Password--------------
 
   forgotPassword(username:string){
-    return this.http.post<any>(`${this.apiUrl}/Auth/forgot-password?userName=${username}`,{});
+    return this.http.post<any>(`${this.apiUrl}/auth/forgot-password?userName=${username}`,{});
   }
 
   verifyOtp(data:any){
-    return this.http.post<any>(`${this.apiUrl}/Auth/verification-otp`,data);
+    return this.http.post<any>(`${this.apiUrl}/auth/verification-otp`,data);
   }
 
   resetPassword(data:any){
-    return this.http.post<any>(`${this.apiUrl}/Auth/reset-password`,data);
+    return this.http.post<any>(`${this.apiUrl}/auth/reset-password`,data);
   }
 
   // --------------------------------------------------------------------------------------------

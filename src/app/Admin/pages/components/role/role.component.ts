@@ -92,7 +92,7 @@ export class RoleComponent {
     this.isLoading = true;
     const body = { 
       filters: { 
-        is_active: "1" 
+        is_delete: "0" 
       }
     };  
     this.roleService.getRole(body).subscribe({

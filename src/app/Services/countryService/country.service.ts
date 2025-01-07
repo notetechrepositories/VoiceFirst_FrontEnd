@@ -19,11 +19,11 @@ export class CountryService {
       'Authorization': `Bearer ${this.accessToken}`
     });
 
-  url=`${this.apiUrl}/Country`;
+    url=`${this.apiUrl}/country`;
           
     // Get all locations
-    getLocations(){
-      return this.http.get<any>(this.url);  
+    getLocations(filter:any){
+      return this.http.post<any>(`${this.url}/get-all`,filter);  
     }
 
    //Insert Country
@@ -55,10 +55,10 @@ export class CountryService {
 
 // -------------------------------DivisionOne-------------------------------------------------------------
 
-   divOneUrl=`${this.apiUrl}/DivisionOne`;
-  getDivisionOneByCountryId(countryId:string){
-    const apiUrl=`${this.divOneUrl}?id_t2_1_country=${countryId}`
-    return this.http.get<any>(apiUrl);
+  divOneUrl=`${this.apiUrl}/division-one`;
+
+  getDivisionOneByCountryId(filter:any){
+    return this.http.post<any>(`${this.divOneUrl}/get-all`,filter);
   }
   
   ///Insert Division One-----------------
@@ -85,14 +85,11 @@ uploadFileDivisionOne(file:any): Observable<any> {
 
 // ----------------------DivisionTwo--------------------------------------------------------------------------------
   
-   divTwourl=`${this.apiUrl}/DivisionTwo`;
+   divTwourl=`${this.apiUrl}/division-two`;
 
-   getDivisionTwoByDivisionOneId(divisionOneId:string){
-    const apiUrl=`${this.divTwourl}?id_t2_1_div1=${divisionOneId}`
-    console.log(apiUrl);
-    
-    return this.http.get<any>(apiUrl);
-  }
+   getDivisionTwoByDivisionOneId(filter:any){
+      return this.http.post<any>(`${this.divTwourl}/get-all`,filter);
+    }
     ///Insert Division Two-----------------
     insertDivisionTwo(data:any){
       return this.http.post<any>(this.divTwourl, data,{headers:this.headers}); 
@@ -110,7 +107,7 @@ uploadFileDivisionOne(file:any): Observable<any> {
       return this.http.post(url, file);
     }
 // ------------------------------------ DivisionThree -------------------------------------------
-  divThreeurl=`${this.apiUrl}/DivisionThree`;
+  divThreeurl=`${this.apiUrl}/division-three`;
 
   //Insert Division Two-----------------
 
@@ -132,10 +129,8 @@ uploadFileDivisionOne(file:any): Observable<any> {
 
    //Get Division3 By Division 2--------------------------
  
-   getDivisionThreeByDivisionTwoId(divisionTwoId:string){
-    const apiUrl=`${this.divThreeurl}?id_t2_1_div2=${divisionTwoId}`
-    console.log(apiUrl);
-    return this.http.get<any>(apiUrl);
+   getDivisionThree(filter:any){
+    return this.http.post<any>(`${this.divThreeurl}/get-all`,filter);
   }
 
   

@@ -138,8 +138,12 @@ export class Division2Component {
     });
   }
   getDivisionOneByCountryId(countryId:any){ 
-    
-    this.countryService.getDivisionOneByCountryId(countryId).subscribe({
+    const body = { 
+      filters: { 
+        id_t2_1_country: countryId
+      }
+    };
+    this.countryService.getDivisionOneByCountryId(body).subscribe({
       next: (response) => { 
         
         this.divisionOne=response.data.Items.map((item: Division) => {
@@ -159,7 +163,12 @@ export class Division2Component {
   }
 
   getDivisionTwoByDivisionOneId(divisionOneId:string){
-    this.countryService.getDivisionTwoByDivisionOneId(divisionOneId).subscribe({
+    const body = { 
+      filters: { 
+        id_t2_1_div1: divisionOneId
+      }
+    };
+    this.countryService.getDivisionTwoByDivisionOneId(body).subscribe({
       next: (res) => {
         this.divisionTwo = res.data.Items;
         console.log('Division Two:', this.divisionTwo);
