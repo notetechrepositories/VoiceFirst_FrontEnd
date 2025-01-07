@@ -1,0 +1,447 @@
+<div class="popup">
+    <div class="popup-content">
+
+
+            <!-- Changing Part -->
+             <div class="d-flex justify-content-between mb-3">
+              <h4>Add Company</h4>
+              <i class="ti ti-x" (click)="onClose()"></i>
+             </div>
+
+             <div class="container header-container">
+              <!-- <H2>Stepper</H2> -->
+              
+              <div id="stepper1" class="bs-stepper">
+                <div class="bs-stepper-header">
+                  <div class="step" data-target="#test-l-1">
+                    <button class="step-trigger">
+                      <span class="bs-stepper-circle">1</span>
+                      <span class="bs-stepper-label">Company Details</span>
+                    </button>
+                  </div>
+                  <div class="line"></div>
+                  <div class="step" data-target="#test-l-2">
+                    <button class="step-trigger">
+                      <span class="bs-stepper-circle">2</span>
+                      <span class="bs-stepper-label">Branch Details</span>
+                    </button>
+                  </div>
+                  <div class="line"></div>
+                  <div class="step" data-target="#test-l-3">
+                    <button class="step-trigger">
+                      <span class="bs-stepper-circle">3</span>
+                      <span class="bs-stepper-label">User Details</span>
+                    </button>
+                  </div>
+                </div>
+                <div class="bs-stepper-content">
+                  <form  [formGroup]="formcompanyadd" class="row g-3" (ngSubmit)="onSubmit()">
+                    <div id="test-l-1" class="content">
+                      <div class="form-group">
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-12">
+                              <label for="inputCompanyName" class="form-label">Company Name</label>
+                              <input type="text" class="form-control mb-3" id="inputCompanyName" placeholder="Enter Company Name" formControlName="companyname"/>
+                              <div *ngIf="formcompanyadd.controls['companyname'].touched" class="text-danger">
+                                <small *ngIf="formcompanyadd.controls['companyname'].errors?.['required']">Company name is required.</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-12">
+                              <label for="selectCompanyType" class="form-label">Company Type</label>
+                              <select class="form-select" id="selectCompanyType" >
+                                <option value="" disabled selected>Select Branch Type</option>
+                                <option *ngFor="let type of companyType" [value]="type">{{ type }}</option>
+                                
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="text-end">
+                        <button (click)="next()" class="primary-btn">Next</button>
+                      </div>
+                    </div>
+                    <div id="test-l-2" class="content">
+                      <div class="form-group">
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="inputBranchName" class="form-label">Branch Name</label>
+                              <input type="text" class="form-control" id="inputBranchName" placeholder="Enter Company Name" />
+                            </div>
+                            <div class="col-md-6">
+                              <label for="selectBranchType" class="form-label">Branch Type</label>
+                              <select class="form-select" id="selectBranchType">
+                                <option value="" disabled selected>Select Branch Type</option>
+                                <option value="retail">Retail</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="franchise">Franchise</option>
+                                <option value="other">Other</option>
+                              </select>
+                              <!-- <input type="text" class="form-control" id="exampleInputBranchType" placeholder="Enter Company Type" /> -->
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-12">
+                              <label for="inputBranchEmail" class="form-label">Email address</label>
+                              <input type="email" class="form-control" id="inputBranchEmail" placeholder="Enter Email" formControlName="email"/>
+                              <div *ngIf="formcompanyadd.controls['email']?.touched && formcompanyadd.controls['email'].invalid" class="text-danger">
+                                <small *ngIf="formcompanyadd.controls['email'].errors?.['required']">Email is required.</small>
+                                <small *ngIf="!formcompanyadd.controls['email'].errors?.['required'] && formcompanyadd.controls['email'].errors?.['invalidEmail']">Invalid email format.</small>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="inputBranchMobile" class="form-label">Mobile</label>
+                              <input type="text" class="form-control" id="inputBranchMobile" placeholder="Enter Mobile no." />
+                              <div *ngIf="formcompanyadd.controls['inputBranchMobile'].touched && formcompanyadd.controls['inputBranchMobile'].invalid" class="text-danger">
+                                <small *ngIf="formcompanyadd.controls['inputBranchMobile'].errors?.['required']">Branch mobile is required.</small>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputBranchPhone" class="form-label">Phone</label>
+                              <input type="text" class="form-control" id="inputBranchPhone" placeholder="Enter Phone no." />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-12">
+                              <label for="inputBranchAddress1" class="form-label">Address1</label>
+                              <input type="email" class="form-control" id="inputBranchAddress1" placeholder="Enter Address1" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-12">
+                              <label for="inputBranchAddress2" class="form-label">Address2</label>
+                              <input type="email" class="form-control" id="inputBranchAddress2" placeholder="Enter Address2" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="selectBranchCountry" class="form-label">Country</label>
+                              <select class="form-select" id="selectBranchCountry">
+                                <option value="" disabled selected>Select Branch Type</option>
+                                <option value="retail">Retail</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="franchise">Franchise</option>
+                                <option value="other">Other</option>
+                              </select>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="selectBranchDiv1" class="form-label">Division1</label>
+                              <select class="form-select" id="selectBranchDiv1">
+                                <option value="" disabled selected>Select Branch Type</option>
+                                <option value="retail">Retail</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="franchise">Franchise</option>
+                                <option value="other">Other</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="selectBranchDiv2" class="form-label">Division2</label>
+                              <select class="form-select" id="selectBranchDiv2">
+                                <option value="" disabled selected>Select Branch Type</option>
+                                <option value="retail">Retail</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="franchise">Franchise</option>
+                                <option value="other">Other</option>
+                              </select>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="selectBranchDiv3" class="form-label">Division3</label>
+                              <select class="form-select" id="selectBranchDiv3">
+                                <option value="" disabled selected>Select Branch Type</option>
+                                <option value="retail">Retail</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="franchise">Franchise</option>
+                                <option value="other">Other</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="inputBranchLocal" class="form-label">Locality</label>
+                              <input type="text" class="form-control" id="inputBranchLocal" placeholder="Enter Locality" />
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputBranchZipcode" class="form-label">Zipcode</label>
+                              <input type="text" class="form-control" id="inputBranchZipcode" placeholder="Enter Zipcode" />
+                            </div>
+                          </div>
+                        </div>
+
+                        
+
+                        
+
+
+
+                        
+                      </div>
+                      <div class="text-end">
+                        <button (click)="next()" class="primary-btn">Next</button>
+                      </div>
+                    </div>
+                    <div id="test-l-3" class="content">
+                      <div class="form-group">
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="inputUserFirstName" class="form-label">First Name</label>
+                              <input type="text" class="form-control" id="inputUserFirstName" placeholder="Enter First Name" />
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputUserLastName" class="form-label">Last Name</label>
+                              <input type="text" class="form-control" id="inputUserLastName" placeholder="Enter Last Name" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="inputUserYearofBirth" class="form-label">Year of Birth</label>
+                              <input type="text" class="form-control" id="inputUserYearofBirth" placeholder="Enter year of birth" />
+                            </div>
+                            <div class="col-md-6">
+                              <label for="selectUserGender" class="form-label">Gender</label>
+                              <select class="form-select" id="selectUserGender">
+                                <option value="" disabled selected>Select Gender</option>
+                                <option value="retail">Male</option>
+                                <option value="corporate">Female</option>
+                                <option value="franchise">Other</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="inputUserEmail" class="form-label">Email</label>
+                              <input type="email" class="form-control" id="inputUserEmail" placeholder="Enter Email" formControlName="useremail" />
+                              <div *ngIf="formcompanyadd.controls['useremail']?.touched && formcompanyadd.controls['useremail'].invalid" class="text-danger">
+                                <small *ngIf="formcompanyadd.controls['useremail'].errors?.['required']">Email is required.</small>
+                                <small *ngIf="!formcompanyadd.controls['useremail'].errors?.['required'] && formcompanyadd.controls['useremail'].errors?.['invalidEmail']">Invalid email format.</small>
+                              </div>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputUserMobile" class="form-label">Mobile no.</label>
+                              <input type="text" class="form-control" id="inputUserMobile" placeholder="Enter Mobile no." />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-12">
+                              <label for="inputUserAddress1" class="form-label">Address1</label>
+                              <input type="email" class="form-control" id="inputUserAddress1" placeholder="Enter Address1" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-12">
+                              <label for="inputUserAddress2" class="form-label">Address2</label>
+                              <input type="email" class="form-control" id="inputUserAddress2" placeholder="Enter Address2" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="selectUserCountry" class="form-label">Country</label>
+                              <select class="form-select" id="selectUserCountry">
+                                <option value="" disabled selected>Select Country</option>
+                                <option value="retail">Retail</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="franchise">Franchise</option>
+                                <option value="other">Other</option>
+                              </select>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="selectUserDiv1" class="form-label">Division1</label>
+                              <select class="form-select" id="selectUserDiv1">
+                                <option value="" disabled selected>Select Division1</option>
+                                <option value="retail">Retail</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="franchise">Franchise</option>
+                                <option value="other">Other</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="selectUserDiv2" class="form-label">Division2</label>
+                              <select class="form-select" id="selectUserDiv2">
+                                <option value="" disabled selected>Select Division2</option>
+                                <option value="retail">Retail</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="franchise">Franchise</option>
+                                <option value="other">Other</option>
+                              </select>
+                            </div>
+                            <div class="col-md-6">
+                              <label for="selectUserDiv3" class="form-label">Division3</label>
+                              <select class="form-select" id="selectUserDiv3">
+                                <option value="" disabled selected>Select Division3</option>
+                                <option value="retail">Retail</option>
+                                <option value="corporate">Corporate</option>
+                                <option value="franchise">Franchise</option>
+                                <option value="other">Other</option>
+                              </select>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="container mb-3">
+                          <div class="row align-items-center">
+                            <div class="col-md-6">
+                              <label for="inputUserLocal" class="form-label">Locality</label>
+                              <input type="text" class="form-control" id="inputUserLocal" placeholder="Enter Locality" />
+                            </div>
+                            <div class="col-md-6">
+                              <label for="inputUserZipcode" class="form-label">Zipcode</label>
+                              <input type="text" class="form-control" id="inputUserZipcode" placeholder="Enter Zipcode" />
+                            </div>
+                          </div>
+                        </div>
+
+                      </div>
+                      <div class="text-end">
+                        <button type="submit" class="primary-btn mt-5" 
+                        >Submit</button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+                                                                                        
+          
+            <!-- working <form class="row g-3">
+              <div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Email</label>
+                <input type="email" class="form-control" id="inputEmail4" formControlName="email"> -->
+
+                <!-- <div *ngIf="form.controls['email'].touched && form.controls['email'].invalid" class="text-danger">
+                  <small *ngIf="form.controls['email'].errors?.['required']">Email is required.</small>
+                  <small *ngIf="form.controls['email'].errors?.['invalidEmail']">Invalid email format.</small>
+                </div> -->
+            <!--   working                  
+              </div>
+            
+              <div class="col-md-6">
+                <label for="inputPassword4" class="form-label">Password</label>
+                <input type="password" class="form-control" id="inputPassword4" formControlName="password"> -->
+                <!-- <div *ngIf="form.controls['password'].touched && form.controls['password'].invalid" class="text-danger">
+                  <small *ngIf="form.controls['password'].errors?.['required']">Password is required.</small>
+                  <small *ngIf="form.controls['password'].errors?.['invalidPassword']">
+                    Password must contain uppercase, lowercase, number, and at least 6 characters.
+                  </small>
+                </div> -->
+
+              <!-- working </div>
+            
+              <div class="col-12">
+                <label for="inputAddress" class="form-label">Address</label>
+                <input type="text" class="form-control" id="inputAddress" formControlName="address"> -->
+                <!-- <div *ngIf="form.controls['address'].touched && form.controls['address'].invalid" class="text-danger">
+                  <small>Address is required.</small>
+                </div> -->
+              <!-- working </div>
+            
+              <div class="col-12">
+                <label for="inputAddress2" class="form-label">Address 2</label>
+                <input type="text" class="form-control" id="inputAddress2" formControlName="address2">
+              </div>
+            
+              <div class="col-md-6">
+                <label for="inputCity" class="form-label">City</label>
+                <input type="text" class="form-control" id="inputCity" formControlName="city"> -->
+
+                <!-- <div *ngIf="form.controls['city'].touched && form.controls['city'].invalid" class="text-danger">
+                  <small>City is required.</small>
+                </div> -->
+
+              <!-- working</div>
+            
+              <div class="col-md-4">
+                <label for="inputState" class="form-label">State</label>
+                <select id="inputState" class="form-select" formControlName="state">
+                  <option selected disabled>Choose...</option>
+                  <option value="state1">State 1</option>
+                  <option value="state2">State 2</option>
+                </select> -->
+
+                <!-- <div *ngIf="form.controls['state'].touched && form.controls['state'].invalid" class="text-danger">
+                  <small>State is required.</small>
+                </div> -->
+              <!-- working </div>
+            
+              <div class="col-md-2">
+                <label for="inputZip" class="form-label">Zip</label>
+                <input type="text" class="form-control" id="inputZip" formControlName="zip"> -->
+
+                <!-- <div *ngIf="form.controls['zip'].touched && form.controls['zip'].invalid" class="text-danger">
+                  <small *ngIf="form.controls['zip'].errors?.['required']">Zip is required.</small>
+                  <small *ngIf="form.controls['zip'].errors?.['pattern']">Invalid zip format.</small>
+                </div> -->
+              <!-- working</div>
+            
+              <div class="col-12">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="gridCheck" formControlName="check">
+                  <label class="form-check-label" for="gridCheck">Check me out</label> -->
+
+                  <!-- <div *ngIf="form.controls['check'].touched && form.controls['check'].invalid" class="text-danger">
+                    <small>You must agree to continue.</small>
+                  </div> -->
+                <!-- working</div>
+              </div>
+            
+              <div class="col-12 d-flex justify-content-end">
+                <button (click)="onSave()" type="submit" class="primary-btn">Add Company</button>
+              </div>
+            </form> -->
+            <!-- ------------- -->
+
+    </div>
+  </div>

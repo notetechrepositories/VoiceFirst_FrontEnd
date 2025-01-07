@@ -20,6 +20,8 @@ import { FilterPipe } from '../../../filter.pipe';
 import { SelectionComponent } from './constant/selection/selection.component';
 import { SelectionValuesComponent } from './constant/selection-values/selection-values.component';
 import { EditRoleComponent } from './role/edit-role/edit-role.component';
+import { CompanyComponent } from './company/company.component';
+import { CompanyAddComponent } from './company/company-add/company-add.component';
 
 
 
@@ -46,7 +48,9 @@ import { EditRoleComponent } from './role/edit-role/edit-role.component';
     Division3Component,
     SelectionComponent,
     SelectionValuesComponent,
-    EditRoleComponent
+    EditRoleComponent,
+    CompanyComponent,
+    CompanyAddComponent
   ],
 })
 export class ComponentModule {}

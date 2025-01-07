@@ -6,6 +6,7 @@ import { CountryComponent } from './country/country.component';
 import { SelectionComponent } from './constant/selection/selection.component';
 import { SelectionValuesComponent } from './constant/selection-values/selection-values.component';
 import { RoleComponent } from './role/role.component';
+import { CompanyComponent } from './company/company.component';
 
 
 export const ComponentRoutes: Routes = [
@@ -46,6 +47,11 @@ export const ComponentRoutes: Routes = [
           },
         ],
       },
+      {
+        path: 'company',
+        component: CompanyComponent,
+      },
+      
     ],
   },
 ];
