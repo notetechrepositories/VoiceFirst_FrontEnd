@@ -7,7 +7,6 @@ background-attachment: fixed;">
     <div class="reset-wrap">
 
         <div class="reset-html">
-          @if(otpPage){
             <div class="d-flex flex-column justify-content-center align-items-center">
               <h3 class="tab mt-1">Verify your OTP</h3>
               <p class="text-center">Enter 6-digit OTP sent to email or phone</p>
@@ -58,9 +57,10 @@ background-attachment: fixed;">
                   (keydown)="moveToNext($event, '', 'digit5')"
                 >
               </div>
-              <div class="mt-4 text-center">
-                  <p>Time remaining: <strong>{{ timeLeft }}</strong> seconds</p>
+              <div class="mt-4 text-center" *ngIf="timeLeft">
+                  <p>Enter OTP in <strong>{{ timeLeft }}</strong> seconds</p>
               </div>
+
 
               <div class="group mt-4">
                 @if(verifyButton){
@@ -81,14 +81,12 @@ background-attachment: fixed;">
                   
                 </div>
             </form>
-          }
-          @else {
-            <div class="d-flex flex-column justify-content-center align-items-center">
-              <h3 class="tab mt-1">OTP Page Unavailable</h3>
-              <a class="text-center" routerLink="/authentication/login">Back to login</a>
-          </div>
-          }
-
+            <div class="d-flex justify-content-center mb-2">
+              <a type="button" class="primary-btn" style="color: aliceblue;" routerLink="/authentication/login">Back to Login</a>
+            </div>  
+            <div class="alert alert-warning" style="margin-bottom: 15px;">
+              ⚠️ Please do not refresh this page. Refreshing will reset your session.
+            </div>
 
                 
                            

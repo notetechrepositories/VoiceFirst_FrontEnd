@@ -63,6 +63,28 @@ export class AuthService {
   resetPassword(data:any){
     return this.http.post<any>(`${this.apiUrl}/Auth/reset-password`,data);
   }
+
+  // --------------------------------------------------------------------------------------------
+
+  encryptedOtp: string = '';
+  userId: string = '';
+  username: string = '';
+  timerExpiration: number = 0;  // Stores timer expiration to handle refresh
+
+  setEncryptedOtp(otp: string, username:string ,duration: number) {
+    this.encryptedOtp = otp;
+    this.username=username;
+    this.timerExpiration = Date.now() + duration * 1000;  // 60 seconds in milliseconds
+  }
+
+  getRemainingTime(): number {
+    const remainingTime = this.timerExpiration - Date.now();
+    return remainingTime > 0 ? remainingTime / 1000 : 0;
+  }
+
+  setUserId(userId: string) {
+    this.userId = userId;
+  }
  
   
 }
