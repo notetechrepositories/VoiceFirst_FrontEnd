@@ -22,7 +22,7 @@ export class CountryService {
     url=`${this.apiUrl}/country`;
           
     // Get all locations
-    getLocations(filter:any){
+    getCountry(filter:any){
       return this.http.post<any>(`${this.url}/get-all`,filter);  
     }
 
