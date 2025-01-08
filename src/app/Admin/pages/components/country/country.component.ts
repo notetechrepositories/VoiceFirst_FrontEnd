@@ -135,7 +135,7 @@ getLocations(): void {
     }
   };
 
-  this.countryService.getLocations(body).subscribe({
+  this.countryService.getCountry(body).subscribe({
     next: (res) => {
       this.locations = res.data.Items || [];
       this.updatePaginatedOrders(); 
@@ -156,7 +156,7 @@ getCountryById(id_t2_1_country:number){
       id_t2_1_country: id_t2_1_country
     }
   };
-  this.countryService.getLocations(body).subscribe({
+  this.countryService.getCountry(body).subscribe({
     next:(response)=>{
       console.log(response);
       
