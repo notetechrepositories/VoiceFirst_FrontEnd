@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from '../../../../../Services/validationService/validation.service';
 import { HttpClient } from '@angular/common/http';
 import { CompanyService } from '../../../../../Services/companyService/company.service';
+import { SweetalertService } from '../../../../../Services/sweetAlertService/sweetalert.service';
 
 
 
@@ -23,7 +24,9 @@ export class CompanyAddComponent implements OnInit{
     private router:Router, 
     private fb: FormBuilder, 
     private http: HttpClient,
-    private companyService:CompanyService)
+    private companyService:CompanyService,
+    private sweetalert:SweetalertService
+    )
   {
     this.formcompanyadd = this.fb.group({
       companyname: ['', [Validators.required]],
@@ -70,27 +73,36 @@ export class CompanyAddComponent implements OnInit{
   }
 
   getCompanyType(){
-    this.companyService.getCompanyType().subscribe({
+    const filterCompanyType = { 
+      filters: { 
+        id_t4_selection: "43E256AF-AC0F-4A89-AE2C-B0EAB8860C61"
+      }
+    }; 
+
+    this.companyService.getSelectionType(filterCompanyType).subscribe({
       next:res=>{
         if(res.status==200){
-          this.companyType=res.data.Items;
-          console.log(this.companyType); 
+          this.companyType=res.data.Items; 
         }
         else{
-          console.log(res);
-          
+          console.log(res);  
         }
         
       },
       error:error=>{
         console.log(error);
-        
+        this.sweetalert.showToast('error','Oops!Something went wrong')
       }
     })
   }
 
   getBranchType(){
-    this.companyService.getBranchType().subscribe({
+    const filterBranchType = { 
+      filters: { 
+        id_t4_selection: "dbb3999e-36ba-4d63-827f-61e19cd698f9" ,
+      }
+    }; 
+    this.companyService.getSelectionType(filterBranchType).subscribe({
       next:res=>{
         if(res.status==200){
           this.branchType=res.data.Items;
@@ -98,13 +110,12 @@ export class CompanyAddComponent implements OnInit{
         }
         else{
           console.log(res);
-          
         }
         
       },
       error:error=>{
         console.log(error);
-        
+        this.sweetalert.showToast('error','Oops!Something went wrong')
       } 
       
     })

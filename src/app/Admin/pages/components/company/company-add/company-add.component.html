@@ -40,7 +40,7 @@
                       <div class="form-group">
                         <div class="container mb-3">
                           <div class="row align-items-center">
-                            <div class="col-md-12 mb-2">
+                            <div class="col-md-12">
                               <label for="inputCompanyName" class="form-label">Company Name</label>
                               <input type="text" class="form-control" id="inputCompanyName" placeholder="Enter Company Name" formControlName="companyname"/>
                               <div *ngIf="formcompanyadd.controls['companyname'].touched" class="text-danger">
@@ -55,7 +55,7 @@
                             <div class="col-md-12">
                               <label for="selectCompanyType" class="form-label">Company Type</label>
                               <select class="form-select" id="selectCompanyType" formControlName="companytype">
-                                <option value="" disabled selected>Select Branch Type</option>
+                                <option value="" disabled selected>Select company type</option>
                                 <option *ngFor="let type of companyType" value={{type.id_t4_1_selection_values}}>{{ type.t4_1_selection_values_name }}</option>
                               </select>
                               <div *ngIf="formcompanyadd.controls['companytype'].touched" class="text-danger">
@@ -137,7 +137,7 @@
                               <label for="inputBranchAddress1" class="form-label">Address1</label>
                               <input type="email" class="form-control" id="inputBranchAddress1" placeholder="Enter Address1" formControlName="branchaddress"/>
                               <div *ngIf="formcompanyadd.controls['branchaddress']?.touched && formcompanyadd.controls['branchaddress'].invalid" class="text-danger">
-                                <small *ngIf="formcompanyadd.controls['branchaddress'].errors?.['required']">Email is required.</small>
+                                <small *ngIf="formcompanyadd.controls['branchaddress'].errors?.['required']">Address is required.</small>
                                 
                               </div>
                             </div>
