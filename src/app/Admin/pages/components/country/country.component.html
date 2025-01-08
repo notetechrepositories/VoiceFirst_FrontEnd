@@ -126,11 +126,11 @@
 
     <!-- Pagination -->
     <div class="pagination">
-      
       <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
       <span>Page {{ currentPage }} of {{ totalPages }}</span>
       <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
     </div>
+    
   </div>
 </div>
 

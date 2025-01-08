@@ -1,0 +1,39 @@
+<div class="d-flex justify-content-center align-items-center auth-container" 
+style="background: url(assets/images/loginbg.jpg);height: 100vh;
+background-size: cover;
+background-attachment: fixed;">
+    <div class="reset-wrap">
+        <div class="reset-html">
+                <div class="d-flex flex-column justify-content-center align-items-center">
+                    <h3 class="tab mt-1">Reset Password</h3>
+                </div>
+                <form class="reset-form mt-3" [formGroup]="form">
+                    <div class="group">
+                      <label for="pass" class="label">New Password</label>
+                      <input
+                        type="password"
+                        class="input"
+                        data-type="password"
+                        formControlName="password1"
+                      />
+                    </div>
+                    <div class="group mb-4">
+                      <label for="pass" class="label">Confirm Password</label>
+                      <input
+                        type="password"
+                        class="input"
+                        data-type="password"
+                        formControlName="password2"
+                      />
+                    </div>
+                    <div class="group">
+                      <input type="submit" class="button" value="Submit" (click)="onSubmit()" />
+                    </div>
+                  </form>
+
+                  <div class="d-flex justify-content-center mb-2">
+                    <a type="button" class="primary-btn" style="color: aliceblue;" routerLink="/authentication/login">Back to Login</a>
+                  </div>  
+        </div>
+    </div>
+</div>

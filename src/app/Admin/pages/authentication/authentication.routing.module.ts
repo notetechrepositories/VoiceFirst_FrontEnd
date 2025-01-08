@@ -4,6 +4,7 @@ import { RegisterComponent } from './register/register.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { OtpVerificationComponent } from './otp-verification/otp-verification.component';
+import { AuthtestComponent } from './test/authtest/authtest.component';
 
 
 
@@ -30,6 +31,10 @@ export const AuthenticationRoutes: Routes = [
       {
         path: 'reset-password',
         component: ResetPasswordComponent,
+      },
+      {
+        path: 'auth-test',
+        component: AuthtestComponent,
       },
     ],
   },
