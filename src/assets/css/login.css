@@ -101,7 +101,7 @@
 	border-radius:2px;
 	position:relative;
 	display:inline-block;
-	background:rgb(241 241 241);
+	background:rgb(168, 168, 168);
 }
 .login-form .group label .icon:before,
 .login-form .group label .icon:after{

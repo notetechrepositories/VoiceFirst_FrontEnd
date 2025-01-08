@@ -1,7 +1,12 @@
-<div class="card">
+
 
 
     <h3 class="mb-4">Selection Values</h3>
+
+    <div class="filter-buttons d-flex justify-content-end">
+      <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="togglePopup()" ><i class='bx bx-plus'></i></button>
+    </div>
+
     <div class="filter-section">
       <div class="row">
         <div class="col-md-6">
@@ -24,15 +29,11 @@
           </div>
         </div>
   
-        <div class="filter-buttons col-md-6 d-flex justify-content-end">
-          <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="togglePopup()" ><i class='bx bx-plus'></i></button>
-        </div>
-  
       </div>
     </div>
   
-    <div class="table-responsive">
-      <table class="table table-bordered table-hover">
+    <div class="table-responsive" style="padding: 1px;">
+      <table class="table">
         <thead class="thead-light">
           <tr>
             <th>#</th>
@@ -41,14 +42,31 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let selection of selectionValues; let i = index">
-            <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
-            <td >{{selection.t4_1_selection_values_name}}</td>
-            <td class="actions">
-              <i class='bx bxs-edit' style="width: 34px;" (click)="editSelection(selection)"></i>
-              <i class='bx bxs-archive' (click)="archiveSelection(selection.id_t4_1_selection_values)"></i>
+
+          <tr *ngIf="isLoading">
+            <td colspan="3" class="position-relative p-0" style="height: 150px;">
+              <div class="d-flex flex-column justify-content-center align-items-center position-absolute top-50 start-50 translate-middle w-100">
+                <div class="loader mb-2"></div>
+                <span>Loading...</span>
+              </div>
             </td>
           </tr>
+
+          <ng-container *ngIf="!isLoading">
+            <tr *ngFor="let selection of selectionValues; let i = index">
+              <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
+              <td >{{selection.t4_1_selection_values_name}}</td>
+              <td class="actions text-end">
+                <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="editSelection(selection)"></i></button>
+                <button class="action-btn danger"><i class='bx bx-trash p-1' (click)="archiveSelection(selection.id_t4_1_selection_values)"></i></button>
+              </td>
+            </tr>
+          </ng-container>
+
+          <tr *ngIf="!isLoading && paginatedOrders.length === 0">
+            <td colspan="3" class="text-center">No data available.</td>
+          </tr>
+
         </tbody>
       </table>
     
@@ -59,7 +77,7 @@
         <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
       </div>
     </div>
-  </div>
+
   <!---------------------------  Popup--------------------------------------->
   <div class="popup" *ngIf="isPopupVisible">
     <div class="popup-content">

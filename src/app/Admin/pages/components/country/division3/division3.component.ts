@@ -53,7 +53,7 @@ export class Division3Component {
         if(response.message=="Success"){
           this.sweetalert.showToast('success','Successfully created.');
           this.divisionTwo.push(data);
-          this.getDivisionThreeByDivisionTwoIdget(data.id_t2_1_div2);
+          this.getDivisionThreeByDivisionTwoId(data.id_t2_1_div2);
           this.divisionThreeForm.patchValue({
             t2_1_div3_name:''
           });
@@ -71,8 +71,12 @@ export class Division3Component {
   }
   // -----------------Get Division One-------------------------------------
     getDivisionOneByCountryId(countryId:any){ 
-      
-      this.countryService.getDivisionOneByCountryId(countryId).subscribe({
+      const body = { 
+        filters: { 
+          id_t2_1_country: countryId
+        }
+      };
+      this.countryService.getDivisionOneByCountryId(body).subscribe({
         next: (response) => { 
           
           this.divisionOne=response.data.Items.map((item: Division) => {
@@ -165,7 +169,7 @@ export class Division3Component {
   onChangeDivisionthree(event:Event): void {
       const selectElement = event.target as HTMLSelectElement; 
       const divisiontwoId = selectElement.value; 
-      this.getDivisionThreeByDivisionTwoIdget(divisiontwoId);
+      this.getDivisionThreeByDivisionTwoId(divisiontwoId);
     }
     getDivisionTwoData():void{
       if (this.locationData) {
@@ -180,10 +184,12 @@ export class Division3Component {
     onChangeDivisiontwo(event: Event): void {
       const selectElement = event.target as HTMLSelectElement; 
       const divisionOneId = selectElement.value; 
-    
-      console.log('Selected Division One ID:', divisionOneId);
-    
-      this.countryService.getDivisionTwoByDivisionOneId(divisionOneId).subscribe({
+      const body = { 
+        filters: { 
+          id_t2_1_div1: divisionOneId
+        }
+      };
+      this.countryService.getDivisionTwoByDivisionOneId(body).subscribe({
         next: (res) => {
           console.log('Response from Division Two API:', res);
           this.divisionTwo = res.data.Items;  
@@ -195,15 +201,21 @@ export class Division3Component {
       });
     }
 
-    getDivisionThreeByDivisionTwoIdget(divisiontwoId:any){
-      this.countryService.getDivisionThreeByDivisionTwoId(divisiontwoId).subscribe({
+    getDivisionThreeByDivisionTwoId(divisiontwoId:string){
+      console.log(divisiontwoId);
+      
+      const body = { 
+        filters: { 
+          id_t2_1_div2: divisiontwoId
+        }
+      };
+      this.countryService.getDivisionThree(body).subscribe({
         next: (res) => {
-          console.log('Response from Division Two API:', res);
           this.divisionThree = res.data.Items; 
-          console.log('Division Two:', this.divisionThree);
         },
         error: (error) => {
           console.error('Failed to load Division Two:', error);
+          this.sweetalert.showToast('error',"Something went wrong")
         },
       });
     }
