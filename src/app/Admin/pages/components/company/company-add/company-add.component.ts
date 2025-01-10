@@ -5,6 +5,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from '../../../../../Services/validationService/validation.service';
 import { HttpClient } from '@angular/common/http';
 import { CompanyService } from '../../../../../Services/companyService/company.service';
+import { CountryService } from '../../../../../Services/countryService/country.service';
 import { SweetalertService } from '../../../../../Services/sweetAlertService/sweetalert.service';
 
 
@@ -25,6 +26,7 @@ export class CompanyAddComponent implements OnInit{
     private fb: FormBuilder, 
     private http: HttpClient,
     private companyService:CompanyService,
+    private countryService: CountryService,
     private sweetalert:SweetalertService
     )
   {
@@ -37,21 +39,33 @@ export class CompanyAddComponent implements OnInit{
       branchmobile: ['', [Validators.required, ValidationService.phone]],
       branchphone: ['',[ValidationService.phone]],
       branchaddress: ['',[Validators.required]], 
+      branchAddress2:['',[Validators.required]],
+      branchCountry:['',[Validators.required]],
+      branchDiv1:['',[Validators.required]],
+      branchlocality: ['',[Validators.required]],
       useremail: ['', [Validators.required, ValidationService.email]],
-
-      
     });
   }
 
   formcompanyadd!: FormGroup;
   companyType: any[]=[];
   branchType: any[]=[];
+  countries: any[]=[];
+  div1: any[]=[];
+  div2: any[]=[];
+  div3: any[]=[];
+  userDiv1: any[]=[];
+  userDiv2: any[]=[];
+  userDiv3: any[]=[];
   selectedType!: string;
+  showDiv1:boolean=false;
+  div1Called!: string;
 
   ngOnInit(): void {
    this.stepperFn();
    this.getCompanyType();
    this.getBranchType();
+   this.getCountries();
   }
 
   private stepper!: Stepper;
@@ -120,10 +134,190 @@ export class CompanyAddComponent implements OnInit{
       
     })
   }
+  getCountries(){
+    const filterCountries = { 
+      filters: { 
+        
+      }
+    };
+    this.countryService.getCountry(filterCountries).subscribe({
+      next: res=>{
+        if(res.status==200){
+          this.countries=res.data.Items;
+          console.log("getCountries result",this.countries);
+          
+           
+
+        }
+        else{
+          console.log(res);
+        }
+      },
+      error:error=>{
+        console.log(error);
+        this.sweetalert.showToast('error','Oops!Something went wrong')
+      }
+    })
+  }
+  onChangeCountries(event: Event){
+    
+    const eventValue=event.target as HTMLSelectElement;
+    const id=eventValue.value;
+    const filterDiv1 = { 
+      filters: { 
+        id_t2_1_country:id
+      }
+    };
+    
+    this.countryService.getDivisionOneByCountryId(filterDiv1).subscribe({
+      next: res=>{
+        if(res.status==200){
+          
+          
+          this.div1=res.data.Items
+          console.log("onChangeCountries result",this.div1);
+          
+           
+          
+        }
+        else{
+          console.log(res);
+        }
+      },
+      error:error=>{
+        console.log(error);
+        this.sweetalert.showToast('error','Oops!Something went wrong')
+      }
+    })
+  }
+  onChangeDivision1(event: Event){
+    const eventValue=event.target as HTMLSelectElement;
+    const id=eventValue.value;
+    const filterDiv2 = { 
+      filters: { 
+        id_t2_1_div1:id
+      }
+    };
+    this.countryService.getDivisionTwoByDivisionOneId(filterDiv2).subscribe({
+      next: res=>{
+        if(res.status==200){
+          this.div2=res.data.Items
+          console.log(this.div2); 
+        }
+        else{
+          console.log(res);
+        }
+      },
+      error:error=>{
+        console.log(error);
+        this.sweetalert.showToast('error','Oops!Something went wrong')
+      }
+    })
+  }
+   
+  onChangeDivision2(event: Event){
+
+    const eventValue=event.target as HTMLSelectElement;
+    const id=eventValue.value;
+    const filterDiv3 = { 
+      filters: { 
+        id_t2_1_div2:id
+      }
+    };
+    this.countryService.getDivisionThree(filterDiv3).subscribe({
+      next: res=>{
+        if(res.status==200){
+          this.div3=res.data.Items
+          console.log(this.div3); 
+        }
+        else{
+          console.log(res);
+        }
+      },
+      error:error=>{
+        console.log(error);
+        this.sweetalert.showToast('error','Oops!Something went wrong')
+      }
+    })
+  }
+  onChangeUserCountry(event: Event){
+    const eventValue=event.target as HTMLSelectElement;
+    const id=eventValue.value;
+    const filterDiv1 = { 
+      filters: { 
+        id_t2_1_country:id
+      }
+    };
+    this.countryService.getDivisionOneByCountryId(filterDiv1).subscribe({
+      next: res=>{
+        if(res.status==200){
+          this.userDiv1=res.data.Items
+          console.log(this.userDiv1); 
+        }
+        else{
+          console.log(res);
+        }
+      },
+      error:error=>{
+        console.log(error);
+        this.sweetalert.showToast('error','Oops!Something went wrong')
+      }
+    })
+  }
+  onChangeUserDivision1(event: Event){
+    const eventValue=event.target as HTMLSelectElement;
+    const id=eventValue.value;
+    const filterDiv2 = { 
+      filters: { 
+        id_t2_1_div1:id
+      }
+    };
+    this.countryService.getDivisionTwoByDivisionOneId(filterDiv2).subscribe({
+      next: res=>{
+        if(res.status==200){
+          this.userDiv2=res.data.Items
+          console.log(this.userDiv2); 
+        }
+        else{
+          console.log(res);
+        }
+      },
+      error:error=>{
+        console.log(error);
+        this.sweetalert.showToast('error','Oops!Something went wrong')
+      }
+    })
+  }
+  onChangeUserDivision2(event: Event){
+    const eventValue=event.target as HTMLSelectElement;
+    const id=eventValue.value;
+    const filterDiv3 = { 
+      filters: { 
+        id_t2_1_div2:id
+      }
+    };
+    this.countryService.getDivisionThree(filterDiv3).subscribe({
+      next: res=>{
+        if(res.status==200){
+          this.userDiv3=res.data.Items
+          console.log(this.userDiv3); 
+        }
+        else{
+          console.log(res);
+        }
+      },
+      error:error=>{
+        console.log(error);
+        this.sweetalert.showToast('error','Oops!Something went wrong')
+      }
+    })
+  }
+
 
   
   onSubmit(): void {
     if (this.formcompanyadd.valid) {
+
       console.log('Form Submitted:', this.formcompanyadd.value);
     } else {
       console.log('Form is invalid. Please check the errors.');

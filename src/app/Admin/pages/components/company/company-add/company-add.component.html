@@ -148,7 +148,7 @@
                           <div class="row align-items-center">
                             <div class="col-md-12">
                               <label for="inputBranchAddress2" class="form-label">Address2</label>
-                              <input type="email" class="form-control" id="inputBranchAddress2" placeholder="Enter Address2" />
+                              <input type="email" class="form-control" id="inputBranchAddress2" placeholder="Enter Address2" formControlName="branchAddress2" />
                             </div>
                           </div>
                         </div>
@@ -157,22 +157,17 @@
                           <div class="row align-items-center">
                             <div class="col-md-6">
                               <label for="selectBranchCountry" class="form-label">Country</label>
-                              <select class="form-select" id="selectBranchCountry">
-                                <option value="" disabled selected>Select Branch Type</option>
-                                <option value="retail">Retail</option>
-                                <option value="corporate">Corporate</option>
-                                <option value="franchise">Franchise</option>
-                                <option value="other">Other</option>
+                              <select class="form-select" id="selectBranchCountry" (change)="onChangeCountries($event)" formControlName="branchCountry">
+                                <option value="" disabled selected>Select country</option>
+                                <option *ngFor="let country of countries" value={{country.id_t2_1_country}} >{{ country.t2_1_country_name }}</option>
+                               
                               </select>
                             </div>
                             <div class="col-md-6">
                               <label for="selectBranchDiv1" class="form-label">Division1</label>
-                              <select class="form-select" id="selectBranchDiv1">
+                              <select class="form-select" id="selectBranchDiv1" (change)="onChangeDivision1($event)" formControlName="branchDiv1">
                                 <option value="" disabled selected>Select Branch Type</option>
-                                <option value="retail">Retail</option>
-                                <option value="corporate">Corporate</option>
-                                <option value="franchise">Franchise</option>
-                                <option value="other">Other</option>
+                                <option *ngFor="let division1 of div1" value={{division1.id_t2_1_div1}} >{{ division1.t2_1_div1_name }}</option>
                               </select>
                             </div>
                           </div>
@@ -182,22 +177,16 @@
                           <div class="row align-items-center">
                             <div class="col-md-6">
                               <label for="selectBranchDiv2" class="form-label">Division2</label>
-                              <select class="form-select" id="selectBranchDiv2">
+                              <select class="form-select" id="selectBranchDiv2" (change)="onChangeDivision2($event)">
                                 <option value="" disabled selected>Select Branch Type</option>
-                                <option value="retail">Retail</option>
-                                <option value="corporate">Corporate</option>
-                                <option value="franchise">Franchise</option>
-                                <option value="other">Other</option>
+                                <option *ngFor="let division2 of div2" value={{division2.id_t2_1_div2}} >{{ division2.t2_1_div2_name }}</option>
                               </select>
                             </div>
                             <div class="col-md-6">
                               <label for="selectBranchDiv3" class="form-label">Division3</label>
                               <select class="form-select" id="selectBranchDiv3">
                                 <option value="" disabled selected>Select Branch Type</option>
-                                <option value="retail">Retail</option>
-                                <option value="corporate">Corporate</option>
-                                <option value="franchise">Franchise</option>
-                                <option value="other">Other</option>
+                                <option *ngFor="let division3 of div3" value={{division3.id_t2_1_div3}} >{{ division3.t2_1_div3_name }}</option>
                               </select>
                             </div>
                           </div>
@@ -207,7 +196,10 @@
                           <div class="row align-items-center">
                             <div class="col-md-6">
                               <label for="inputBranchLocal" class="form-label">Locality</label>
-                              <input type="text" class="form-control" id="inputBranchLocal" placeholder="Enter Locality" />
+                              <input type="text" class="form-control" id="inputBranchLocal" placeholder="Enter Locality" formControlName="branchlocality"/>
+                              <div *ngIf="formcompanyadd.controls['branchlocality'].touched" class="text-danger">
+                                <small *ngIf="formcompanyadd.controls['branchlocality'].errors?.['required']">Branch locality is required.</small>
+                              </div>
                             </div>
                             <div class="col-md-6">
                               <label for="inputBranchZipcode" class="form-label">Zipcode</label>
@@ -300,22 +292,16 @@
                           <div class="row align-items-center">
                             <div class="col-md-6">
                               <label for="selectUserCountry" class="form-label">Country</label>
-                              <select class="form-select" id="selectUserCountry">
+                              <select class="form-select" id="selectUserCountry" (change)="onChangeUserCountry($event)">
                                 <option value="" disabled selected>Select Country</option>
-                                <option value="retail">Retail</option>
-                                <option value="corporate">Corporate</option>
-                                <option value="franchise">Franchise</option>
-                                <option value="other">Other</option>
+                                <option *ngFor="let country of countries" value={{country.id_t2_1_country}} >{{ country.t2_1_country_name }}</option>
                               </select>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" >
                               <label for="selectUserDiv1" class="form-label">Division1</label>
-                              <select class="form-select" id="selectUserDiv1">
+                              <select class="form-select" id="selectUserDiv1" (change)="onChangeUserDivision1($event)" >
                                 <option value="" disabled selected>Select Division1</option>
-                                <option value="retail">Retail</option>
-                                <option value="corporate">Corporate</option>
-                                <option value="franchise">Franchise</option>
-                                <option value="other">Other</option>
+                                <option *ngFor="let userDivision1 of userDiv1" value={{userDivision1.id_t2_1_div1}} >{{ userDivision1.t2_1_div1_name }}</option>
                               </select>
                             </div>
                           </div>
@@ -325,22 +311,16 @@
                           <div class="row align-items-center">
                             <div class="col-md-6">
                               <label for="selectUserDiv2" class="form-label">Division2</label>
-                              <select class="form-select" id="selectUserDiv2">
+                              <select class="form-select" id="selectUserDiv2" (change)="onChangeUserDivision2($event)">
                                 <option value="" disabled selected>Select Division2</option>
-                                <option value="retail">Retail</option>
-                                <option value="corporate">Corporate</option>
-                                <option value="franchise">Franchise</option>
-                                <option value="other">Other</option>
+                                <option *ngFor="let userDivision2 of userDiv2" value={{userDivision2.id_t2_1_div2}} >{{ userDivision2.t2_1_div2_name }}</option>
                               </select>
                             </div>
                             <div class="col-md-6">
                               <label for="selectUserDiv3" class="form-label">Division3</label>
                               <select class="form-select" id="selectUserDiv3">
                                 <option value="" disabled selected>Select Division3</option>
-                                <option value="retail">Retail</option>
-                                <option value="corporate">Corporate</option>
-                                <option value="franchise">Franchise</option>
-                                <option value="other">Other</option>
+                                <option *ngFor="let userDivision3 of userDiv3" value={{userDivision3.id_t2_1_div3}} >{{ userDivision3.t2_1_div3_name }}</option>
                               </select>
                             </div>
                           </div>

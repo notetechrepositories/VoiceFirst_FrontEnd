@@ -40,14 +40,15 @@
       </div>
     </div>
   
-    <div class="table-responsive">
-      <table class="table table-bordered p-1">
+    <div class="table-responsive" style="padding: 1px;">
+      <table class="table">
         <thead class="thead-light">
           <tr>
             <th>#</th>
             <th>Company Name</th>
             <th>Company Type</th>
             <th>Status</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -60,6 +61,11 @@
               <span class="badge" [ngClass]="getStatusClass(company.status)">
                 {{ company.status }}
               </span>
+            </td>
+            <td class="actions text-end">
+              <button class="action-btn danger"><i class="ti ti-eye"></i></button>
+              <button class="action-btn info"><i class='bx bxs-edit p-1'></i></button>
+              <button class="action-btn danger" (click)="deleteFn()"><i class='bx bx-trash p-1'></i></button>
             </td>
           </tr>
         </tbody>
