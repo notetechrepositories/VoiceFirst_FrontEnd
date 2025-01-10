@@ -35,8 +35,9 @@
                   </div>
                 </div>
                 <div class="bs-stepper-content">
-                  <form  [formGroup]="formcompanyadd" class="row g-3" (ngSubmit)="onSubmit()">
                     <div id="test-l-1" class="content">
+                      <form  [formGroup]="formcompanyadd" class="row g-3" (ngSubmit)="onSubmit()">
+
                       <div class="form-group">
                         <div class="container mb-3">
                           <div class="row align-items-center">
@@ -70,10 +71,11 @@
 
                         <button type="button" (click)="next()" class="primary-btn">Next</button>
                       </div>
+                    </form>
                     </div>
                     <div id="test-l-2" class="content">
+                      <form  [formGroup]="formbranchadd" class="row g-3" (ngSubmit)="onSubmit()">
                       <div class="form-group">
-
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-6">
@@ -219,8 +221,11 @@
                       <div class="text-end">
                         <button type="button" (click)="next()" class="primary-btn">Next</button>
                       </div>
+                      </form>
                     </div>
                     <div id="test-l-3" class="content">
+                      <form  [formGroup]="formuseradd" class="row g-3" (ngSubmit)="onSubmit()">
+
                       <div class="form-group">
                         <div class="container mb-3">
                           <div class="row align-items-center">
@@ -344,8 +349,8 @@
                         <button type="submit" class="primary-btn mt-5" 
                         >Submit</button>
                       </div>
+                      </form>
                     </div>
-                  </form>
                 </div>
               </div>
             </div>

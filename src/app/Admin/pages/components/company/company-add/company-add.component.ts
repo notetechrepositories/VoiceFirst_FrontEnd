@@ -45,9 +45,28 @@ export class CompanyAddComponent implements OnInit{
       branchlocality: ['',[Validators.required]],
       useremail: ['', [Validators.required, ValidationService.email]],
     });
+    this.formbranchadd = this.fb.group({
+      branchname: ['',[Validators.required]],
+      branchtype: ['',[Validators.required]],
+      branchemail: ['', [Validators.required, ValidationService.email]],
+      branchmobile: ['', [Validators.required, ValidationService.phone]],
+      branchphone: ['',[ValidationService.phone]],
+      branchaddress: ['',[Validators.required]], 
+      branchAddress2:['',[Validators.required]],
+      branchCountry:['',[Validators.required]],
+      branchDiv1:['',[Validators.required]],
+      branchlocality: ['',[Validators.required]],
+      useremail: ['', [Validators.required, ValidationService.email]],
+    });
+    this.formuseradd = this.fb.group({
+      useremail: ['', [Validators.required, ValidationService.email]],
+    });
   }
 
   formcompanyadd!: FormGroup;
+  formbranchadd!: FormGroup;
+  formuseradd!: FormGroup;
+
   companyType: any[]=[];
   branchType: any[]=[];
   countries: any[]=[];
