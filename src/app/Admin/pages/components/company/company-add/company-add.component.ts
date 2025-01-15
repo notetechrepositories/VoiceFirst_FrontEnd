@@ -30,37 +30,7 @@ export class CompanyAddComponent implements OnInit{
     private sweetalert:SweetalertService
     )
   {
-    this.formcompanyadd = this.fb.group({
-      companyname: ['', [Validators.required]],
-      companytype: ['', [Validators.required]],
-      branchname: ['',[Validators.required]],
-      branchtype: ['',[Validators.required]],
-      branchemail: ['', [Validators.required, ValidationService.email]],
-      branchmobile: ['', [Validators.required, ValidationService.phone]],
-      branchphone: ['',[ValidationService.phone]],
-      branchaddress: ['',[Validators.required]], 
-      branchAddress2:['',[Validators.required]],
-      branchCountry:['',[Validators.required]],
-      branchDiv1:['',[Validators.required]],
-      branchlocality: ['',[Validators.required]],
-      useremail: ['', [Validators.required, ValidationService.email]],
-    });
-    this.formbranchadd = this.fb.group({
-      branchname: ['',[Validators.required]],
-      branchtype: ['',[Validators.required]],
-      branchemail: ['', [Validators.required, ValidationService.email]],
-      branchmobile: ['', [Validators.required, ValidationService.phone]],
-      branchphone: ['',[ValidationService.phone]],
-      branchaddress: ['',[Validators.required]], 
-      branchAddress2:['',[Validators.required]],
-      branchCountry:['',[Validators.required]],
-      branchDiv1:['',[Validators.required]],
-      branchlocality: ['',[Validators.required]],
-      useremail: ['', [Validators.required, ValidationService.email]],
-    });
-    this.formuseradd = this.fb.group({
-      useremail: ['', [Validators.required, ValidationService.email]],
-    });
+    
   }
 
   formcompanyadd!: FormGroup;
@@ -81,11 +51,52 @@ export class CompanyAddComponent implements OnInit{
   div1Called!: string;
 
   ngOnInit(): void {
+    this.formcompanyadd = this.fb.group({
+      companyname: ['', [Validators.required]],
+      companytype: ['', [Validators.required]],
+    
+    });
+    this.formbranchadd = this.fb.group({
+      branchname: ['',[Validators.required]],
+      branchtype: ['',[Validators.required]],
+      branchemail: ['', [Validators.required, ValidationService.email]],
+      branchmobile: ['', [Validators.required, ValidationService.phone]],
+      branchphone: ['',[ValidationService.phone]],
+      branchaddress: ['',[Validators.required]], 
+      branchAddress2:['',[Validators.required]],
+      branchCountry:['',[Validators.required]],
+      branchDiv1:['',[Validators.required]],
+      branchDiv2:[''],
+      branchDiv3:[''],
+      branchlocality: ['',[Validators.required]],
+      branchzipcode:[''],
+      
+    });
+    this.formuseradd = this.fb.group({
+      userfirstname:[''],
+      userlastname:[''],
+      useryearofbirth:[''],
+      usergender:[''],
+      useremail: ['', [Validators.required, ValidationService.email]],
+      usermobile:[''],
+      useraddress1:[''],
+      useraddress2:[''],
+      usercountry:[''],
+      userdiv1:[''],
+      userdiv2:[''],
+      userdiv3:[''],
+      userlocality:[''],
+      userzipcode:[''],
+      
+    });
    this.stepperFn();
    this.getCompanyType();
    this.getBranchType();
    this.getCountries();
   }
+
+
+
 
   private stepper!: Stepper;
 
@@ -335,13 +346,51 @@ export class CompanyAddComponent implements OnInit{
 
   
   onSubmit(): void {
-    if (this.formcompanyadd.valid) {
+    console.log('Form formcompanyadd:', this.formcompanyadd.value);
+    console.log('Form formbranchadd:', this.formbranchadd.value);
+    console.log('Form formuseradd:', this.formuseradd.value);
 
-      console.log('Form Submitted:', this.formcompanyadd.value);
-    } else {
-      console.log('Form is invalid. Please check the errors.');
-      this.formcompanyadd.markAllAsTouched(); // Mark all controls as touched to trigger validation errors
+    if (
+      this.formcompanyadd.valid &&
+      this.formbranchadd.valid &&
+      this.formuseradd.valid
+    ) {
+      // Combine the form data into a single object
+      const requestData = {
+        companyt1_company_name: this.formcompanyadd.get('companyname')?.value,
+        id_company_type: this.formcompanyadd.get('companytype')?.value,
+        insertBranchDTOModel: this.formbranchadd.value,
+        userDtoModel: this.formuseradd.value,
+      };
+      // Log the combined data (optional)
+      console.log('Combined Data:', requestData);
+      // this.companyService.registerCompany(requestData).subscribe({
+      //   next:res=>{
+      //     if(res.status==200){
+            
+      //       console.log("success"); 
+      //     }
+      //     else{
+      //       console.log(res);
+      //     }
+      //   },
+      //   error:error=>{
+
+      //   }
+        
+      // })
+
     }
+
+
+
+    // if (this.formcompanyadd.valid) {
+
+    //   console.log('Form Submitted:', this.formcompanyadd.value);
+    // } else {
+    //   console.log('Form is invalid. Please check the errors.');
+    //   this.formcompanyadd.markAllAsTouched(); // Mark all controls as touched to trigger validation errors
+    // }
 
     
   }

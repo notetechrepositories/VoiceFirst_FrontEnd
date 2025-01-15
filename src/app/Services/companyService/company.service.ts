@@ -20,6 +20,9 @@ export class CompanyService {
   getSelectionType(filter:any){
     return this.http.post<any>(`${this.apiUrl}/selection_values/get-all`,filter,{headers:this.headers});
   }
+  registerCompany(requestData: any){
+    return this.http.post<any>(`${this.apiUrl}/company/insert-company-admin`,requestData,{headers:this.headers});
+  }
 
   
 }
