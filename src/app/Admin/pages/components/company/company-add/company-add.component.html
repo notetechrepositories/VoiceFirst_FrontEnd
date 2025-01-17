@@ -14,21 +14,24 @@
               <div id="stepper1" class="bs-stepper">
                 <div class="bs-stepper-header">
                   <div class="step" data-target="#test-l-1">
-                    <button class="step-trigger">
+                    <button class="step-trigger"
+                      [ngClass]="{'valid-step': formcompanyadd.valid, 'active-step': isCurrentStep(1)}" [disabled]="true">
                       <span class="bs-stepper-circle">1</span>
                       <span class="bs-stepper-label">Company Details</span>
                     </button>
                   </div>
                   <div class="line"></div>
                   <div class="step" data-target="#test-l-2">
-                    <button class="step-trigger">
+                    <button class="step-trigger"
+                      [ngClass]="{'valid-step': formbranchadd.valid, 'active-step': isCurrentStep(2)}" [disabled]="true">
                       <span class="bs-stepper-circle">2</span>
                       <span class="bs-stepper-label">Branch Details</span>
                     </button>
                   </div>
                   <div class="line"></div>
                   <div class="step" data-target="#test-l-3">
-                    <button class="step-trigger">
+                    <button class="step-trigger"
+                    [ngClass]="{'valid-step': formuseradd.valid, 'active-step': isCurrentStep(3)}" [disabled]="true">
                       <span class="bs-stepper-circle">3</span>
                       <span class="bs-stepper-label">User Details</span>
                     </button>
@@ -36,16 +39,16 @@
                 </div>
                 <div class="bs-stepper-content">
                     <div id="test-l-1" class="content">
-                      <form  [formGroup]="formcompanyadd" class="row g-3" (ngSubmit)="onSubmit()">
+                      <form  [formGroup]="formcompanyadd" class="row g-3">
 
                       <div class="form-group">
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-12">
-                              <label for="inputCompanyName" class="form-label">Company Name</label>
-                              <input type="text" class="form-control" id="inputCompanyName" placeholder="Enter Company Name" formControlName="companyname"/>
-                              <div *ngIf="formcompanyadd.controls['companyname'].touched" class="text-danger">
-                                <small *ngIf="formcompanyadd.controls['companyname'].errors?.['required']">Company name is required.</small>
+                              <label for="inputCompanyName" class="form-label">Company Name <span class="text-danger">*</span> </label>
+                              <input type="text" class="form-control" id="inputCompanyName" placeholder="Enter Company Name" formControlName="t1_company_name"/>
+                              <div *ngIf="formcompanyadd.controls['t1_company_name'].touched" class="text-danger">
+                                <small *ngIf="formcompanyadd.controls['t1_company_name'].errors?.['required']">Company name is required.</small>
                               </div>
                             </div>
                           </div>
@@ -54,13 +57,13 @@
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-12">
-                              <label for="selectCompanyType" class="form-label">Company Type</label>
-                              <select class="form-select" id="selectCompanyType" formControlName="companytype">
+                              <label for="selectCompanyType" class="form-label">Company Type <span class="text-danger">*</span> </label>
+                              <select class="form-select" id="selectCompanyType" formControlName="id_company_type">
                                 <option value="" disabled selected>Select company type</option>
                                 <option *ngFor="let type of companyType" value={{type.id_t4_1_selection_values}}>{{ type.t4_1_selection_values_name }}</option>
                               </select>
-                              <div *ngIf="formcompanyadd.controls['companytype'].touched" class="text-danger">
-                                <small *ngIf="formcompanyadd.controls['companytype'].errors?.['required']">Company type is required.</small>
+                              <div *ngIf="formcompanyadd.controls['id_company_type'].touched" class="text-danger">
+                                <small *ngIf="formcompanyadd.controls['id_company_type'].errors?.['required']">Company type is required.</small>
                               </div>
                             </div>
                           </div>
@@ -69,30 +72,30 @@
                       </div>
                       <div class="text-end">
 
-                        <button type="button" (click)="next()" class="primary-btn">Next</button>
+                        <button type="button" (click)="nexttobranch()" class="primary-btn">Next</button>
                       </div>
                     </form>
                     </div>
                     <div id="test-l-2" class="content">
-                      <form  [formGroup]="formbranchadd" class="row g-3" (ngSubmit)="onSubmit()">
+                      <form  [formGroup]="formbranchadd" class="row g-3">
                       <div class="form-group">
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-6">
-                              <label for="inputBranchName" class="form-label">Branch Name</label>
-                              <input type="text" class="form-control" id="inputBranchName" placeholder="Enter Company Name" formControlName="branchname" />
-                              <div *ngIf="formbranchadd.controls['branchname'].touched" class="text-danger">
-                                <small *ngIf="formbranchadd.controls['branchname'].errors?.['required']">Branch name is required.</small>
+                              <label for="inputBranchName" class="form-label">Branch Name <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="inputBranchName" placeholder="Enter Company Name" formControlName="t2_company_branch_name" />
+                              <div *ngIf="formbranchadd.controls['t2_company_branch_name'].touched" class="text-danger">
+                                <small *ngIf="formbranchadd.controls['t2_company_branch_name'].errors?.['required']">Branch name is required.</small>
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <label for="selectBranchType" class="form-label">Branch Type</label>
-                              <select class="form-select" id="selectBranchType" formControlName="branchtype">
+                              <label for="selectBranchType" class="form-label">Branch Type <span class="text-danger">*</span></label>
+                              <select class="form-select" id="selectBranchType" formControlName="t2_id_branch_type">
                                 <option value="" disabled selected>Select Branch Type</option>
                                 <option *ngFor="let type of branchType" value={{type.id_t4_1_selection_values}}>{{ type.t4_1_selection_values_name }}</option>
                               </select>
-                              <div *ngIf="formbranchadd.controls['branchtype'].touched" class="text-danger">
-                                <small *ngIf="formbranchadd.controls['branchtype'].errors?.['required']">Branch type is required.</small>
+                              <div *ngIf="formbranchadd.controls['t2_id_branch_type'].touched" class="text-danger">
+                                <small *ngIf="formbranchadd.controls['t2_id_branch_type'].errors?.['required']">Branch type is required.</small>
                               </div>
                               <!-- <input type="text" class="form-control" id="exampleInputBranchType" placeholder="Enter Company Type" /> -->
                             </div>
@@ -102,11 +105,11 @@
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-12">
-                              <label for="inputBranchEmail" class="form-label">Email address</label>
-                              <input type="email" class="form-control" id="inputBranchEmail" placeholder="Enter Email" formControlName="branchemail"/>
-                              <div *ngIf="formbranchadd.controls['branchemail']?.touched && formbranchadd.controls['branchemail'].invalid" class="text-danger">
-                                <small *ngIf="formbranchadd.controls['branchemail'].errors?.['required']">Email is required.</small>
-                                <small *ngIf="!formbranchadd.controls['branchemail'].errors?.['required'] && formbranchadd.controls['branchemail'].errors?.['invalidEmail']">Invalid email format.</small>
+                              <label for="inputBranchEmail" class="form-label">Email address <span class="text-danger">*</span></label>
+                              <input type="email" class="form-control" id="inputBranchEmail" placeholder="Enter Email" formControlName="t2_email"/>
+                              <div *ngIf="formbranchadd.controls['t2_email']?.touched && formbranchadd.controls['t2_email'].invalid" class="text-danger">
+                                <small *ngIf="formbranchadd.controls['t2_email'].errors?.['required']">Email is required.</small>
+                                <small *ngIf="!formbranchadd.controls['t2_email'].errors?.['required'] && formbranchadd.controls['t2_email'].errors?.['invalidEmail']">Invalid email format.</small>
                               </div>
                             </div>
                           </div>
@@ -115,19 +118,19 @@
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-6">
-                              <label for="inputBranchMobile" class="form-label">Mobile</label>
-                              <input type="text" class="form-control" id="inputBranchMobile" placeholder="Enter Mobile no." formControlName="branchmobile"/>
-                              <div *ngIf="formbranchadd.controls['branchmobile'].touched && formbranchadd.controls['branchmobile'].invalid" class="text-danger">
-                                <small *ngIf="formbranchadd.controls['branchmobile'].errors?.['required']">Branch mobile is required.</small>
-                                <small *ngIf="!formbranchadd.controls['branchmobile'].errors?.['required'] && formbranchadd.controls['branchmobile'].errors?.['invalidPhone']"> Invalid mobile number</small>
+                              <label for="inputBranchMobile" class="form-label">Mobile <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="inputBranchMobile" placeholder="Enter Mobile no." formControlName="t2_mobile_no"/>
+                              <div *ngIf="formbranchadd.controls['t2_mobile_no'].touched && formbranchadd.controls['t2_mobile_no'].invalid" class="text-danger">
+                                <small *ngIf="formbranchadd.controls['t2_mobile_no'].errors?.['required']">Branch mobile is required.</small>
+                                <small *ngIf="!formbranchadd.controls['t2_mobile_no'].errors?.['required'] && formbranchadd.controls['t2_mobile_no'].errors?.['invalidPhone']"> Invalid mobile number</small>
                               </div>
                             </div>
                             <div class="col-md-6">
                               <label for="inputBranchPhone" class="form-label">Phone</label>
-                              <input type="text" class="form-control" id="inputBranchPhone" placeholder="Enter Phone no." formControlName="branchphone" />
-                              <div *ngIf="formbranchadd.controls['branchphone'].value" class="text-danger">
+                              <input type="text" class="form-control" id="inputBranchPhone" placeholder="Enter Phone no." formControlName="t2_phone_no" />
+                              <div *ngIf="formbranchadd.controls['t2_phone_no'].value" class="text-danger">
                                 
-                                <small *ngIf="formbranchadd.controls['branchphone'].errors?.['invalidPhone']"> Invalid phone number</small>
+                                <small *ngIf="formbranchadd.controls['t2_phone_no'].errors?.['invalidPhone']"> Invalid phone number</small>
                               </div>
                             </div>
                           </div>
@@ -136,10 +139,10 @@
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-12">
-                              <label for="inputBranchAddress1" class="form-label">Address1</label>
-                              <input type="email" class="form-control" id="inputBranchAddress1" placeholder="Enter Address1" formControlName="branchaddress"/>
-                              <div *ngIf="formbranchadd.controls['branchaddress']?.touched && formbranchadd.controls['branchaddress'].invalid" class="text-danger">
-                                <small *ngIf="formbranchadd.controls['branchaddress'].errors?.['required']">Address is required.</small>
+                              <label for="inputBranchAddress1" class="form-label">Address1 <span class="text-danger">*</span></label>
+                              <input type="email" class="form-control" id="inputBranchAddress1" placeholder="Enter Address1" formControlName="t2_address_1"/>
+                              <div *ngIf="formbranchadd.controls['t2_address_1']?.touched && formbranchadd.controls['t2_address_1'].invalid" class="text-danger">
+                                <small *ngIf="formbranchadd.controls['t2_address_1'].errors?.['required']">Address is required.</small>
                                 
                               </div>
                             </div>
@@ -150,7 +153,7 @@
                           <div class="row align-items-center">
                             <div class="col-md-12">
                               <label for="inputBranchAddress2" class="form-label">Address2</label>
-                              <input type="email" class="form-control" id="inputBranchAddress2" placeholder="Enter Address2" formControlName="branchAddress2" />
+                              <input type="email" class="form-control" id="inputBranchAddress2" placeholder="Enter Address2" formControlName="t2_address_2" />
                             </div>
                           </div>
                         </div>
@@ -158,16 +161,20 @@
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-6">
-                              <label for="selectBranchCountry" class="form-label">Country</label>
-                              <select class="form-select" id="selectBranchCountry" (change)="onChangeCountries($event)" formControlName="branchCountry">
+                              <label for="selectBranchCountry" class="form-label">Country <span class="text-danger">*</span></label>
+                              <select class="form-select" id="selectBranchCountry" (change)="onChangeCountries($event)" formControlName="id_t2_1_country">
+                                
                                 <option value="" disabled selected>Select country</option>
                                 <option *ngFor="let country of countries" value={{country.id_t2_1_country}} >{{ country.t2_1_country_name }}</option>
                                
                               </select>
+                              <div *ngIf="formbranchadd.controls['id_t2_1_country'].touched" class="text-danger">
+                                <small *ngIf="formbranchadd.controls['id_t2_1_country'].errors?.['required']">Country is required.</small>
+                              </div>
                             </div>
-                            <div class="col-md-6">
-                              <label for="selectBranchDiv1" class="form-label">Division1</label>
-                              <select class="form-select" id="selectBranchDiv1" (change)="onChangeDivision1($event)" formControlName="branchDiv1">
+                            <div class="col-md-6" *ngIf="showDivision1">
+                              <label for="selectBranchDiv1" class="form-label">Division1 <span class="text-danger">*</span></label>
+                              <select class="form-select" id="selectBranchDiv1" (change)="onChangeDivision1($event)" formControlName="id_t2_1_div1">
                                 <option value="" disabled selected>Select Branch Type</option>
                                 <option *ngFor="let division1 of div1" value={{division1.id_t2_1_div1}} >{{ division1.t2_1_div1_name }}</option>
                               </select>
@@ -177,16 +184,16 @@
 
                         <div class="container mb-3">
                           <div class="row align-items-center">
-                            <div class="col-md-6">
-                              <label for="selectBranchDiv2" class="form-label">Division2</label>
-                              <select class="form-select" id="selectBranchDiv2" (change)="onChangeDivision2($event)" formControlName="branchDiv2">
+                            <div class="col-md-6"  *ngIf="showDivision2">
+                              <label for="selectBranchDiv2" class="form-label">Division2 <span class="text-danger">*</span></label>
+                              <select class="form-select" id="selectBranchDiv2" (change)="onChangeDivision2($event)" formControlName="id_t2_1_div2">
                                 <option value="" disabled selected>Select Branch Type</option>
                                 <option *ngFor="let division2 of div2" value={{division2.id_t2_1_div2}} >{{ division2.t2_1_div2_name }}</option>
                               </select>
                             </div>
-                            <div class="col-md-6">
-                              <label for="selectBranchDiv3" class="form-label">Division3</label>
-                              <select class="form-select" id="selectBranchDiv3" formControlName="branchDiv3">
+                            <div class="col-md-6"  *ngIf="showDivision3">
+                              <label for="selectBranchDiv3" class="form-label">Division3 <span class="text-danger">*</span></label>
+                              <select class="form-select" id="selectBranchDiv3" formControlName="id_t2_1_div3">
                                 <option value="" disabled selected>Select Branch Type</option>
                                 <option *ngFor="let division3 of div3" value={{division3.id_t2_1_div3}} >{{ division3.t2_1_div3_name }}</option>
                               </select>
@@ -197,15 +204,18 @@
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-6">
-                              <label for="inputBranchLocal" class="form-label">Locality</label>
-                              <input type="text" class="form-control" id="inputBranchLocal" placeholder="Enter Locality" formControlName="branchlocality"/>
-                              <div *ngIf="formbranchadd.controls['branchlocality'].touched" class="text-danger">
-                                <small *ngIf="formbranchadd.controls['branchlocality'].errors?.['required']">Branch locality is required.</small>
+                              <label for="inputBranchLocal" class="form-label">Locality <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="inputBranchLocal" placeholder="Enter Locality" formControlName="t2_1_local_name"/>
+                              <div *ngIf="formbranchadd.controls['t2_1_local_name'].touched" class="text-danger">
+                                <small *ngIf="formbranchadd.controls['t2_1_local_name'].errors?.['required']">Branch locality is required.</small>
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <label for="inputBranchZipcode" class="form-label">Zipcode</label>
-                              <input type="text" class="form-control" id="inputBranchZipcode" placeholder="Enter Zipcode" formControlName="branchzipcode"/>
+                              <label for="inputBranchZipcode" class="form-label">Zipcode <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="inputBranchZipcode" placeholder="Enter Zipcode" formControlName="t2_zip_code"/>
+                              <div *ngIf="formbranchadd.controls['t2_zip_code'].touched" class="text-danger">
+                                <small *ngIf="formbranchadd.controls['t2_zip_code'].errors?.['required']">Zipcode is required.</small>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -219,23 +229,23 @@
                         
                       </div>
                       <div class="text-end">
-                        <button type="button" (click)="next()" class="primary-btn">Next</button>
+                        <button type="button" (click)="nexttouser()" class="primary-btn">Next</button>
                       </div>
                       </form>
                     </div>
                     <div id="test-l-3" class="content">
-                      <form  [formGroup]="formuseradd" class="row g-3" (ngSubmit)="onSubmit()">
+                      <form  [formGroup]="formuseradd" class="row g-3" >
 
                       <div class="form-group">
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-6">
-                              <label for="inputUserFirstName" class="form-label">First Name</label>
-                              <input type="text" class="form-control" id="inputUserFirstName" placeholder="Enter First Name" formControlName="userfirstname"/>
+                              <label for="inputUserFirstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="inputUserFirstName" placeholder="Enter First Name" formControlName="t5_first_name"/>
                             </div>
                             <div class="col-md-6">
-                              <label for="inputUserLastName" class="form-label">Last Name</label>
-                              <input type="text" class="form-control" id="inputUserLastName" placeholder="Enter Last Name" formControlName="userlastname"/>
+                              <label for="inputUserLastName" class="form-label">Last Name </label>
+                              <input type="text" class="form-control" id="inputUserLastName" placeholder="Enter Last Name" formControlName="t5_last_name"/>
                             </div>
                           </div>
                         </div>
@@ -243,16 +253,16 @@
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-6">
-                              <label for="inputUserYearofBirth" class="form-label">Year of Birth</label>
-                              <input type="text" class="form-control" id="inputUserYearofBirth" placeholder="Enter year of birth" formControlName="useryearofbirth"/>
+                              <label for="inputUserYearofBirth" class="form-label">Year of Birth <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="inputUserYearofBirth" placeholder="Enter year of birth" formControlName="t5_birth_year"/>
                             </div>
                             <div class="col-md-6">
-                              <label for="selectUserGender" class="form-label">Gender</label>
-                              <select class="form-select" id="selectUserGender" formControlName="usergender">
+                              <label for="selectUserGender" class="form-label">Gender </label>
+                              <select class="form-select" id="selectUserGender" formControlName="t5_sex">
                                 <option value="" disabled selected>Select Gender</option>
-                                <option value="retail">Male</option>
-                                <option value="corporate">Female</option>
-                                <option value="franchise">Other</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
                               </select>
                             </div>
                           </div>
@@ -261,16 +271,16 @@
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-6">
-                              <label for="inputUserEmail" class="form-label">Email</label>
-                              <input type="email" class="form-control" id="inputUserEmail" placeholder="Enter Email" formControlName="useremail" />
-                              <div *ngIf="formuseradd.controls['useremail']?.touched && formuseradd.controls['useremail'].invalid" class="text-danger">
-                                <small *ngIf="formuseradd.controls['useremail'].errors?.['required']">Email is required.</small>
-                                <small *ngIf="!formuseradd.controls['useremail'].errors?.['required'] && formuseradd.controls['useremail'].errors?.['invalidEmail']">Invalid email format.</small>
+                              <label for="inputUserEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                              <input type="email" class="form-control" id="inputUserEmail" placeholder="Enter Email" formControlName="t5_email" />
+                              <div *ngIf="formuseradd.controls['t5_email']?.touched && formuseradd.controls['t5_email'].invalid" class="text-danger">
+                                <small *ngIf="formuseradd.controls['t5_email'].errors?.['required']">Email is required.</small>
+                                <small *ngIf="!formuseradd.controls['t5_email'].errors?.['required'] && formuseradd.controls['t5_email'].errors?.['invalidEmail']">Invalid email format.</small>
                               </div>
                             </div>
                             <div class="col-md-6">
-                              <label for="inputUserMobile" class="form-label">Mobile no.</label>
-                              <input type="text" class="form-control" id="inputUserMobile" placeholder="Enter Mobile no." formControlName="usermobile"/>
+                              <label for="inputUserMobile" class="form-label">Mobile no. <span class="text-danger">*</span></label>
+                              <input type="text" class="form-control" id="inputUserMobile" placeholder="Enter Mobile no." formControlName="t5_mobile_no"/>
                             </div>
                           </div>
                         </div>
@@ -278,8 +288,8 @@
                         <div class="container mb-3">
                           <div class="row align-items-center">
                             <div class="col-md-12">
-                              <label for="inputUserAddress1" class="form-label">Address1</label>
-                              <input type="email" class="form-control" id="inputUserAddress1" placeholder="Enter Address1" formControlName="useraddress1" />
+                              <label for="inputUserAddress1" class="form-label">Address1 </label>
+                              <input type="email" class="form-control" id="inputUserAddress1" placeholder="Enter Address1" formControlName="t5_address_1" />
                             </div>
                           </div>
                         </div>
@@ -288,7 +298,7 @@
                           <div class="row align-items-center">
                             <div class="col-md-12">
                               <label for="inputUserAddress2" class="form-label">Address2</label>
-                              <input type="email" class="form-control" id="inputUserAddress2" placeholder="Enter Address2" formControlName="useraddress2"/>
+                              <input type="email" class="form-control" id="inputUserAddress2" placeholder="Enter Address2" formControlName="t5_address_2"/>
                             </div>
                           </div>
                         </div>
@@ -297,14 +307,14 @@
                           <div class="row align-items-center">
                             <div class="col-md-6">
                               <label for="selectUserCountry" class="form-label">Country</label>
-                              <select class="form-select" id="selectUserCountry" (change)="onChangeUserCountry($event)" formControlName="usercountry">
+                              <select class="form-select" id="selectUserCountry" (change)="onChangeUserCountry($event)" formControlName="id_t2_1_country">
                                 <option value="" disabled selected>Select Country</option>
                                 <option *ngFor="let country of countries" value={{country.id_t2_1_country}} >{{ country.t2_1_country_name }}</option>
                               </select>
                             </div>
                             <div class="col-md-6" >
                               <label for="selectUserDiv1" class="form-label">Division1</label>
-                              <select class="form-select" id="selectUserDiv1" (change)="onChangeUserDivision1($event)" formControlName="userdiv1">
+                              <select class="form-select" id="selectUserDiv1" (change)="onChangeUserDivision1($event)" formControlName="id_t2_1_div1">
                                 <option value="" disabled selected>Select Division1</option>
                                 <option *ngFor="let userDivision1 of userDiv1" value={{userDivision1.id_t2_1_div1}} >{{ userDivision1.t2_1_div1_name }}</option>
                               </select>
@@ -316,14 +326,14 @@
                           <div class="row align-items-center">
                             <div class="col-md-6">
                               <label for="selectUserDiv2" class="form-label">Division2</label>
-                              <select class="form-select" id="selectUserDiv2" (change)="onChangeUserDivision2($event)" formControlName="userdiv2">
+                              <select class="form-select" id="selectUserDiv2" (change)="onChangeUserDivision2($event)" formControlName="id_t2_1_div2">
                                 <option value="" disabled selected>Select Division2</option>
                                 <option *ngFor="let userDivision2 of userDiv2" value={{userDivision2.id_t2_1_div2}} >{{ userDivision2.t2_1_div2_name }}</option>
                               </select>
                             </div>
                             <div class="col-md-6">
                               <label for="selectUserDiv3" class="form-label">Division3</label>
-                              <select class="form-select" id="selectUserDiv3" formControlName="userdiv3">
+                              <select class="form-select" id="selectUserDiv3" formControlName="id_t2_1_div3">
                                 <option value="" disabled selected>Select Division3</option>
                                 <option *ngFor="let userDivision3 of userDiv3" value={{userDivision3.id_t2_1_div3}} >{{ userDivision3.t2_1_div3_name }}</option>
                               </select>
@@ -335,18 +345,18 @@
                           <div class="row align-items-center">
                             <div class="col-md-6">
                               <label for="inputUserLocal" class="form-label">Locality</label>
-                              <input type="text" class="form-control" id="inputUserLocal" placeholder="Enter Locality" formControlName="userlocality" />
+                              <input type="text" class="form-control" id="inputUserLocal" placeholder="Enter Locality" formControlName="t2_1_local_name" />
                             </div>
                             <div class="col-md-6">
                               <label for="inputUserZipcode" class="form-label">Zipcode</label>
-                              <input type="text" class="form-control" id="inputUserZipcode" placeholder="Enter Zipcode" formControlName="userzipcode"/>
+                              <input type="text" class="form-control" id="inputUserZipcode" placeholder="Enter Zipcode" formControlName="t5_zip_code"/>
                             </div>
                           </div>
                         </div>
 
                       </div>
                       <div class="text-end">
-                        <button type="submit" class="primary-btn mt-5" 
+                        <button type="submit" class="primary-btn mt-5" (click)="onSubmit()"
                         >Submit</button>
                       </div>
                       </form>

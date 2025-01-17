@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { CompanyService } from '../../../../../Services/companyService/company.service';
 import { CountryService } from '../../../../../Services/countryService/country.service';
 import { SweetalertService } from '../../../../../Services/sweetAlertService/sweetalert.service';
+import Swal from 'sweetalert2';
 
 
 
@@ -49,44 +50,47 @@ export class CompanyAddComponent implements OnInit{
   selectedType!: string;
   showDiv1:boolean=false;
   div1Called!: string;
-
+  currentStep: number=1;
+  showDivision1: boolean=false;
+  showDivision2: boolean=false;
+  showDivision3: boolean=false;
   ngOnInit(): void {
     this.formcompanyadd = this.fb.group({
-      companyname: ['', [Validators.required]],
-      companytype: ['', [Validators.required]],
+      t1_company_name: ['', [Validators.required]],
+      id_company_type: ['', [Validators.required]],
     
     });
     this.formbranchadd = this.fb.group({
-      branchname: ['',[Validators.required]],
-      branchtype: ['',[Validators.required]],
-      branchemail: ['', [Validators.required, ValidationService.email]],
-      branchmobile: ['', [Validators.required, ValidationService.phone]],
-      branchphone: ['',[ValidationService.phone]],
-      branchaddress: ['',[Validators.required]], 
-      branchAddress2:['',[Validators.required]],
-      branchCountry:['',[Validators.required]],
-      branchDiv1:['',[Validators.required]],
-      branchDiv2:[''],
-      branchDiv3:[''],
-      branchlocality: ['',[Validators.required]],
-      branchzipcode:[''],
+      t2_company_branch_name: ['',[Validators.required]],
+      t2_id_branch_type: ['',[Validators.required]],
+      t2_email: ['', [Validators.required, ValidationService.email]],
+      t2_mobile_no: ['', [Validators.required, ValidationService.phone]],
+      t2_phone_no: ['',[ValidationService.phone]],
+      t2_address_1: ['',[Validators.required]], 
+      t2_address_2:['',[Validators.required]],
+      id_t2_1_country:['',[Validators.required]],
+      id_t2_1_div1:['',[Validators.required]],
+      id_t2_1_div2:[''],
+      id_t2_1_div3:[''],
+      t2_1_local_name: ['',[Validators.required]],
+      t2_zip_code:['',[Validators.required]],
       
     });
     this.formuseradd = this.fb.group({
-      userfirstname:[''],
-      userlastname:[''],
-      useryearofbirth:[''],
-      usergender:[''],
-      useremail: ['', [Validators.required, ValidationService.email]],
-      usermobile:[''],
-      useraddress1:[''],
-      useraddress2:[''],
-      usercountry:[''],
-      userdiv1:[''],
-      userdiv2:[''],
-      userdiv3:[''],
-      userlocality:[''],
-      userzipcode:[''],
+      t5_first_name:[''],
+      t5_last_name:[''],
+      t5_birth_year:[''],
+      t5_sex:[''],
+      t5_email: ['', [Validators.required, ValidationService.email]],
+      t5_mobile_no:[''],
+      t5_address_1:[''],
+      t5_address_2:[''],
+      id_t2_1_country:[''],
+      id_t2_1_div1:[''],
+      id_t2_1_div2:[''],
+      id_t2_1_div3:[''],
+      t2_1_local_name:[''],
+      t5_zip_code:[''],
       
     });
    this.stepperFn();
@@ -112,8 +116,25 @@ export class CompanyAddComponent implements OnInit{
     }
   }
 
-  next() {
-    this.stepper.next();
+  nexttobranch() {
+    this.formcompanyadd.markAllAsTouched();
+    if(this.formcompanyadd.valid && this.currentStep < 3)
+    {
+      this.stepper.next();
+      this.currentStep++;
+    }
+  }
+  nexttouser(){
+    this.formbranchadd.markAllAsTouched();
+    if(this.formbranchadd.valid && this.currentStep < 3)
+    {
+      this.stepper.next();
+      this.currentStep++;
+    }
+  }
+
+  isCurrentStep(step: number): boolean {
+    return this.currentStep === step;
   }
 
   getCompanyType(){
@@ -350,37 +371,50 @@ export class CompanyAddComponent implements OnInit{
     console.log('Form formbranchadd:', this.formbranchadd.value);
     console.log('Form formuseradd:', this.formuseradd.value);
 
-    if (
-      this.formcompanyadd.valid &&
-      this.formbranchadd.valid &&
-      this.formuseradd.valid
-    ) {
+    this.formuseradd.markAllAsTouched();
+    if (this.formcompanyadd.valid && this.formbranchadd && this.formuseradd && this.currentStep <=3)
+   {
+    
+    
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, add company!"
+      })
+    
+    
       // Combine the form data into a single object
       const requestData = {
-        companyt1_company_name: this.formcompanyadd.get('companyname')?.value,
-        id_company_type: this.formcompanyadd.get('companytype')?.value,
+        t1_company_name: this.formcompanyadd.get('t1_company_name')?.value,
+        id_company_type: this.formcompanyadd.get('id_company_type')?.value,
         insertBranchDTOModel: this.formbranchadd.value,
         userDtoModel: this.formuseradd.value,
       };
-      // Log the combined data (optional)
+      
       console.log('Combined Data:', requestData);
-      // this.companyService.registerCompany(requestData).subscribe({
-      //   next:res=>{
-      //     if(res.status==200){
+      this.companyService.registerCompany(requestData).subscribe({
+         next:res=>{
+          if(res.status==200){
             
-      //       console.log("success"); 
-      //     }
-      //     else{
-      //       console.log(res);
-      //     }
-      //   },
-      //   error:error=>{
-
-      //   }
+            console.log("success"); 
+          }
+          else{
+            console.log(res);
+          }
+        },
+        error:error=>{
+          console.log(error);
+        this.sweetalert.showToast('error','Oops!Something went wrong')
+        }
         
-      // })
+      })
 
     }
+  
 
 
 
