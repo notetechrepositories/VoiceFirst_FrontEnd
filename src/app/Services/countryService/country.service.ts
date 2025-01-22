@@ -14,13 +14,16 @@ export class CountryService {
 
   constructor(private http: HttpClient,private localStorageService:LocalstorageService) { }
 
-    accessToken = this.localStorageService.getItem('token'); 
+    accessToken = this.localStorageService.getItem('token');
+    
+     
     headers = new HttpHeaders({
       'Authorization': `Bearer ${this.accessToken}`
     });
 
     url=`${this.apiUrl}/country`;
-          
+
+        
     // Get all locations
     getCountry(filter:any){
       return this.http.post<any>(`${this.url}/get-all`,filter);  

@@ -45,6 +45,7 @@ export const routes: Routes = [
       },
     ],
   },
+  
   {
     path: '**',  
     redirectTo: '/authentication/login', // Or replace with a 404 error component if desired
