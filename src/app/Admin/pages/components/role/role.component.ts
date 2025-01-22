@@ -9,18 +9,9 @@ import { SweetalertService } from '../../../../Services/sweetAlertService/sweeta
 import { AddRoleComponent } from './add-role/add-role.component';
 import { EditRoleComponent } from './edit-role/edit-role.component';
 import { RoleService } from '../../../../Services/roleService/role.service';
+import { Role } from '../../../Models/role_model';
 
-export interface Role {
-  id_t5_1_m_user_roles: string;
-  t5_1_m_user_roles_name: string;
-  t5_1_m_all_location_access: number;
-  t5_1_m_all_location_type: number;
-  t5_1_m_only_assigned_location: number;
-  inserted_by: string | null;
-  inserted_date: string;
-  updated_by: string | null;
-  updated_date: string;
-}
+
 
 @Component({
   selector: 'app-role',
@@ -97,6 +88,8 @@ export class RoleComponent {
     };  
     this.roleService.getRole(body).subscribe({
       next: (res) => {
+        console.log(res);
+        
         if (res.status == 200) {
           this.roles = res.data.Items;
           console.log(res);

@@ -3,6 +3,7 @@ import { environment } from '../../../environment/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { LocalstorageService } from '../localStorageService/localstorage.service';
 import { Observable } from 'rxjs';
+import { ApiResponse, Role } from '../../Admin/Models/role_model';
 
 
 @Injectable({
@@ -24,8 +25,7 @@ export class RoleService {
   }
 
   getRole(body:any) {
-   
-    return this.http.post<any>(`${this.apiUrl}/role/get-all`, body, { headers: this.headers });
+    return this.http.post<ApiResponse>(`${this.apiUrl}/role/get-all`, body, { headers: this.headers });
   }
   
   getRoleandPermission(id:string){
