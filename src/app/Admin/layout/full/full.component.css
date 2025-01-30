@@ -85,7 +85,7 @@ body {
 
 @media screen and (min-width: 768px) {
   .page-wrapper.toggled .page-content {
-    padding-left: 263px;
+    padding-left: 260px;
   }
 }
 /*----------------show sidebar button----------------*/
@@ -479,4 +479,10 @@ body {
 
 .chiller-theme .sidebar-footer>a:last-child {
     border-right: none;
+}
+
+header{
+  height: 59px;
+  background-color: var(--primary-color);
+
 }

@@ -2,7 +2,7 @@ import { Component, ComponentFactoryResolver, Input, Output } from '@angular/cor
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SweetalertService } from '../../../../../Services/sweetAlertService/sweetalert.service';
-import { ConstantService } from '../../../../../Services/constant.service';
+import { ConstantService } from '../../../../../Services/constantService/constant.service';
 import Swal from 'sweetalert2';
 export interface SelectionValues {
   t4_1_selection_values_name:string;

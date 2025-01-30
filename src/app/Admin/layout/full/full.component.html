@@ -1,6 +1,6 @@
 <div class="page-wrapper chiller-theme toggled">
-  <a id="show-sidebar" class="btn btn-sm btn-dark">
-    <i class="fas fa-bars" style="color: #fff;"></i>
+  <a id="show-sidebar" class="btn btn-sm btn-light">
+    <i class="fas fa-bars" style="color: black;"></i>
   </a>
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
@@ -27,12 +27,6 @@
             <a routerLink="components/role" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
               <i class="fa fa-tachometer-alt"></i>
               <span>Role</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="components/test" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Test</span>
             </a>
           </li>
           <li>
@@ -63,7 +57,14 @@
             </a>
           </li>
 
-          <li class="sidebar-dropdown">
+          <li>
+            <a routerLink="components/test" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              <i class="fa fa-tachometer-alt"></i>
+              <span>Test</span>
+            </a>
+          </li>
+
+          <!-- <li class="sidebar-dropdown">
             <a href="#">
               <i class="far fa-gem"></i>
               <span>Components</span>
@@ -144,7 +145,7 @@
               <i class="fa fa-folder"></i>
               <span>Examples</span>
             </a>
-          </li>
+          </li> -->
         </ul>
       </div>
       <!-- sidebar-menu  -->
@@ -159,8 +160,8 @@
         <i class="fa fa-envelope"></i>
         <span class="badge badge-pill badge-success notification">7</span>
       </a>
-      <a href="#">
-        <i class="fa fa-cog"></i>
+      <a routerLink="components/profile">
+        <i class="fa fa-user"></i>
         <span class="badge-sonar"></span>
       </a>
       <a (click)="logout()">
@@ -169,7 +170,10 @@
     </div>
   </nav>
   <!-- sidebar-wrapper  -->
+  <!-- <header class="header"></header> -->
   <main class="page-content">
+
+
     <div class="container-fluid">
       <!--  -->
       <div>
