@@ -25,7 +25,6 @@ export function appInitializer(authService: AuthService): () => Promise<void> {
     FullComponent,
     SubscriptionComponent,
     FilterPipe,
-    
   ],
   imports: [
     BrowserModule,
