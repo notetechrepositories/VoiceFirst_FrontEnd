@@ -15,8 +15,6 @@ export class CountryService {
   constructor(private http: HttpClient,private localStorageService:LocalstorageService) { }
 
     accessToken = this.localStorageService.getItem('token');
-    
-     
     headers = new HttpHeaders({
       'Authorization': `Bearer ${this.accessToken}`
     });
@@ -31,6 +29,8 @@ export class CountryService {
 
    //Insert Country
    insertCountry(data: any){
+
+    
     return this.http.post<any>(this.url, data,{headers:this.headers}); 
   }
 

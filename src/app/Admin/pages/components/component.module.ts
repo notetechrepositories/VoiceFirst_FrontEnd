@@ -23,6 +23,7 @@ import { EditRoleComponent } from './role/edit-role/edit-role.component';
 import { CompanyComponent } from './company/company.component';
 import { CompanyAddComponent } from './company/company-add/company-add.component';
 import { ProfileComponent } from './profile/profile.component';
+import { CompanyViewComponent } from './company/company-view/company-view.component';
 
 
 
@@ -52,7 +53,8 @@ import { ProfileComponent } from './profile/profile.component';
     EditRoleComponent,
     CompanyComponent,
     CompanyAddComponent,
-    ProfileComponent
+    ProfileComponent,
+    CompanyViewComponent
   ],
 })
 export class ComponentModule {}

@@ -1,0 +1,21 @@
+.valid-step .bs-stepper-circle {
+    background-color: #28a745; /* Green color */
+    color: white; /* White text for contrast */
+  }
+  .valid-step .bs-stepper-label {
+    color: #28a745; /* Bootstrap's primary blue */
+    font-weight: bold;
+  }
+  .active-step .bs-stepper-label {
+    color: #007bff; /* Bootstrap's primary blue */
+    font-weight: bold;
+  }
+  
+  .active-step .bs-stepper-circle {
+    background-color: #007bff;
+    color: white;
+  }
+
+
+
+  
