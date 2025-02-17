@@ -7,6 +7,7 @@ import { SelectionComponent } from './constant/selection/selection.component';
 import { SelectionValuesComponent } from './constant/selection-values/selection-values.component';
 import { RoleComponent } from './role/role.component';
 import { CompanyComponent } from './company/company.component';
+import { ProfileComponent } from './profile/profile.component';
 import { CompanyViewComponent } from './company/company-view/company-view.component';
 
 
@@ -49,16 +50,21 @@ export const ComponentRoutes: Routes = [
         ],
       },
       {
+        path: 'profile',
+        component: ProfileComponent,
+      },
+      {
         path: '',
         children: [
           {
             path: 'company',
             component: CompanyComponent,
           },
+
           {
             path: 'company/company-view',
             component: CompanyViewComponent
-          }
+          },
         ]
       }
       

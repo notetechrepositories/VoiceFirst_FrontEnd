@@ -22,6 +22,7 @@ import { SelectionValuesComponent } from './constant/selection-values/selection-
 import { EditRoleComponent } from './role/edit-role/edit-role.component';
 import { CompanyComponent } from './company/company.component';
 import { CompanyAddComponent } from './company/company-add/company-add.component';
+import { ProfileComponent } from './profile/profile.component';
 import { CompanyViewComponent } from './company/company-view/company-view.component';
 
 
@@ -52,6 +53,7 @@ import { CompanyViewComponent } from './company/company-view/company-view.compon
     EditRoleComponent,
     CompanyComponent,
     CompanyAddComponent,
+    ProfileComponent,
     CompanyViewComponent
   ],
 })
