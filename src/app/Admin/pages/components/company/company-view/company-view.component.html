@@ -1,0 +1,178 @@
+<div class="main-content">
+  <!-- Page content -->
+  <div class="container-fluid mt-4">
+    <div class="row">
+      <div class="col-xl-12 order-xl-1">
+
+        <div class="card first-card bg-white shadow">
+          <div class="card-first-card-header bg-white border-0">
+            <div class="row align-items-center">
+              <div class="col-8">
+                <h3 class="mb-0">{{company.t1_company_name}} </h3>
+                <h6 class="heading-small text-muted mb-4">{{company.company_type}}</h6>
+              </div>
+              <div class="col-4 text-right">
+                <a href="#!" class="btn btn-sm btn-primary">Edit</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-first-card-body">
+            <form [formGroup]="formheadoffice">
+
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <input type="text" class="form-control no-label no-border" placeholder="Arabian Grills (Head office)"
+                    formControlName="t2_company_branch_name">
+                </div>
+
+                <div class="col-md-6 mb-2">
+                  <input type="text" class="form-control no-label no-border" placeholder="arabiangrills@motetech.com"
+                    formControlName="t2_email">
+                </div>
+
+                <div class="col-md-6 mb-2">
+                  <input type="text" class="form-control no-label no-border" placeholder="9495686773"
+                    formControlName="t2_mobile_no">
+                </div>
+
+                <div class="col-md-6 mb-2">
+                  <input type="text" class="form-control no-label no-border" placeholder="2383773"
+                    formControlName="t2_phone_no">
+                </div>
+
+                <div class="col-12">
+                  <input type="text" class="form-control no-label no-border" placeholder="Address1"
+                    formControlName="t2_address_1">
+                </div>
+                <div class="col-12">
+                  <input type="text" class="form-control no-label no-border" placeholder="Address2"
+                    formControlName="t2_address_2">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <input type="text" class="form-control no-label no-border" placeholder="Pincode:680004"
+                    formControlName="t2_zip_code">
+                </div>
+                <div class="col-md-6 mb-3">
+                  <input type="text" class="form-control no-label no-border" placeholder="Azad Road  "
+                    formControlName="t2_1_local_name">
+                </div>
+
+                <div class="col-md-3 mb-3">
+                  <input type="text" class="form-control no-label no-border" placeholder="Kaloor"
+                    formControlName="t2_1_div3_name">
+                </div>
+                <div class="col-md-3 mb-3">
+                  <input type="text" class="form-control no-label no-border" placeholder="Ernamkulam"
+                    formControlName="t2_1_div2_name">
+                </div>
+                <div class="col-md-3 mb-3">
+                  <input type="text" class="form-control no-label no-border" placeholder="Kerala"
+                    formControlName="t2_1_div1_name">
+                </div>
+                <div class="col-md-3 mb-3">
+                  <input type="text" class="form-control no-label no-border" placeholder="India"
+                    formControlName="t2_1_country_name">
+                </div>
+              </div>
+
+              <hr class="my-4">
+            </form>
+
+          </div>
+        </div>
+
+        <div class="card second-card bg-white shadow">
+          <div class="card-second-card-header bg-white border-0">
+
+          </div>
+
+          <div calss="card-second-card-body">
+            <h6 class="heading-small text-muted mb-4">Branch information</h6>
+            <form [formGroup]="formbranch">
+              <div formArrayName="branches">
+                <div class="accordion" id="branchAccordion">
+                  <!-- Loop through all branches -->
+                  <div class="accordion-item" *ngFor="let branch of branchControls; let i = index" [formGroupName]="i">
+                    <h2 class="accordion-header" [id]="'heading' + i">
+                      <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                        [attr.data-bs-target]="'#collapse' + i" [attr.aria-controls]="'collapse' + i">
+                        Branch #{{ i + 1 }}: {{ branch.get('t2_company_branch_name')?.value || 'Unnamed Branch' }}
+                      </button>
+                    </h2>
+                    
+                    <!-- Accordion Content -->
+                    <div [id]="'collapse' + i" class="accordion-collapse collapse">
+                      <div class="accordion-body">
+                        <div class="row">
+                          <div class="col-md-6 mb-2">
+                            <label>Email</label>
+                            <input type="email" class="form-control" formControlName="t2_email" placeholder="Branch Email">
+                          </div>
+            
+                          <div class="col-md-6 mb-2">
+                            <label>Mobile Number</label>
+                            <input type="text" class="form-control" formControlName="t2_mobile_no" placeholder="Mobile Number">
+                          </div>
+            
+                          <div class="col-md-6 mb-2">
+                            <label>Phone Number</label>
+                            <input type="text" class="form-control" formControlName="t2_phone_no" placeholder="Phone Number">
+                          </div>
+            
+                          <div class="col-md-6 mb-2">
+                            <label>Address Line 1</label>
+                            <input type="text" class="form-control" formControlName="t2_address_1" placeholder="Address Line 1">
+                          </div>
+            
+                          <div class="col-md-6 mb-2">
+                            <label>Address Line 2</label>
+                            <input type="text" class="form-control" formControlName="t2_address_2" placeholder="Address Line 2">
+                          </div>
+            
+                          <div class="col-md-6 mb-2">
+                            <label>Pincode</label>
+                            <input type="text" class="form-control" formControlName="t2_zip_code" placeholder="Pincode">
+                          </div>
+            
+                          <div class="col-md-6 mb-2">
+                            <label>Local Area</label>
+                            <input type="text" class="form-control" formControlName="t2_1_local_name" placeholder="Local Area">
+                          </div>
+            
+                          <div class="col-md-3 mb-2">
+                            <label>City</label>
+                            <input type="text" class="form-control" formControlName="t2_1_div3_name" placeholder="City">
+                          </div>
+            
+                          <div class="col-md-3 mb-2">
+                            <label>District</label>
+                            <input type="text" class="form-control" formControlName="t2_1_div2_name" placeholder="District">
+                          </div>
+            
+                          <div class="col-md-3 mb-2">
+                            <label>State</label>
+                            <input type="text" class="form-control" formControlName="t2_1_div1_name" placeholder="State">
+                          </div>
+            
+                          <div class="col-md-3 mb-2">
+                            <label>Country</label>
+                            <input type="text" class="form-control" formControlName="t2_1_country_name" placeholder="Country">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+            
+          </div>
+        </div>
+
+
+
+
+      </div>
+    </div>
+  </div>
+</div>

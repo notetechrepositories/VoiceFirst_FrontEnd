@@ -29,9 +29,10 @@
             </div> -->
             <div class="col-md-4">
               <select class="form-select" [(ngModel)]="filterStatus" (change)="applyFilters()">
-                <option value="">All Status</option>
-                <option value="active">Active</option>
-                <option value="inactive">Inactive</option>
+                <option [value]="null" disabled selected>Filter by status</option> 
+                <option value=''>All Status</option>
+                <option value='1'>Active</option>
+                <option value='0'>Inactive</option>
                
               </select>
             </div>
@@ -48,6 +49,7 @@
             <th>Company Name</th>
             <th>Company Type</th>
             <th>Status</th>
+            <th>Expire on</th>
             <th></th>
           </tr>
         </thead>
@@ -55,15 +57,21 @@
           <tr *ngFor="let company of paginatedCompanies; let i = index">
             <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
             
-            <td>{{ company.companyName }}</td>
-            <td>{{ company.companyType }}</td>
+            <td>{{ company.t1_company_name }}</td>
+            <td>{{ company.company_type }}</td>
             <td>
-              <span class="badge" [ngClass]="getStatusClass(company.status)">
-                {{ company.status }}
+              <span class="badge" [ngClass]="getActiveStatusClass(company.is_active)">
+                {{getActiveStatusText(company.is_active)}}
+              </span>
+            </td>
+            <td>
+              <span  [ngClass]="getStatusClass(company.is_active_till_date)">
+                {{ getFormattedDate(company.is_active_till_date) }}
               </span>
             </td>
             <td class="actions text-end">
-              <button class="action-btn danger"><i class="ti ti-eye"></i></button>
+              <!-- <a class="action-btn danger" [routerLink]="['/components/company/company-view',company.id_t1_company]" ><i class="ti ti-eye"></i></a> -->
+              <a class="action-btn danger" (click)="companyView(company)" ><i class="ti ti-eye"></i></a>
               <button class="action-btn info"><i class='bx bxs-edit p-1'></i></button>
               <button class="action-btn danger" (click)="deleteFn()"><i class='bx bx-trash p-1'></i></button>
             </td>
@@ -89,8 +97,9 @@
     <!-- <button (click)="updatePopup()" label="Show">Update</button> -->
   </div>
   
-  
-  
-  <ng-container #popupContainer></ng-container>
+  <ng-container #popupContainer></ng-container>  
+
+
+
   
   

@@ -14,7 +14,20 @@ export class ValidationService {
   }
   static phone(control: AbstractControl): ValidationErrors | null{
     const phoneRegex= /^\+?\d+$/;
+    const value = control.value;
+    if (!value) {
+      return null;
+  }
     return phoneRegex.test(control.value) ? null : {invalidPhone: true};
+  }
+
+  static personName(control: AbstractControl): ValidationErrors | null{
+    const personNameRegex=/^[a-zA-Z'-\s]{2,50}$/; // Allow letters, hyphens, apostrophes, and spaces
+    const value=control.value;
+    if (!value) {
+      return null; // Return null if no value (not required validation)
+  }
+  return personNameRegex.test(value) ? null : { invalidName: true };
   }
 
   static password(control: AbstractControl): ValidationErrors | null {

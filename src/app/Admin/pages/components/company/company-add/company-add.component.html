@@ -200,7 +200,7 @@
                               </div>
                             </div>
 
-                            <div class="col-md"  *ngIf="showDivision3">
+                            <div class="col-md" *ngIf="showDivision3" >
                               <label for="selectBranchDiv3" class="form-label">{{div3Label}} <span class="text-danger">*</span></label>
                               <select class="form-select" id="selectBranchDiv3" formControlName="id_t2_1_div3">
                                 <option value="" disabled selected>Select {{div3Label}}</option>
@@ -277,10 +277,18 @@
                             <div class="col-md-6">
                               <label for="inputUserFirstName" class="form-label">First Name <span class="text-danger">*</span></label>
                               <input type="text" class="form-control" id="inputUserFirstName" placeholder="Enter First Name" formControlName="t5_first_name"/>
+                              <div *ngIf="formuseradd.controls['t5_first_name']?.touched && formuseradd.controls['t5_first_name'].invalid" class="text-danger">
+                                <small *ngIf="formuseradd.controls['t5_first_name'].errors?.['required']">First name is required.</small>
+                                <small *ngIf="!formuseradd.controls['t5_first_name'].errors?.['required'] && formuseradd.controls['t5_first_name'].errors?.['invalidName']">Invalid name format.</small>
+                              </div>
                             </div>
                             <div class="col-md-6">
                               <label for="inputUserLastName" class="form-label">Last Name </label>
                               <input type="text" class="form-control" id="inputUserLastName" placeholder="Enter Last Name" formControlName="t5_last_name"/>
+                              <div *ngIf="formuseradd.controls['t5_last_name'].value" class="text-danger">
+                                
+                                <small *ngIf="formuseradd.controls['t5_last_name'].errors?.['invalidName']"> Invalid name format</small>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -289,7 +297,10 @@
                           <div class="row align-items-center">
                             <div class="col-md-6">
                               <label for="inputUserYearofBirth" class="form-label">Year of Birth <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control" id="inputUserYearofBirth" placeholder="Enter year of birth" formControlName="t5_birth_year"/>
+                              <select  class="form-select" id="inputUserYearofBirth" placeholder="Enter year of birth" formControlName="t5_birth_year">
+                                <option value="" disabled selected> Select year</option>
+                                <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                              </select>
                             </div>
                             <div class="col-md-6">
                               <label for="selectUserGender" class="form-label">Gender </label>
@@ -316,6 +327,10 @@
                             <div class="col-md-6">
                               <label for="inputUserMobile" class="form-label">Mobile no. <span class="text-danger">*</span></label>
                               <input type="text" class="form-control" id="inputUserMobile" placeholder="Enter Mobile no." formControlName="t5_mobile_no"/>
+                              <div *ngIf="formuseradd.controls['t5_mobile_no'].touched && formuseradd.controls['t5_mobile_no'].invalid" class="text-danger">
+                                <small *ngIf="formuseradd.controls['t5_mobile_no'].errors?.['required']">User mobile is required.</small>
+                                <small *ngIf="!formuseradd.controls['t5_mobile_no'].errors?.['required'] && formuseradd.controls['t5_mobile_no'].errors?.['invalidPhone']"> Invalid mobile number</small>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -340,38 +355,51 @@
 
                         <div class="container mb-3">
                           <div class="row align-items-center">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                               <label for="selectUserCountry" class="form-label">Country</label>
                               <select class="form-select" id="selectUserCountry" (change)="onChangeUserCountry($event)" formControlName="id_t2_1_country">
                                 <option value="" disabled selected>Select Country</option>
                                 <option *ngFor="let country of countries" value={{country.id_t2_1_country}} >{{ country.t2_1_country_name }}</option>
                               </select>
+                              <div *ngIf="formuseradd.controls['id_t2_1_country'].touched" class="text-danger">
+                                <small *ngIf="formuseradd.controls['id_t2_1_country'].errors?.['required']">Country is required.</small>
+                              </div>
                             </div>
-                            <div class="col-md-6" >
-                              <label for="selectUserDiv1" class="form-label">Division1</label>
-                              <select class="form-select" id="selectUserDiv1" (change)="onChangeUserDivision1($event)" formControlName="id_t2_1_div1">
-                                <option value="" disabled selected>Select Division1</option>
-                                <option *ngFor="let userDivision1 of userDiv1" value={{userDivision1.id_t2_1_div1}} >{{ userDivision1.t2_1_div1_name }}</option>
-                              </select>
-                            </div>
+
                           </div>
                         </div>
 
                         <div class="container mb-3">
                           <div class="row align-items-center">
-                            <div class="col-md-6">
-                              <label for="selectUserDiv2" class="form-label">Division2</label>
+                            <div class="col-md" *ngIf="showDivision1User">
+                              <label for="selectUserDiv1" class="form-label">{{div1LabelUser}} <span class="text-danger">*</span></label>
+                              <select class="form-select" id="selectUserDiv1" (change)="onChangeUserDivision1($event)" formControlName="id_t2_1_div1">
+                                <option value="" disabled selected>Select {{div1LabelUser}}</option>
+                                <option *ngFor="let userDivision1 of userDiv1" value={{userDivision1.id_t2_1_div1}} >{{ userDivision1.t2_1_div1_name }}</option>
+                              </select>
+                              <div *ngIf="formuseradd.controls['id_t2_1_div1'].touched" class="text-danger">
+                                <small *ngIf="formuseradd.controls['id_t2_1_div1'].errors?.['required']">{{div1LabelUser}} is required.</small>
+                              </div>
+                            </div>
+                            <div class="col-md" *ngIf="showDivision2User">
+                              <label for="selectUserDiv2" class="form-label">{{div2LabelUser}} <span class="text-danger">*</span></label>
                               <select class="form-select" id="selectUserDiv2" (change)="onChangeUserDivision2($event)" formControlName="id_t2_1_div2">
-                                <option value="" disabled selected>Select Division2</option>
+                                <option value="" disabled selected>Select {{div2LabelUser}}</option>
                                 <option *ngFor="let userDivision2 of userDiv2" value={{userDivision2.id_t2_1_div2}} >{{ userDivision2.t2_1_div2_name }}</option>
                               </select>
+                              <div *ngIf="formuseradd.controls['id_t2_1_div2'].touched" class="text-danger">
+                                <small *ngIf="formuseradd.controls['id_t2_1_div2'].errors?.['required']">{{div2LabelUser}} is required.</small>
+                              </div>
                             </div>
-                            <div class="col-md-6">
-                              <label for="selectUserDiv3" class="form-label">Division3</label>
+                            <div class="col-md" *ngIf="showDivision3User">
+                              <label for="selectUserDiv3" class="form-label">{{div3LabelUser}}<span class="text-danger">*</span></label>
                               <select class="form-select" id="selectUserDiv3" formControlName="id_t2_1_div3">
-                                <option value="" disabled selected>Select Division3</option>
+                                <option value="" disabled selected>Select {{div3LabelUser}}</option>
                                 <option *ngFor="let userDivision3 of userDiv3" value={{userDivision3.id_t2_1_div3}} >{{ userDivision3.t2_1_div3_name }}</option>
                               </select>
+                              <div *ngIf="formuseradd.controls['id_t2_1_div3'].touched" class="text-danger">
+                                <small *ngIf="formuseradd.controls['id_t2_1_div3'].errors?.['required']">{{div3LabelUser}} is required.</small>
+                              </div>
                             </div>
                           </div>
                         </div>

@@ -15,9 +15,9 @@ export class RoleService {
   constructor(private http: HttpClient,private localStorageService:LocalstorageService) { }
 
   accessToken = this.localStorageService.getItem('token'); 
-headers = new HttpHeaders({
-'Authorization': `Bearer ${this.accessToken}`
-});
+  headers = new HttpHeaders({
+  'Authorization': `Bearer ${this.accessToken}`
+  });
   
 
   insertRole(data:any){

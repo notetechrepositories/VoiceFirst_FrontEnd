@@ -1,9 +1,13 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, ElementRef, Input, Pipe, ViewChild, ViewContainerRef } from '@angular/core';
 import { CompanyAddComponent } from './company-add/company-add.component';
 import { SweetalertService } from '../../../../Services/sweetAlertService/sweetalert.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { Company } from '../../../Models/company_model';
+import { CompanyService } from '../../../../Services/companyService/company.service';
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { CompanyViewComponent } from './company-view/company-view.component';
 
 @Component({
   selector: 'app-company',
@@ -11,66 +15,89 @@ import { Company } from '../../../Models/company_model';
   styleUrl: './company.component.css'
 })
 export class CompanyComponent {
-  constructor(private componentFactoryResolver: ComponentFactoryResolver,private sweetalert:SweetalertService) {}
-
-  companies = [
-    {
-      id: '1',
-      companyName: 'Suzuki',
-      companyType: 'Vehicle',
-      status: 'active'
-    },
-
-    {
-      id: '2',
-      companyName: 'KFC',
-      companyType: 'Restaurant',
-      status: 'inactive'
-    },
-
-    {
-      id: '3',
-      companyName: 'Kalyan',
-      companyType: 'multicompany group',
-      status: 'inactive'
-    },
-    {
-      id: '4',
-      companyName: 'Aryas',
-      companyType: 'Restaurant',
-      status: 'active'
-    },
-    {
-      id: '5',
-      companyName: 'Reliance',
-      companyType: 'multicompany group',
-      status: 'active'
-    },
-    {
-      id: '6',
-      companyName: 'Lulu',
-      companyType: 'multicompany group',
-      status: 'active'
-    }
-  ];
-  filteredCompanies = [...this.companies];
-  itemsPerPage = 2;
-  currentPage = 1;
-  paginatedCompanies = this.filteredCompanies.slice(0, this.itemsPerPage);
+  constructor
+  (private componentFactoryResolver: ComponentFactoryResolver,
+  private sweetalert:SweetalertService,
+  private companyService: CompanyService,
+  private router:Router) {}
+  ngOnInit(){
+    
+    this.getAllCompany();
+    
+  }
+  companies:any[]=[];
+  filteredCompanies:any[]=[];
+  paginatedCompanies:any[]=[];
+  itemsPerPage:number=2;
+  currentPage:number = 1;
+  
+  
+  getAllCompany(){
+    const filterCompany = {
+      filters: {},
+    };
+    this.companyService.getCompany(filterCompany).subscribe({
+      next:(res)=>{
+        if(res.status==200){
+          console.log();
+          
+          this.companies=res.data.Item;
+          this.filteredCompanies = [...this.companies];
+          this.paginatedCompanies = this.filteredCompanies.slice(0, this.itemsPerPage);
+          console.log("Companies are",this.companies);
+        }else{
+          console.log(res);
+        }
+      },
+      error:(error)=>{
+        console.log(error);
+        this.sweetalert.showToast('error', 'Oops!Something went wrong');
+      },
+    });
+  }
+  
+  
+  
 
   get totalPages(): number {
     return Math.ceil(this.filteredCompanies.length / this.itemsPerPage);
   }
+  companyViewObj:any;
+  companyView(company:any){
+    console.log(company);
 
-  getStatusClass(status: string): string {
-    switch (status) {
-      case 'active':
-        return 'badge-success';
-      case 'inactive':
-        return 'badge-danger';
-      default:
-        return 'badge-light';
+    this.router.navigate(['/components/company/company-view'], {
+      state: { company },
+    });
+    
+  }
+  getStatusClass(is_active_till_date: Date): string {
+    const currentDate = new Date(); // Get the current date
+    const tillDate = new Date(is_active_till_date); // Convert to Date object if not already
+    // Compare the dates
+    if (tillDate <= currentDate) 
+      return 'status-inactive'; // Inactive
+    else{
+      return 'status-active';
     }
+  }
+  getFormattedDate(date: string | Date): string {
+    const parsedDate = new Date(date);
+    return parsedDate.toLocaleDateString('en-GB'); // Format as DD/MM/YYYY
+  }
+  
+
+  getStatusText(is_active_till_date: Date): string{
+    const currentDate = new Date();
+    const tillDate = new Date(is_active_till_date);
+    return tillDate >= currentDate ? 'Active' : 'Inactive';
+  }
+  getActiveStatusClass(is_active: number):string{
+    return is_active== 1 ? 'badge-success' : 'badge-danger';
+
+  }
+  getActiveStatusText(is_active: number){
+    return is_active== 1 ? 'Active': 'Inactive';
   }
 
   nextPage() {
@@ -97,7 +124,7 @@ export class CompanyComponent {
 
   searchTerm = '';
   filterDate = '';
-  filterStatus = '';
+  filterStatus:number|null=null;
   
 
 applyFilters() {
@@ -109,8 +136,8 @@ applyFilters() {
     const search = this.searchTerm.toLowerCase();
     temporaryCompanies = temporaryCompanies.filter(
       (company) =>
-        company.companyName.toLowerCase().includes(search) ||
-      company.companyType.toLowerCase().includes(search)
+        company.t1_company_name.toLowerCase().includes(search) ||
+        company.company_type.toLowerCase().includes(search)
     );
   }
 
@@ -123,9 +150,10 @@ applyFilters() {
 
   // Filter by status
   if (this.filterStatus) {
-    console.log("status checked");
+    console.log("status checked",this.filterStatus);
+    
     temporaryCompanies = temporaryCompanies.filter(
-      (company) => company.status === this.filterStatus
+      (company) => company.is_active === Number(this.filterStatus)
     );
   }
 
@@ -133,6 +161,9 @@ applyFilters() {
   console.log(this.filteredCompanies);
   this.updatePaginatedCompanies();
 }
+//-----------------------------Comapany ViewMore----------------------------------
+
+
 
 
 // ----------------------------------POP UP----------------------------------------

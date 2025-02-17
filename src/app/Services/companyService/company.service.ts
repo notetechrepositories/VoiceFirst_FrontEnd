@@ -21,10 +21,15 @@ export class CompanyService {
     return this.http.post<any>(`${this.apiUrl}/selection_values/get-all`,filter,{headers:this.headers});
   }
   registerCompany(requestData: any){
+    console.log(this.accessToken);
+    
     return this.http.post<any>(`${this.apiUrl}/company/insert-company-admin`,requestData,{headers:this.headers});
   }
-
+  getCompany(filter:any){
+    return this.http.post<any>(`${this.apiUrl}/company/get-all-company-branch-details`,filter,{headers:this.headers});
+  }
   
+
 }
 
   
