@@ -1,0 +1,15 @@
+.status {
+    font-family: 'Arial', sans-serif; /* Common font for all statuses */
+    font-size: 14px; /* Common font size */
+  }
+  
+  .status-active {
+    color: black; /* Green for active */
+  }
+  
+  .status-inactive {
+    color: red; /* Red for inactive */
+  }
+  
+ 
+  

@@ -9,6 +9,7 @@ import { RoleComponent } from './role/role.component';
 import { CompanyComponent } from './company/company.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BranchComponent } from './branch/branch.component';
+import { CompanyViewComponent } from './company/company-view/company-view.component';
 
 
 export const ComponentRoutes: Routes = [
@@ -54,13 +55,23 @@ export const ComponentRoutes: Routes = [
         ],
       },
       {
-        path: 'company',
-        component: CompanyComponent,
-      },
-      {
         path: 'profile',
         component: ProfileComponent,
       },
+      {
+        path: '',
+        children: [
+          {
+            path: 'company',
+            component: CompanyComponent,
+          },
+
+          {
+            path: 'company/company-view',
+            component: CompanyViewComponent
+          },
+        ]
+      }
       
     ],
   },

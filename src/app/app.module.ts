@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { SubscriptionComponent } from './Admin/layout/subscription/subscription.component';
 import { FilterPipe } from './filter.pipe';
 
+
 export function appInitializer(authService: AuthService): () => Promise<void> {
   return () =>
     new Promise((resolve) => {
@@ -30,7 +31,7 @@ export function appInitializer(authService: AuthService): () => Promise<void> {
     BrowserModule,
     AppRoutingModule,
     RouterOutlet,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [
     {

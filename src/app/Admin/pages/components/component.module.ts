@@ -26,6 +26,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { BranchComponent } from './branch/branch.component';
 import { AddBranchComponent } from './branch/add-brach/add-branch/add-branch.component';
 import { EditBranchComponent } from './branch/edit-branch/edit-branch.component';
+import { CompanyViewComponent } from './company/company-view/company-view.component';
 
 
 
@@ -58,7 +59,8 @@ import { EditBranchComponent } from './branch/edit-branch/edit-branch.component'
     ProfileComponent,
     BranchComponent,
     AddBranchComponent,
-    EditBranchComponent
+    EditBranchComponent,
+    CompanyViewComponent
   ],
 })
 export class ComponentModule {}
