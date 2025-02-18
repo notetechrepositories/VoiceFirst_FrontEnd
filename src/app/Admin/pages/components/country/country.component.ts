@@ -180,8 +180,6 @@ getCountryById(id_t2_1_country:number){
 
 // ---------------------Edit-Icon-----------------
 editLocation(location: any): void {
-  console.log(location);
-  
   this.popupContainer.clear();
       const factory = this.componentFactoryResolver.resolveComponentFactory(EditCountryComponent);
       const componentRef = this.popupContainer.createComponent(factory);
