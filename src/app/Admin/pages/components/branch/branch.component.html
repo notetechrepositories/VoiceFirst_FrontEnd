@@ -63,20 +63,30 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let order of paginatedOrders; let i = index">
+      <tr *ngFor="let branch of paginatedOrders; let i = index">
         <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
-        <td>{{ order.customer }}</td>
-        <td>{{ order.productName }}</td>
-        <td>{{ order.amount | currency }}</td>
-        <td>{{ order.orderDate }}</td>
-        <td>{{ order.paymentMethod }}</td>
+        <td>{{ branch.t2_company_branch_name }}</td>
+        <td>{{ branch.company_branch_type_name }}</td>
+        <td>{{ branch. t2_email }}</td>
         <td>
-          <span class="badge" [ngClass]="getStatusClass(order.deliveryStatus)">
-            {{ order.deliveryStatus }}
-          </span>
+          {{ (branch.t2_address_1 || '') }},
+          {{ (branch.t2_address_2 || '') }},
+          {{ (branch.t2_1_country_name || '') }},<br>
+          {{ (branch.t2_1_div1_name || '') }},
+          {{ (branch.t2_1_div2_name || '') }},
+          {{ (branch.t2_1_div3_name || '') }},<br>
+          {{ (branch.t2_1_local_name || '') }},
+          {{ (branch.t2_zip_code || '') }}
+        </td>
+             
+        <td>{{ (branch.t2_mobile_no || '')}}, <br>{{ (branch.t2_phone_no || '')}}</td>
+        <td>Active
+          <!-- <span class="badge" [ngClass]="getStatusClass(branch.st)">
+            {{ branch.deliveryStatus }}
+          </span> -->
         </td>
         <td class="actions text-end">
-          <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="openUpdateCompany()"></i></button>
+          <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="UpdateBranch(branch)"></i></button>
           <button class="action-btn danger" (click)="deleteFn()"><i class='bx bx-trash p-1'></i></button>
         </td>
       </tr>

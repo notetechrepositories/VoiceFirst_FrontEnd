@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ComponentFactoryResolver, Input, ViewChild, ViewContainerRef } from '@angular/core';
 import { SweetalertService } from '../../../../Services/sweetAlertService/sweetalert.service';
 import { Branch } from '../../../Models/branch_model';
 import { BrachService } from '../../../../Services/branchService/brach.service';
@@ -12,69 +12,21 @@ import { EditBranchComponent } from './edit-branch/edit-branch.component';
   styleUrl: './branch.component.css'
 })
 export class BranchComponent {
-
-
-  constructor(private componentFactoryResolver: ComponentFactoryResolver,private sweetalert:SweetalertService) {}
-
-  orders = [
-    {
-      orderId: '#TBT12',
-      customer: 'Louis Hicks',
-      productName: 'Leather band Smartwatches',
-      amount: 2145.2,
-      orderDate: '11 Feb, 2021',
-      deliveryDate: '22 Feb, 2021',
-      paymentMethod: 'COD',
-      deliveryStatus: 'DELIVERED',
-    },
-    {
-      orderId: '#TBT11',
-      customer: 'Richard Jenkins',
-      productName: 'Innovative Education Book',
-      amount: 203.65,
-      orderDate: '08 Oct, 2021',
-      deliveryDate: '24 Oct, 2021',
-      paymentMethod: 'Visa',
-      deliveryStatus: 'CANCELLED',
-    },
-    {
-      orderId: '#TBT10',
-      customer: 'Edward Rogers',
-      productName: 'Apple Headphone',
-      amount: 1876.02,
-      orderDate: '25 Nov, 2021',
-      deliveryDate: '03 Dec, 2021',
-      paymentMethod: 'COD',
-      deliveryStatus: 'RETURNS',
-    },
-    {
-      orderId: '#TBT9',
-      customer: 'Alina Holland',
-      productName: 'Borosil Paper Cup',
-      amount: 351.91,
-      orderDate: '19 June, 2021',
-      deliveryDate: '28 June, 2021',
-      paymentMethod: 'Visa',
-      deliveryStatus: 'PENDING',
-    },
-    {
-      orderId: '#TBT8',
-      customer: 'Theresa Crawford',
-      productName: 'Galaxy Watch4',
-      amount: 3468.41,
-      orderDate: '28 Oct, 2022',
-      deliveryDate: '09 Nov, 2022',
-      paymentMethod: 'Mastercard',
-      deliveryStatus: 'PICKUPS',
-    },
-  ];
-
+  branch: Branch[] = [];
+ @Input() branches: any[] = [];
+  constructor(private componentFactoryResolver: ComponentFactoryResolver,private sweetalert:SweetalertService,
+    private branchservice:BrachService) {}
+    ngOnInit(): void {
+      this.getBranch();
+      
+    }
+  
   itemsPerPage = 2;
   currentPage = 1;
-  paginatedOrders = this.orders.slice(0, this.itemsPerPage);
+  paginatedOrders = this.branch.slice(0, this.itemsPerPage);
 
   get totalPages(): number {
-    return Math.ceil(this.orders.length / this.itemsPerPage);
+    return Math.ceil(this.branch.length / this.itemsPerPage);
   }
 
   getStatusClass(status: string): string {
@@ -111,7 +63,7 @@ export class BranchComponent {
   updatePaginatedOrders() {
     const start = (this.currentPage - 1) * this.itemsPerPage;
     const end = start + this.itemsPerPage;
-    this.paginatedOrders = this.orders.slice(start, end);
+    this.paginatedOrders = this.branch.slice(start, end);
   }
 
   // ----------------------
@@ -119,34 +71,34 @@ export class BranchComponent {
   searchTerm = '';
   filterDate = '';
   filterStatus = '';
-  filteredOrders = [...this.orders];
+  filteredOrders = [...this.branch];
 
 applyFilters() {
-  let orders = [...this.orders];
+  let orders = [...this.branch];
 
   // Filter by search term
   if (this.searchTerm) {
     const search = this.searchTerm.toLowerCase();
     orders = orders.filter(
       (order) =>
-        order.customer.toLowerCase().includes(search) ||
-        order.productName.toLowerCase().includes(search)
+        order.branchName.toLowerCase().includes(search) ||
+        order.branchType.toLowerCase().includes(search)
     );
   }
 
   // Filter by date
   if (this.filterDate) {
     orders = orders.filter(
-      (order) => new Date(order.orderDate).toDateString() === new Date(this.filterDate).toDateString()
+      (order) => new Date(order.country).toDateString() === new Date(this.filterDate).toDateString()
     );
   }
 
   // Filter by status
-  if (this.filterStatus) {
-    orders = orders.filter(
-      (order) => order.deliveryStatus === this.filterStatus
-    );
-  }
+  // if (this.filterStatus) {
+  //   orders = orders.filter(
+  //     (order) => order.deliveryStatus === this.filterStatus
+  //   );
+  // }
 
   this.filteredOrders = orders;
   this.updatePaginatedOrders();
@@ -240,5 +192,56 @@ successtoast(){
     }
   })()
 }
+// ------------------Get---------------------------
+getBranch(): void {
+  const body = { 
+    filters: { 
 
+    }
+  };
+
+  this.branchservice.getBranch(body).subscribe({
+    next: (res) => {
+      console.log(res);
+      this.branch = res.data.Items || [];
+      this.updatePaginatedOrders(); 
+    },
+    error: (error) => {
+      console.log('Failed to load locations:', error);
+      this.branch = [];
+      this.updatePaginatedOrders(); 
+    },
+  });       
+}
+// ------------GetById------------------------------
+
+  getBranchById(id_t2_company_branch:number){
+    const body = { 
+      filters: { 
+        id_t2_company_branch: id_t2_company_branch
+      }
+    };
+    this.branchservice.getBranch(body).subscribe({
+      next:(response)=>{
+        console.log(response);
+        
+        this.branches=response;
+      }
+    })
+  }
+//----------------Update------------------
+  UpdateBranch(branch:any):void{
+    
+      this.popupContainer.clear();
+          const factory = this.componentFactoryResolver.resolveComponentFactory(EditBranchComponent);
+          const componentRef = this.popupContainer.createComponent(factory);
+          componentRef.instance.branchData = branch;
+          componentRef.instance.closePopup = () => {
+            this.popupContainer.clear();
+            this.getBranch(); 
+          };
+    
+  
+    
+  }
 }

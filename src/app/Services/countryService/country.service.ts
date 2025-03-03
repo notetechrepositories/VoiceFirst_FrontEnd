@@ -137,7 +137,7 @@ uploadFileDivisionOne(file:any): Observable<any> {
   }
 
   getDivisionThreeByDivisionTwoId(filter:any){
-    return this.http.post<any>(`${this.divTwourl}/get-all`,filter);
+    return this.http.post<any>(`${this.divThreeurl}/get-all`,filter);
   }
   // ---------------Import----------------------------------
   uploadFileDivisionThree(file:any): Observable<any> {

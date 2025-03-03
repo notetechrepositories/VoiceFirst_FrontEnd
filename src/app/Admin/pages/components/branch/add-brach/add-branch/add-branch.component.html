@@ -16,22 +16,20 @@
                   </div>
                   <div class="col-md-6">
                     <label for="selectBranchType" class="form-label">Branch Type</label>
-                    <select class="form-select" id="selectBranchType" formControlName="t2_id_branch_type">
+                    <select class="form-select" id="t2_id_branch_type" formControlName="t2_id_branch_type">
                       <option value="" disabled selected>Select Branch Type</option>
-                      <option value="retail">Retail</option>
-                      <option value="corporate">Corporate</option>
-                      <option value="franchise">Franchise</option>
-                      <option value="other">Other</option>
+                      <option value="retail" *ngFor="let branchtype of branchType" [value]="branchtype.id_t4_1_selection_values">{{ branchtype.t4_1_selection_values_name }}</option>
+
                     </select>
                     <!-- <input type="text" class="form-control" id="exampleInputBranchType" placeholder="Enter Company Type" /> -->
                   </div>
                   <div class="col-md-12">
                     <label for="inputEmail4" class="form-label">Email</label>
                     <input type="email" class="form-control" id="inputEmail4" formControlName="t2_email">
-                    <div *ngIf="branchForm.controls['t2_email'].touched && branchForm.controls['email'].invalid" class="text-danger">
+                    <!-- <div *ngIf="branchForm.controls['t2_email'].touched && branchForm.controls['email'].invalid" class="text-danger">
                       <small *ngIf="branchForm.controls['t2_email'].errors?.['required']">Email is required.</small>
                       <small *ngIf="branchForm.controls['t2_email'].errors?.['invalidEmail']">Invalid email format.</small>
-                    </div>
+                    </div> -->
                   </div>
               <div class="col-12">
                 <label for="inputAddress" class="form-label">Address</label>
@@ -88,9 +86,14 @@
                 <!-- <input type="text" class="form-control" id="exampleInputBranchType" placeholder="Enter Company Type" /> -->
               </div>
               <div class="col-md-6">
-                <label for="inputBranchName" class="form-label">Zip Code</label>
-                <input type="text" class="form-control" id="inputBranchName" placeholder="Enter Company Name" />
+                <label for="inputBranchName" class="form-label">Location Name</label>
+                <input type="text" class="form-control" id="t2_1_local_name" formControlName="t2_1_local_name" />
               </div>
+              <div class="col-md-6">
+                <label for="inputBranchName" class="form-label">Zip Code</label>
+                <input type="text" class="form-control" id="t2_zip_code" formControlName="t2_zip_code" />
+              </div>
+
 
             
               <div class="col-12 d-flex justify-content-end">
