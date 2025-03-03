@@ -148,20 +148,34 @@ show() {
   this.sweetalert.success()
 }
 
-deleteFn(){
+deleteBranch(id:any){
   Swal.fire({
-    title: "Are you sure?",
-    text: "You won't be able to revert this!",
-    icon: "warning",
-    showCancelButton: true,
-    confirmButtonColor: "#3085d6",
-    cancelButtonColor: "#d33",
-    confirmButtonText: "Yes, delete it!"
-  }).then((result) => {
-    if (result.isConfirmed) {
-      this.sweetalert.showToast('success','Succefully deleted');
-    }
-  });
+     title: "Are you sure?",
+     text: "You won't be able to revert this!",
+     icon: "warning",
+     showCancelButton: true,
+     confirmButtonColor: "#3085d6",
+     cancelButtonColor: "#d33",
+     confirmButtonText: "Yes, delete it!"
+   }).then((result) => {
+     if (result.isConfirmed) {
+      console.log(id);
+      
+       this.branchservice.deleteBranch(id).subscribe({
+         next: (res) => {
+           if(res.message=="Success"){
+             this.sweetalert.showToast('success','Succefully deleted');
+             //this.paginatedOrders = this.locations.filter(item => item.id_t2_1_country !== id);
+             this.getBranch();
+           }
+         },
+         error: (error) => {
+           this.sweetalert.showToast('error','Oops! Something went wrong.');
+         },
+       });
+      
+     }
+   });
 }
 
 successtoast(){

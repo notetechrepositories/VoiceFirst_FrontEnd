@@ -30,6 +30,7 @@ export class EditBranchComponent {
   constructor(private router:Router,private fb: FormBuilder,private brachService:BrachService
       ,private sweetalert:SweetalertService,private countryService:CountryService ,private companyService:CompanyService)
       {this.branchForm = this.fb.group({
+        id_t2_company_branch:[''],
         t2_company_branch_name: [''],
         id_t1_company: ['8bd712f1-222f-4322-a496-56bdd9e4e03b'],
         t2_id_branch_type: [''],
@@ -42,6 +43,7 @@ export class EditBranchComponent {
         id_t2_1_div1: [''],
         id_t2_1_div2: [''],
         id_t2_1_div3: [''],
+        id_t2_1_local:[''],
         t2_1_local_name: [''],
         t2_zip_code: ['']
       
@@ -59,8 +61,23 @@ export class EditBranchComponent {
   }
 
   onSubmit() {
-    alert('Company Added!');
-    this.closePopup();
+    const data=this.branchForm.value;
+    this.brachService.updateBranch(data).subscribe({
+      next: (response) => {
+        if(response.message=="Success"){
+          this.sweetalert.showToast('success','Successfully updated.');
+          this.closePopup();
+          this.branchForm.reset();
+        }
+        else{
+          this.sweetalert.showToast('error',response.message);
+        }
+      },
+      error: (error) => {
+        console.error('Error adding location:', error);
+        alert('Failed to add location.');
+      },
+    });
   }
   getCountry():void{
     const filterCountries = {
@@ -156,6 +173,9 @@ export class EditBranchComponent {
   onChangeDivisionTwo(event:Event){
     const selectElement = event.target as HTMLSelectElement; 
     const divisionTwoId= selectElement.value; 
+   this.getDivisionThree(divisionTwoId);
+  }
+  getDivisionThree(divisionTwoId:string){
     const filterCountries = {
       filters: {
         id_t2_1_div2: divisionTwoId,
@@ -210,10 +230,11 @@ export class EditBranchComponent {
       console.log(this.branchData.id_t2_1_country);
       
       this.getDivisionOne(this.branchData.id_t2_1_country);
- this.getdivisiontwo(this.branchData.id_t2_1_div1)
-      
+      this.getdivisiontwo(this.branchData.id_t2_1_div1) 
+      this.getDivisionThree(this.branchData.id_t2_1_div2)
       const data=this.branchData;
       this.branchForm.patchValue({
+        id_t2_company_branch:data.id_t2_company_branch,
         t2_company_branch_name: data.t2_company_branch_name,
         t2_id_branch_type:data.t2_id_branch_type,
         t2_1_div1_called: data.t2_1_div1_called,
@@ -230,6 +251,8 @@ export class EditBranchComponent {
         t2_zip_code:data.t2_zip_code,
         t2_1_country_name:data.t2_1_country_name,
         id_t2_1_div1:data.id_t2_1_div1,
+        id_t2_1_div2:data.id_t2_1_div2,
+        id_t2_1_div3:data.id_t2_1_div3,
         t2_1_div2_name:data.t2_1_div2_name,
       });
     }
