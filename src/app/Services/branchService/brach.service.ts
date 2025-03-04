@@ -42,6 +42,8 @@ export class BrachService {
 
   //Delete Branch
   deleteBranch(branchId:any){
+    console.log(branchId);
+    
     const url = `${this.url}/${branchId}`;
     return this.http.delete<any>(url);
   }
