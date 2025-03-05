@@ -1768,6 +1768,37 @@
     font-weight: bold;
     color: #555;
   }
+
+  .borderless-input {
+    border: none;
+    outline: none;
+    background: transparent;
+    border-bottom: 2px solid blue; 
+    transition: border-bottom 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  }
+
+  /* Add glowing effect on focus */
+.borderless-input:focus {
+  /* border-bottom: 2px solid dodgerblue; */
+  /*box-shadow: 0 3px 10px rgba(30, 144, 255, 0.8);  Dodgerblue glow */
+}
+
+  .center-placeholder {
+    text-align: center; /* Horizontally center text */
+  }
+  
+  .auto-resize {
+    width: auto;
+    min-width: 100px; /* Minimum width */
+    max-width: 100%; /* Prevent overflow */
+  }
+  
+ 
+  
+ 
+  
+  
+
   
   
   @media (max-width: 768px) {
