@@ -1,0 +1,21 @@
+/* Remove border */
+.no-border {
+    border: none;
+    border-bottom: 1px solid #ccc; /* Optional: Adds a subtle underline */
+    background-color: transparent; /* Optional: Transparent background */
+    outline: none;
+}
+
+/* Placeholder styles (optional) */
+.no-label::placeholder {
+    font-size: 14px; /* Adjust font size for placeholders */
+    color: #999; /* Placeholder text color */
+}
+.card-first-card-header {
+    margin-bottom: 15px; /* Add space below the header */
+}
+
+.card-first-card-body {
+    padding-top: 0; /* Optional: Remove unnecessary padding at the top of the body */
+}
+
