@@ -8,6 +8,7 @@ import { SelectionValuesComponent } from './constant/selection-values/selection-
 import { RoleComponent } from './role/role.component';
 import { CompanyComponent } from './company/company.component';
 import { ProfileComponent } from './profile/profile.component';
+import { BranchComponent } from './branch/branch.component';
 import { CompanyViewComponent } from './company/company-view/company-view.component';
 
 
@@ -34,6 +35,10 @@ export const ComponentRoutes: Routes = [
       {
         path: 'selection-values',
         component: SelectionValuesComponent,
+      },
+      {
+        path: 'branch',
+        component: BranchComponent,
       },
       
       {
