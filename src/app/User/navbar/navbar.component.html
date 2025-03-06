@@ -1,0 +1,46 @@
+<nav class="nav-container">
+    <div class="nav-logo">
+      <img src="assets/images/logo.png" alt="logo" />
+      <!-- <h1>LOGO</h1> -->
+    </div>
+    <ul class="nav-list" [class.nav-active]="isMenuOpen">
+      <li>
+        <a href="#">Home</a>
+      </li>
+      <li>
+        <a href="#">Services</a>
+      </li>
+      <li>
+        <a href="#">Blog</a>
+      </li>
+      <li>
+        <a href="#">Contact Us</a>
+      </li>
+    </ul>
+    <div class="nav-toggle" (click)="toggleMenu()">
+      <span class="nav-line" [class.nav-toggle-active]="isMenuOpen"></span>
+      <span class="nav-line" [class.nav-toggle-active]="isMenuOpen"></span>
+      <span class="nav-line" [class.nav-toggle-active]="isMenuOpen"></span>
+    </div>
+  </nav>
+  
+  <div class="nav-menu" [class.nav-menu-active]="isMenuOpen">
+    <ul class="nav-menu-list">
+      <li>
+        <a href="#">Home</a>
+      </li>
+      <li>
+        <a href="#">Services</a>
+      </li>
+      <li>
+        <a href="#">Blog</a>
+      </li>
+      <li>
+        <a href="#">Contact Us</a>
+      </li>
+    </ul>
+  </div>
+  
+  
+
+<router-outlet/>
