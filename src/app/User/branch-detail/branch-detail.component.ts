@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FileUploadEvent } from 'primeng/fileupload';
+
 
 
 
