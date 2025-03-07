@@ -56,13 +56,13 @@
 
 <section class="review-section">
     <div class="container">
-        <div class="row">
-            <div class="col-md-6">
-                <h1 class="fw-bold">Your Opinion Matters!</h1>
-                <p>"We value your feedback! Report any issues or suggest improvements to enhance our system’s functionality. Your insights help us create a better experience for everyone."</p>
+        <div class="row w-100">
+            <div class="col-md-12">
+                <h1 class="fw-bold mt-4">Your Opinion Matters!</h1>
+                <p class="text-center mt-4">"We value your feedback! Report any issues or suggest improvements to enhance our system’s functionality. Your insights help us create a better experience for everyone."</p>
             </div>
-            <div class="col-md-6">
-                <form class="row g-3">
+            <div class="col-md-12">
+                <form class="row g-3 w-100">
                     <!-- <div class="col-12">
                         <select id="inputState" class="form-select form-control-lg">
                           <option selected disabled style="color: #fff;">Select a session</option>
@@ -72,9 +72,101 @@
                     <div class="col-12">
                       <textarea type="text" class="form-control form-control-lg" id="inputAddress" placeholder="Message"></textarea>
                     </div>
+
+<!--  -->
+
+                    <div class="col-12 d-flex justify-content-center">
+                        <div class="row g-2  w-100">
+                            <!-- Card 1 -->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card">
+                                    <label>Choose First Set of Images</label>
+                                    <div class="img-thumbs">
+        
+                                            <div class="col-12">
+                                                <label for="upload-img1" class="custom-file-upload">
+                                                    <span class="plus-icon">+</span>
+                                                </label>
+                                                <input type="file" (change)="onFileSelected($event, 'images1')" multiple id="upload-img1" accept="image/*" />
+                                            </div>
+                                            <div class="col-12">
+                                                <div *ngFor="let preview of previews1; let i = index" class="wrapper-thumb mb-1">
+                                                    <img [src]="preview.url" class="img-preview-thumb" />
+                                                    <span class="remove-btn" (click)="removeFile(i, 'images1')"><i class="fas fa-times-circle solid"></i></span>
+                                                </div>
+                                                <div *ngIf="previews1.length==0" class="no-file">
+                                                    <p class="text-center">No file selected</p>
+                                                </div>
+                                            </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 2 -->
+                            <div class="col-md-4 col-sm-6">
+                                <div class="card">
+                                    <label>Choose Second Set of Images</label>
+                                    <div class="img-thumbs">
+
+                                            <div class="col-12">
+                                                <label for="upload-img2" class="custom-file-upload">
+                                                    <span class="plus-icon">+</span>
+                                                  </label>
+                                                  <input type="file" (change)="onFileSelected($event, 'images2')" multiple id="upload-img2" accept="image/*" />
+                                            </div>
+                                            <div class="col-12">
+                                                <div *ngFor="let preview of previews2; let i = index" class="wrapper-thumb">
+                                                    <img [src]="preview.url" class="img-preview-thumb" />
+                                                    <span class="remove-btn" (click)="removeFile(i, 'images2')"><i class="fas fa-times-circle"></i></span>
+                                                  </div>
+                                                  <div *ngIf="previews2.length==0" class="no-file">
+                                                    <p class="text-center">No file selected</p>
+                                                </div>
+                                            </div>  
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Card 3 -->
+                            <div class="col-md-4 col-sm-6 mx-auto">
+                                <div class="card">
+                                    <label>Choose Videos</label>
+                                    <div class="img-thumbs">
+
+                                            <div class="col-12">
+                                                <label for="upload-video" class="custom-file-upload">
+                                                    <span class="plus-icon">+</span>
+                                                  </label>
+                                                  <input type="file" (change)="onFileSelected($event, 'videos')" multiple id="upload-video" accept="video/*" />
+                                            </div>
+                                            <div class="col-12">
+                                                <div *ngFor="let preview of videoPreviews; let i = index" class="wrapper-thumb">
+                                                    <video class="video-preview-thumb" controls>
+                                                      <source [src]="preview.url" type="video/mp4" />
+                                                      Your browser does not support videos.
+                                                    </video>
+                                                    <span class="remove-btn" (click)="removeFile(i, 'videos')">x</span>
+                                                  </div>
+                                                  <div *ngIf="videoPreviews.length==0" class="no-file">
+                                                    <p class="text-center">No file selected</p>
+                                                </div>
+                                            </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+<!--  -->
+                    <div class="col-12 d-flex justify-content-center">
+                        
+                    </div>
+
+
                    
                     <div class="col-12">
-                      <button type="submit" class="btn btn-primary w-100">Sign in</button>
+                      <button type="submit" class="btn btn-primary w-100">Submit</button>
                     </div>
                   </form>
             </div>

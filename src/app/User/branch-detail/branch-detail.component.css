@@ -138,7 +138,105 @@ img {
   .review-section textarea{
     min-height:201px;
   }
+
+  /*  */
+
+  /* Hide the default file input */
+  #upload-img1, #upload-img2, #upload-video {
+    display: none;
+  }
   
+  /* Custom upload button */
+  .custom-file-upload {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    border: 2px dashed #007bff;
+    font-size: 24px;
+    font-weight: bold;
+    color: #007bff;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  /* Hover effect */
+  .custom-file-upload:hover {
+    background: #007bff;
+    color: white;
+  }
+  
+  .plus-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: -4px;
+    margin-left: 1px;
+  }
+  
+  .img-thumbs {
+    background: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 0.25rem;
+    padding: 0.75rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .wrapper-thumb {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .img-preview-thumb {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 0.25rem;
+    box-shadow: 0.125rem 0.125rem 0.0625rem rgba(0, 0, 0, 0.12);
+    max-width: 140px;
+    padding: 0.25rem;
+    width: 100px;
+    height: 100px;
+    margin-left: 9px;
+  }
+  
+  .video-preview-thumb {
+    max-width: 200px;
+    max-height: 120px;
+    border-radius: 5px;
+    margin-left: 9px;
+  }
+  
+  .remove-btn {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background: white;
+    border-radius: 50%;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .remove-btn:hover {
+    box-shadow: 0px 0px 3px grey;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .no-file p{
+    font-size: .9rem;
+  }
+
+  /*  */
+
+
 
 
 @media (max-width: 991px) {
