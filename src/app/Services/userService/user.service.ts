@@ -21,4 +21,12 @@ export class UserService {
     getUserDetails(filters:any){
         return this.http.post<any>(`${this.apiUrl}/user/get-all`, filters, { headers: this.headers });
     }
+    getAdminProfile(){
+      return this.http.get<any>(`${this.apiUrl}/user/get-profile`,{headers: this.headers});
+    }
+    putAdminProfile(userData:any){
+      console.log("put request body",userData);
+      
+      return this.http.put<any>(`${this.apiUrl}/user`, userData, {headers:this.headers});
+    }
 }
