@@ -6,7 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { UsersRoutes } from './user.routing.module';
 import { BranchDetailComponent } from './branch-detail/branch-detail.component';
-import { PrimeNgModule } from '../primengModules';
+
 
 
 
