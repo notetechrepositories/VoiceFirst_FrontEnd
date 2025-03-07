@@ -23,6 +23,9 @@ import { EditRoleComponent } from './role/edit-role/edit-role.component';
 import { CompanyComponent } from './company/company.component';
 import { CompanyAddComponent } from './company/company-add/company-add.component';
 import { ProfileComponent } from './profile/profile.component';
+import { BranchComponent } from './branch/branch.component';
+import { AddBranchComponent } from './branch/add-brach/add-branch/add-branch.component';
+import { EditBranchComponent } from './branch/edit-branch/edit-branch.component';
 import { CompanyViewComponent } from './company/company-view/company-view.component';
 
 
@@ -54,6 +57,9 @@ import { CompanyViewComponent } from './company/company-view/company-view.compon
     CompanyComponent,
     CompanyAddComponent,
     ProfileComponent,
+    BranchComponent,
+    AddBranchComponent,
+    EditBranchComponent,
     CompanyViewComponent
   ],
 })

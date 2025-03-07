@@ -47,6 +47,8 @@ export class CreateCountryComponent {
 
   onSubmit(): void {
     const data=this.locationForm.value;
+    console.log(data);
+    
     this.countryService.insertCountry(data).subscribe({
       next: (response) => {
       if(response.message=="Success"){

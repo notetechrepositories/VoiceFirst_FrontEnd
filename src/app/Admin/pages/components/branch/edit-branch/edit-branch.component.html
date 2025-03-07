@@ -1,0 +1,106 @@
+<div class="popup">
+  <div class="popup-content">
+
+
+          <!-- Changing Part -->
+           <div class="d-flex justify-content-between mb-3">
+            <h2>Branch</h2>
+            <i class="ti ti-x" (click)="onClose()"></i>
+           </div>
+         
+        
+          <form class="row g-3" [formGroup]="branchForm" (ngSubmit)="onSubmit()">
+              <div class="col-md-6">
+                  <label for="inputBranchName" class="form-label">Branch Name</label>
+                  <input type="text" class="form-control" id="t2_company_branch_name" placeholder="Enter Branch Name" formControlName="t2_company_branch_name"/>
+                </div>
+                <div class="col-md-6">
+                  <label for="selectBranchType" class="form-label">Branch Type</label>
+                  <select class="form-select" id="t2_id_branch_type" formControlName="t2_id_branch_type">
+                    <option value="" disabled selected>Select Branch Type</option>
+                    <option value="retail" *ngFor="let branchtype of branchType" [value]="branchtype.id_t4_1_selection_values">{{ branchtype.t4_1_selection_values_name }}</option>
+
+                  </select>
+                  <!-- <input type="text" class="form-control" id="exampleInputBranchType" placeholder="Enter Company Type" /> -->
+                </div>
+                <div class="col-md-12">
+                  <label for="inputEmail4" class="form-label">Email</label>
+                  <input type="email" class="form-control" id="t2_email" formControlName="t2_email">
+                  <!-- <div *ngIf="branchForm.controls['t2_email'].touched && branchForm.controls['email'].invalid" class="text-danger">
+                    <small *ngIf="branchForm.controls['t2_email'].errors?.['required']">Email is required.</small>
+                    <small *ngIf="branchForm.controls['t2_email'].errors?.['invalidEmail']">Invalid email format.</small>
+                  </div> -->
+                </div>
+            <div class="col-12">
+              <label for="inputAddress" class="form-label">Address</label>
+              <input type="text" class="form-control" id="t2_address_1" formControlName="t2_address_1">
+              <!-- <div *ngIf="form.controls['address'].touched && form.controls['address'].invalid" class="text-danger">
+                <small>Address is required.</small>
+              </div> -->
+            </div>
+          
+            <div class="col-12">
+              <label for="inputAddress2" class="form-label">Address 2</label>
+              <input type="text" class="form-control" id="t2_address_2" formControlName="t2_address_2">
+            </div>
+          
+            <div class="col-md-6">
+              <label for="inputCity" class="form-label">Mobile Number</label>
+              <input type="text" class="form-control" id="t2_mobile_no" formControlName="t2_mobile_no">
+            </div>
+            <div class="col-md-6">
+              <label for="inputCity" class="form-label">Phone Number</label>
+              <input type="text" class="form-control" id="t2_phone_no" formControlName="t2_phone_no">
+            </div>
+            <div class="col-md-6">
+              <label for="selectBranchType" class="form-label">Country</label>
+              <select class="form-control" id="id_t2_1_country" formControlName="id_t2_1_country" (change)="onChangeCountry($event)">
+                  <option value="" disabled selected>Select Country</option>  
+                  <option *ngFor="let country of countries" [value]="country.id_t2_1_country">{{ country.t2_1_country_name }}</option>
+                </select>
+              <!-- <input type="text" class="form-control" id="exampleInputBranchType" placeholder="Enter Company Type" /> -->
+            </div>                
+              <div class="col-md-6" *ngIf="showDivisionOne">
+                  <label for="selectBranchType" class="form-label">{{ div1 }}</label>
+              <select class="form-select" id="selectBranchType" formControlName="id_t2_1_div1" (change)="onChangeDivisionOne($event)">
+                <option value="" disabled selected>Select Division one</option>
+                <option *ngFor="let divisionOne of divisionOnes" [value]="divisionOne.id_t2_1_div1">{{ divisionOne.t2_1_div1_name }}</option>
+                
+              </select>
+              <!-- <input type="text" class="form-control" id="exampleInputBranchType" placeholder="Enter Company Type" /> -->
+            </div>    
+              <div class="col-md-6" *ngIf="showDivisionTwo">
+                  <label for="selectBranchType" class="form-label">{{ div2 }}</label>
+              <select class="form-select" id="selectBranchType" formControlName="id_t2_1_div2" (change)="onChangeDivisionTwo($event)">
+                <option value="" disabled selected>Select Division Two</option>
+                <option *ngFor="let divisiontwo of divisionTwo" [value]="divisiontwo.id_t2_1_div2">{{ divisiontwo.t2_1_div2_name }}</option>
+              </select>
+              <!-- <input type="text" class="form-control" id="exampleInputBranchType" placeholder="Enter Company Type" /> -->
+            </div>     
+               <div class="col-md-6" *ngIf="showDivisionThree">
+              <label for="selectBranchType" class="form-label">{{ div3 }}</label>
+              <select class="form-select" id="selectBranchType" formControlName="id_t2_1_div3">
+                <option value="" disabled selected>Select Division Three</option>
+                <option *ngFor="let divisionthree of divisionThree" [value]="divisionthree.id_t2_1_div3">{{ divisionthree.t2_1_div3_name }}</option>
+              </select>
+              <!-- <input type="text" class="form-control" id="exampleInputBranchType" placeholder="Enter Company Type" /> -->
+            </div>
+            <div class="col-md-6">
+              <label for="inputBranchName" class="form-label">Location Name</label>
+              <input type="text" class="form-control" id="t2_1_local_name" formControlName="t2_1_local_name" />
+            </div>
+            <div class="col-md-6">
+              <label for="inputBranchName" class="form-label">Zip Code</label>
+              <input type="text" class="form-control" id="t2_zip_code" formControlName="t2_zip_code" />
+            </div>
+
+
+          
+            <div class="col-12 d-flex justify-content-end">
+              <button type="submit" class="primary-btn">Submit</button>
+            </div>
+          </form>
+          <!-- ------------- -->
+
+  </div>
+</div>
