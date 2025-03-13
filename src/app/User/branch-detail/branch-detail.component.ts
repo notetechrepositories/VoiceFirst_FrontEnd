@@ -1,4 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { AudioRecorderService } from '../../Services/audioRecorderService/audio-recorder.service';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 
@@ -18,6 +20,10 @@ export class BranchDetailComponent {
   selectedVideos: File[] = [];
   videoPreviews: { url: string }[] = [];
 
+  constructor(
+    private audioService: AudioRecorderService,
+    private sanitizer: DomSanitizer,
+  ){}
 
   onFileSelected(event: Event, type: string) {
     const input = event.target as HTMLInputElement;
@@ -57,8 +63,61 @@ export class BranchDetailComponent {
     }
   }
 
+  // Audio recorder
 
- 
+  isRecording: boolean = false;
+  isRecordBtn: boolean = true;
+  audioUrl: any = null;
+  audioBlob: Blob | null = null;
+
+
+  async startRecording() {
+    // this.isRecording = true;
+    this.audioUrl=null;
+    this.isRecordBtn = false;
+    await this.audioService.startRecording();
+  }
+
+  async stopRecording() {
+    // this.isRecording = false;
+    
+    this.isRecordBtn= true;
+    this.audioBlob = await this.audioService.stopRecording();
+
+    if (this.audioBlob) {
+      this.audioUrl = this.sanitizer.bypassSecurityTrustUrl(
+        URL.createObjectURL(this.audioBlob)
+      );
+
+      // Append to form
+      const file = new File([this.audioBlob], 'audio_recording.wav', { type: 'audio/wav' });
+      // this.audioForm.patchValue({ audioFile: file });
+    }
+  }
+
+  deleteRecording() {
+    this.audioUrl = null;
+    this.audioBlob = null;
+    // this.audioForm.patchValue({ audioFile: null });
+  }
+
+  // submitForm() {
+  //   if (!this.audioBlob) {
+  //     alert('Please record an audio before submitting.');
+  //     return;
+  //   }
+
+  //   const formData = new FormData();
+  //   formData.append('audioFile', this.audioForm.get('audioFile')?.value);
+
+  //   fetch('https://your-api-endpoint.com/upload-audio', {
+  //     method: 'POST',
+  //     body: formData,
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => console.log('Success:', data))
+  //     .catch((error) => console.error('Error:', error));
+  // }
 }
 
 

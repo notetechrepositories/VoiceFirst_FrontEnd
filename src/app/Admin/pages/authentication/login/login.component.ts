@@ -40,7 +40,7 @@ export class LoginComponent {
           if(res.status==200){
             this.localStorageService.setItem('token', res.data.token);
             this.localStorageService.setItem('role', res.data.role);
-            if(res.data.role=='Admin' || res.data.role=="Company"){
+            if(res.data.role =='Notetech' || res.data.role=="Company"){
               this.router.navigate(['/dashboard']);
             }
             
