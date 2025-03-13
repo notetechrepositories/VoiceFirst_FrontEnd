@@ -214,24 +214,7 @@
                           </div>
                         </div>
 
-                        <!-- <div class="container mb-3">
-                          <div class="row align-items-center">
-                            <div class="col-md-6"  *ngIf="showDivision2">
-                              <label for="selectBranchDiv2" class="form-label">{{div2Label}} <span class="text-danger">*</span></label>
-                              <select class="form-select" id="selectBranchDiv2" (change)="onChangeDivision2($event)" formControlName="id_t2_1_div2">
-                                <option value="" disabled selected>Select Branch Type</option>
-                                <option *ngFor="let division2 of div2" value={{division2.id_t2_1_div2}} >{{ division2.t2_1_div2_name }}</option>
-                              </select>
-                            </div>
-                            <div class="col-md-6"  *ngIf="showDivision3">
-                              <label for="selectBranchDiv3" class="form-label">{{div3Label}} <span class="text-danger">*</span></label>
-                              <select class="form-select" id="selectBranchDiv3" formControlName="id_t2_1_div3">
-                                <option value="" disabled selected>Select Branch Type</option>
-                                <option *ngFor="let division3 of div3" value={{division3.id_t2_1_div3}} >{{ division3.t2_1_div3_name }}</option>
-                              </select>
-                            </div>
-                          </div>
-                        </div> -->
+                       
 
                         <div class="container mb-3">
                           <div class="row align-items-center">
@@ -251,14 +234,6 @@
                             </div>
                           </div>
                         </div>
-
-                        
-
-                        
-
-
-
-                        
                       </div>
                       <div class="text-end">
                         <button type="button" (click)="previoustocompany()" class="primary-btn">Previous</button>
@@ -432,94 +407,5 @@
                 </div>
               </div>
             </div>
-                                                                                        
-          
-            <!-- working <form class="row g-3">
-              <div class="col-md-6">
-                <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4" formControlName="email"> -->
-
-                <!-- <div *ngIf="form.controls['email'].touched && form.controls['email'].invalid" class="text-danger">
-                  <small *ngIf="form.controls['email'].errors?.['required']">Email is required.</small>
-                  <small *ngIf="form.controls['email'].errors?.['invalidEmail']">Invalid email format.</small>
-                </div> -->
-            <!--   working                  
-              </div>
-            
-              <div class="col-md-6">
-                <label for="inputPassword4" class="form-label">Password</label>
-                <input type="password" class="form-control" id="inputPassword4" formControlName="password"> -->
-                <!-- <div *ngIf="form.controls['password'].touched && form.controls['password'].invalid" class="text-danger">
-                  <small *ngIf="form.controls['password'].errors?.['required']">Password is required.</small>
-                  <small *ngIf="form.controls['password'].errors?.['invalidPassword']">
-                    Password must contain uppercase, lowercase, number, and at least 6 characters.
-                  </small>
-                </div> -->
-
-              <!-- working </div>
-            
-              <div class="col-12">
-                <label for="inputAddress" class="form-label">Address</label>
-                <input type="text" class="form-control" id="inputAddress" formControlName="address"> -->
-                <!-- <div *ngIf="form.controls['address'].touched && form.controls['address'].invalid" class="text-danger">
-                  <small>Address is required.</small>
-                </div> -->
-              <!-- working </div>
-            
-              <div class="col-12">
-                <label for="inputAddress2" class="form-label">Address 2</label>
-                <input type="text" class="form-control" id="inputAddress2" formControlName="address2">
-              </div>
-            
-              <div class="col-md-6">
-                <label for="inputCity" class="form-label">City</label>
-                <input type="text" class="form-control" id="inputCity" formControlName="city"> -->
-
-                <!-- <div *ngIf="form.controls['city'].touched && form.controls['city'].invalid" class="text-danger">
-                  <small>City is required.</small>
-                </div> -->
-
-              <!-- working</div>
-            
-              <div class="col-md-4">
-                <label for="inputState" class="form-label">State</label>
-                <select id="inputState" class="form-select" formControlName="state">
-                  <option selected disabled>Choose...</option>
-                  <option value="state1">State 1</option>
-                  <option value="state2">State 2</option>
-                </select> -->
-
-                <!-- <div *ngIf="form.controls['state'].touched && form.controls['state'].invalid" class="text-danger">
-                  <small>State is required.</small>
-                </div> -->
-              <!-- working </div>
-            
-              <div class="col-md-2">
-                <label for="inputZip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="inputZip" formControlName="zip"> -->
-
-                <!-- <div *ngIf="form.controls['zip'].touched && form.controls['zip'].invalid" class="text-danger">
-                  <small *ngIf="form.controls['zip'].errors?.['required']">Zip is required.</small>
-                  <small *ngIf="form.controls['zip'].errors?.['pattern']">Invalid zip format.</small>
-                </div> -->
-              <!-- working</div>
-            
-              <div class="col-12">
-                <div class="form-check">
-                  <input class="form-check-input" type="checkbox" id="gridCheck" formControlName="check">
-                  <label class="form-check-label" for="gridCheck">Check me out</label> -->
-
-                  <!-- <div *ngIf="form.controls['check'].touched && form.controls['check'].invalid" class="text-danger">
-                    <small>You must agree to continue.</small>
-                  </div> -->
-                <!-- working</div>
-              </div>
-            
-              <div class="col-12 d-flex justify-content-end">
-                <button (click)="onSave()" type="submit" class="primary-btn">Add Company</button>
-              </div>
-            </form> -->
-            <!-- ------------- -->
-
     </div>
   </div>

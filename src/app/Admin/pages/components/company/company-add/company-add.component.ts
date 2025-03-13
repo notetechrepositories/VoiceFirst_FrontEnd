@@ -500,7 +500,7 @@ export class CompanyAddComponent implements OnInit {
     if (
       this.formcompanyadd.valid &&
       this.formbranchadd.valid &&
-      this.formuseradd.valid 
+      this.formuseradd.valid  
       
     ) {
       const requestData = {

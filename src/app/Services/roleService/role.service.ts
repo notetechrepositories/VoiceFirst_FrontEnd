@@ -24,9 +24,13 @@ export class RoleService {
     return this.http.post<any>(`${this.apiUrl}/role/add-role-with-permission`, data,{headers:this.headers}); 
   }
 
-  getRole(body:any) {
-    return this.http.post<ApiResponse>(`${this.apiUrl}/role/get-all`, body, { headers: this.headers });
-  }
+    getRole(body:any) {
+      console.log("function called");
+      
+      return this.http.post<ApiResponse>(`${this.apiUrl}/role/get-all`, body, { headers: this.headers });
+      
+      
+    }
   
   getRoleandPermission(id:string){
     return this.http.get<any>(`${this.apiUrl}/role/get-permission-by-role-id?id=${id}`);
