@@ -93,7 +93,7 @@
                               <label for="selectBranchType" class="form-label">Branch Type <span class="text-danger">*</span></label>
                               <select class="form-select" id="selectBranchType" formControlName="t2_id_branch_type">
                                 <option value="" disabled selected>Select Branch Type</option>
-                                <option *ngFor="let type of branchType" value={{type.id_t4_1_selection_values}}>{{ type.t4_1_selection_values_name }}</option>
+                                <option *ngFor="let type of branchType" [disabled]="type.t4_1_selection_values_name!=='Head Office'" value={{type.id_t4_1_selection_values}}>{{ type.t4_1_selection_values_name }}</option>
                               </select>
                               <div *ngIf="formbranchadd.controls['t2_id_branch_type'].touched" class="text-danger">
                                 <small *ngIf="formbranchadd.controls['t2_id_branch_type'].errors?.['required']">Branch type is required.</small>
