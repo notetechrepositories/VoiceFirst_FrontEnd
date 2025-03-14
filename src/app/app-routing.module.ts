@@ -4,6 +4,7 @@ import { FullComponent } from './Admin/layout/full/full.component';
 import { BlankComponent } from './Admin/layout/blank/blank.component';
 import { AuthGuard } from './authGuard/auth.guard';
 import { SubscriptionComponent } from './Admin/layout/subscription/subscription.component';
+import { NavbarComponent } from './User/navbar/navbar.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,23 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'user',
+    component: NavbarComponent,
+    children: [
+      {
+        path: '',
+        redirectTo: '/user/home',
+        pathMatch: 'full',
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./User/user.module').then((m) => m.UsersModule),
+      },
+    ],
+  },
+  
   {
     path: '',
     component: BlankComponent,
