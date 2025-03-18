@@ -1,0 +1,76 @@
+<section class="home-banner">
+  <h1 class="fw-bold">Report Issues & Improve Service Quality</h1>
+  <p>
+    "Help businesses improve by sharing your experience. Report any issues
+    you’ve encountered."
+  </p>
+  <div class="container-input">
+    <input
+      type="text"
+      placeholder="Search for a business (restaurant, shop, hotel)..."
+      name="text"
+      class="input"
+      [(ngModel)]="searchQuery"
+      (input)="onSearch()"
+    />
+    <svg
+      fill="#000000"
+      width="20px"
+      height="20px"
+      viewBox="0 0 1920 1920"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M790.588 1468.235c-373.722 0-677.647-303.924-677.647-677.647 0-373.722 303.925-677.647 677.647-677.647 373.723 0 677.647 303.925 677.647 677.647 0 373.723-303.924 677.647-677.647 677.647Zm596.781-160.715c120.396-138.692 193.807-319.285 193.807-516.932C1581.176 354.748 1226.428 0 790.588 0S0 354.748 0 790.588s354.748 790.588 790.588 790.588c197.647 0 378.24-73.411 516.932-193.807l516.028 516.142 79.963-79.963-516.142-516.028Z"
+        fill-rule="evenodd"
+      ></path>
+    </svg>
+
+    <!-- <button class="search-button" type="submit">Go</button> -->
+  </div>
+  <div class="container d-flex justify-content-center">
+    <div class="suggestion-box" id="suggestionBox" *ngIf="searchQuery">
+      <!-- If there are filtered results, show them -->
+      <div *ngIf="filteredBusinesses.length > 0">
+        <div
+          class="suggestion-item d-flex justify-content-start"
+          *ngFor="let business of filteredBusinesses"
+          (click)="selectBusiness(business)"
+        >
+          <div style="width: 100%">
+            <div class="d-flex justify-content-between">
+              <strong>{{ business.t2_company_branch_name }}</strong
+              ><br />
+              <div class="d-flex justify-content-end">
+                <small class="light-text">Give Review</small>
+              </div>
+            </div>
+            <small>
+              {{ business.t2_address_1 }} </small
+            ><br />
+            <small>
+              {{ business.t2_1_local_name }}, {{ business.t2_1_div3_name }},
+              {{ business.t2_1_div2_name }}, {{ business.t2_1_div1_name }},
+              {{ business.t2_1_country_name }},
+              {{ business.t2_zip_code }}
+            </small>
+          </div>
+        </div>
+      </div>
+
+      <!-- Show "No results found" if there is a search query but no matches -->
+      <div *ngIf="filteredBusinesses.length === 0">
+        <div class="no-results">No results found</div>
+      </div>
+    </div>
+  </div>
+
+  <p>or</p>
+</section>
+
+<!-- <section>
+    <div class="container">
+        <h1>Recent Searches</h1>
+    </div>
+    
+</section> -->

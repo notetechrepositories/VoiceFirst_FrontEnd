@@ -4,34 +4,25 @@ import { FullComponent } from './Admin/layout/full/full.component';
 import { BlankComponent } from './Admin/layout/blank/blank.component';
 import { AuthGuard } from './authGuard/auth.guard';
 import { SubscriptionComponent } from './Admin/layout/subscription/subscription.component';
+import { NavbarComponent } from './User/navbar/navbar.component';
+import { LandingpageComponent } from './User/landingpage/landingpage.component';
+import { NotfoundComponent } from './User/notfound/notfound.component';
 
 export const routes: Routes = [
+
   {
     path: '',
-    component: FullComponent,
-    canActivate: [AuthGuard], 
+    component: NavbarComponent,
     children: [
       {
         path: '',
-        redirectTo: '/dashboard',
-        pathMatch: 'full',
+        component: LandingpageComponent, // Default landing page component
       },
       {
-        path: 'dashboard',
+        path: 'user',
         loadChildren: () =>
-          import('./Admin/pages/pages.module').then((m) => m.PagesModule),
+          import('./User/user.module').then((m) => m.UsersModule),
       },
-      {
-        path: 'components',
-        loadChildren: () =>
-          import('./Admin/pages/components/component.module').then((m) => m.ComponentModule),
-      },
-    ],
-  },
-  {
-    path: '',
-    component: BlankComponent,
-    children: [
       {
         path: 'authentication',
         loadChildren: () =>
@@ -39,17 +30,42 @@ export const routes: Routes = [
             (m) => m.AuthenticationModule
           ),
       },
+    ],
+  },
+
+  {
+    path: 'dashboard',
+    component: FullComponent,
+    canActivate: [AuthGuard],
+    children: [
       {
-        path: 'subscription',
-        component: SubscriptionComponent,
+        path: '',
+        loadChildren: () =>
+          import('./Admin/pages/pages.module').then((m) => m.PagesModule),
+      },
+      {
+        path: 'components',
+        loadChildren: () =>
+          import('./Admin/pages/components/component.module').then(
+            (m) => m.ComponentModule
+          ),
       },
     ],
   },
-  
   {
-    path: '**',  
-    redirectTo: '/authentication/login', // Or replace with a 404 error component if desired
+    path: '**',
+    component: BlankComponent,
+    children: [
+      {
+        path: '**',
+        component: NotfoundComponent,
+      },
+    ],
   },
+  // {
+  //   path: '**',  
+  //   redirectTo: '/authentication/login', // Or replace with a 404 error component if desired
+  // },
 ];
 
 @NgModule({

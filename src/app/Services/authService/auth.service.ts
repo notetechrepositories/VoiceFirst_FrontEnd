@@ -37,7 +37,7 @@ export class AuthService {
 
   logout(): void {
     this.localStorageService.clear();
-    this.router.navigate(['/authentication/login']);
+    this.router.navigate(['']);
   }
 
   validateToken(): Promise<void> {

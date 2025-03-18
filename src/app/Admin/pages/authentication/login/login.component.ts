@@ -10,13 +10,13 @@ import { LocalstorageService } from '../../../../Services/localStorageService/lo
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  loginForm!:FormGroup;
-  error:string='';
+  loginForm!: FormGroup;
+  error: string = '';
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
     private router: Router,
-    private localStorageService:LocalstorageService
+    private localStorageService: LocalstorageService
   ) {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
@@ -26,24 +26,28 @@ export class LoginComponent {
 
   ngOnInit(): void {
     this.error='';
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/dashboard']); // Redirect to dashboard if already logged in
-    }
+
   }
 
   onLogin(): void {
-    if (this.loginForm.valid) { 
+    if (this.loginForm.valid) {
       const loginData = this.loginForm.value;
       this.authService.login(loginData).subscribe({
         next: (res) => {
           console.log(res);
-          if(res.status==200){
+          if (res.status == 200) {
             this.localStorageService.setItem('token', res.data.token);
             this.localStorageService.setItem('role', res.data.role);
-            this.router.navigate(['/dashboard']);
+            if(res.data.role =="Notetech" || res.data.role == "Company"){
+              this.router.navigate(['/dashboard']);
+            }
+            else{
+              this.router.navigate(['/user/home']);
+            }
+            
           }
-          else{
-            this.error=res.message;
+          else {
+            this.error = res.message;
           }
         },
         error: (error) => {

@@ -1,1 +1,156 @@
-<p>dashboard works!</p>
+<main class="py-6 bg-surface-secondary">
+    <div class="container-fluid">
+        <!-- Card stats -->
+        <div class="row g-6 mb-6">
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Recent Registrations</span>
+                                <span class="h3 font-bold mb-0">110</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-tertiary text-white text-lg rounded-circle">
+                                    <i class="bi bi-credit-card"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-0 text-sm">
+                            <span class="badge badge-pill bg-soft-success text-success me-2">
+                                <i class='bx bx-up-arrow-alt'></i>13%
+                            </span>
+                            <span class="text-nowrap text-xs text-muted">Since last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Company</span>
+                                <span class="h3 font-bold mb-0">215</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-primary text-white text-lg rounded-circle">
+                                    <i class="bi bi-people"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-0 text-sm">
+                            <span class="badge badge-pill bg-soft-success text-success me-2">
+                                <i class='bx bx-up-arrow-alt'></i>30%
+                            </span>
+                            <span class="text-nowrap text-xs text-muted">Since last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Issues Reported</span>
+                                <span class="h3 font-bold mb-0">11</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-info text-white text-lg rounded-circle">
+                                    <i class="bi bi-clock-history"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-0 text-sm">
+                            <span class="badge badge-pill bg-soft-danger text-danger me-2">
+                                <i class='bx bx-down-arrow-alt' ></i>-5%
+                            </span>
+                            <span class="text-nowrap text-xs text-muted">Since last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-3 col-sm-6 col-12">
+                <div class="card shadow border-0">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <span class="h6 font-semibold text-muted text-sm d-block mb-2">Profit</span>
+                                <span class="h3 font-bold mb-0">75%</span>
+                            </div>
+                            <div class="col-auto">
+                                <div class="icon icon-shape bg-warning text-white text-lg rounded-circle">
+                                    <i class="bi bi-minecart-loaded"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-2 mb-0 text-sm">
+                            <span class="badge badge-pill bg-soft-success text-success me-2">
+                                <i class='bx bx-up-arrow-alt'></i>10%
+                            </span>
+                            <span class="text-nowrap text-xs text-muted">Since last month</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mt-5">
+            <div class="col-md-8 ">
+                        <!-- chart -->
+                        <div class="chart-card">
+                            <div class="bg-[#f5f6fa]">
+                                <div class="w-100 mx-auto">
+                                <div class="rounded-md p-3 sm:p-5">
+                                    <p class="h6 font-semibold text-muted text-sm d-block mb-2">Profit & Lose</p>
+                                    <canvas id="line-chart" class="w-full"></canvas>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+            <div class="col-md-4">
+                <div class="chart-card" style="height: 564px;">
+                    <div class="table-responsive" style="padding: 1px;">
+                        <p class="h6 font-semibold text-muted text-sm d-block mb-4 mt-3">Company</p>
+                        <table class="table">
+                          <thead class="thead-light">
+                            <tr>
+                              <th>Customer</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr *ngFor="let order of paginatedOrders; let i = index">
+
+                              <td>{{ order.customer }}</td>
+   
+                              <td class="text-end">
+                                <span class="badge" [ngClass]="getStatusClass(order.deliveryStatus)">
+                                  {{ order.deliveryStatus }}
+                                </span>
+                              </td>
+       
+                            </tr>
+                          </tbody>
+                        </table>
+                      
+                        <div class="pagination">
+                          
+                          <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
+                          <span>Page {{ currentPage }} of {{ totalPages }}</span>
+                          <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
+                        </div>
+                      </div>
+                </div>
+            </div>
+        </div>
+
+
+
+          
+
+    </div>
+</main>

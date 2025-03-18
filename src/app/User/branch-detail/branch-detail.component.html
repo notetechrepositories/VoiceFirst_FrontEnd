@@ -1,0 +1,192 @@
+<section class="banner">
+    <div class="container">
+        <div class="row align-items-center flex-row-reverse">
+            <div class="col-lg-6">
+                <div class="about-text go-to">
+                    <h3 class="dark-color">About Me</h3>
+                    <h6 class="theme-color lead">A Lead UX &amp; UI designer based in Canada</h6>
+                    <div class="row about-list">
+                        <div class="col-md-6">
+                            <div class="media">
+                                <label>Birthday</label>
+                                <p>4th april 1998</p>
+                            </div>
+                            <div class="media">
+                                <label>Age</label>
+                                <p>22 Yr</p>
+                            </div>
+                            <div class="media">
+                                <label>Residence</label>
+                                <p>Canada</p>
+                            </div>
+                            <div class="media">
+                                <label>Address</label>
+                                <p>California, USA</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="media">
+                                <label>E-mail</label>
+                                <p>infodomain.com</p>
+                            </div>
+                            <div class="media">
+                                <label>Phone</label>
+                                <p>820-885-3321</p>
+                            </div>
+                            <div class="media">
+                                <label>Skype</label>
+                                <p>skype.0404</p>
+                            </div>
+                            <div class="media">
+                                <label>Freelance</label>
+                                <p>Available</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="about-avatar card">
+                    <img src="https://images.unsplash.com/photo-1621114957135-7f88c8447439?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" title="" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="review-section">
+    <div class="container">
+        <div class="card">
+            <div class="d-flex flex-column justify-content-center">
+                <div>
+                    <h1 class="fw-bold mt-4 text-center">Your Opinion Matters!</h1>
+                    <p class="text-center mt-4">"We value your feedback! Report any issues or suggest improvements to enhance our system’s functionality. Your insights help us create a better experience for everyone."</p>
+                </div>
+                <div>
+                    
+                    <form class="w-100 p-4">
+                        <!-- <div class="col-12">
+                            <select id="inputState" class="form-select form-control-lg">
+                              <option selected disabled style="color: #fff;">Select a session</option>
+                              <option>...</option>
+                            </select>
+                          </div> -->
+                          <div class="rvw-card">
+                            <div>
+                                <textarea type="text" class="form-control form-control-lg" id="inputAddress" placeholder="Message"></textarea>
+                            </div>
+                                <div class="recorder">
+                                        <div>
+                                            <button class="Btn start" (click)="startRecording()" *ngIf="isRecordBtn">
+                                                <div class="sign">
+                                                    <i class='bx bxs-microphone'></i>
+                                                </div>
+                                              </button>
+                                              <button class="Btn stop" (click)="stopRecording()" *ngIf="!isRecordBtn">
+                                                <div class="sign">
+                                                    <i class='bx bx-stop' ></i>
+                                                </div>
+                                              </button>
+                                        </div>
+                                        <div class="wave-card">
+                                            <div class="d-flex" >
+                                                <audio [src]="audioUrl" controls></audio>
+                                                <button class="remove" (click)="deleteRecording()" *ngIf="audioUrl" > <i class="fas fa-times"></i></button>
+                                            </div>  
+                                        </div>
+                                  </div>
+                          </div>
+                        
+    
+    <!--  -->
+    
+                        <div class="d-flex justify-content-center" style="margin-top: -5px;">
+                            <div class="row g-2  w-100">
+                                <!-- Card 1 -->
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="card">
+                                        <label>Bill Image Upload</label>
+                                        <div class="img-thumbs">
+                                                <div>
+                                                    <label for="upload-img1" class="custom-file-upload">
+                                                        <span class="plus-icon"><i class='bx bxs-image-add'></i></span>
+                                                    </label>
+                                                    <input type="file" (change)="onFileSelected($event, 'images1')" multiple id="upload-img1" accept="image/*" />
+                                                </div>
+                                                <div>
+                                                    <div *ngFor="let preview of previews1; let i = index" class="wrapper-thumb mb-1">
+                                                        <img [src]="preview.url" class="img-preview-thumb" />
+                                                        <span class="remove-btn" (click)="removeFile(i, 'images1')"><i class="fas fa-times-circle solid"></i></span>
+                                                    </div>
+                                                    <div *ngIf="previews1.length==0" class="no-file">
+                                                        <p class="text-center">No file selected</p>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Card 2 -->
+                                <div class="col-md-4 col-sm-6">
+                                    <div class="card">
+                                        <label>Evidence Image Upload</label>
+                                        <div class="img-thumbs">
+                                                <div>
+                                                    <label for="upload-img2" class="custom-file-upload">
+                                                        <span class="plus-icon"><i class='bx bxs-image-add'></i></span>
+                                                      </label>
+                                                      <input type="file" (change)="onFileSelected($event, 'images2')" multiple id="upload-img2" accept="image/*" />
+                                                </div>
+                                                <div >
+                                                    <div *ngFor="let preview of previews2; let i = index" class="wrapper-thumb mb-1">
+                                                        <img [src]="preview.url" class="img-preview-thumb" />
+                                                        <span class="remove-btn" (click)="removeFile(i, 'images2')"><i class="fas fa-times-circle"></i></span>
+                                                      </div>
+                                                      <div *ngIf="previews2.length==0" class="no-file">
+                                                        <p class="text-center">No file selected</p>
+                                                    </div>
+                                                </div>  
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Card 3 -->
+                                <div class="col-md-4 col-sm-6 mx-auto">
+                                    <div class="card">
+                                        <label>Video Upload</label>
+                                        <div class="img-thumbs">
+                                                <div>
+                                                    <label for="upload-video" class="custom-file-upload">
+                                                        <span class="plus-icon"><i class='bx bxs-video-plus'></i></span>
+                                                      </label>
+                                                      <input type="file" (change)="onFileSelected($event, 'videos')" multiple id="upload-video" accept="video/*" />
+                                                </div>
+                                                <div>
+                                                    <div *ngFor="let preview of videoPreviews; let i = index" class="wrapper-thumb mb-1">
+                                                        <video class="video-preview-thumb" controls>
+                                                          <source [src]="preview.url" type="video/mp4" />
+                                                          Your browser does not support videos.
+                                                        </video>
+                                                        <span class="remove-btn" (click)="removeFile(i, 'videos')"><i class="fas fa-times-circle"></i></span>
+                                                      </div>
+                                                      <div *ngIf="videoPreviews.length==0" class="no-file">
+                                                        <p class="text-center">No file selected</p>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+    <!--  -->
+                        <div class="mt-3">
+                          <button type="submit" class="btn btn-primary w-100">Submit</button>
+                        </div>
+                      </form>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</section>
