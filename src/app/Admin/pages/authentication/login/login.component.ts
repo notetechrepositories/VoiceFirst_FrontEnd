@@ -25,10 +25,8 @@ export class LoginComponent {
   }
 
   ngOnInit(): void {
-    this.error = '';
-    if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/dashboard']); // Redirect to dashboard if already logged in
-    }
+    this.error='';
+
   }
 
   onLogin(): void {
@@ -40,12 +38,13 @@ export class LoginComponent {
           if (res.status == 200) {
             this.localStorageService.setItem('token', res.data.token);
             this.localStorageService.setItem('role', res.data.role);
-            if (res.data.role == 'Notetech' || res.data.role == "Company") {
+            if(res.data.role =="Notetech" || res.data.role == "Company"){
               this.router.navigate(['/dashboard']);
             }
-            else {
+            else{
               this.router.navigate(['/user/home']);
             }
+            
           }
           else {
             this.error = res.message;

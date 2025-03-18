@@ -16,7 +16,7 @@ export class FullComponent implements AfterViewInit, OnInit {
   isShow = false;
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
-    private authService: AuthService, private localstorageService: LocalstorageService, private router: Router) { }
+    private authService: AuthService,private router:Router,private localStorageService:LocalstorageService, private localstorageService: LocalstorageService) { }
   async ngOnInit(): Promise<void> {
     var role = await this.localstorageService.getItem('role')
     if (role == "User") {
@@ -26,6 +26,8 @@ export class FullComponent implements AfterViewInit, OnInit {
       this.isShow = true;
     }
   }
+
+
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
