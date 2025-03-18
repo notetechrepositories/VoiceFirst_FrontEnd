@@ -503,65 +503,132 @@
                           </div>
                         </div> -->
 
-                        <div class="container mb-3">
-                          <div class="row align-items-center">
-                            <div class="col-md-6">
-                              <label for="inputBranchLocal" class="form-label">Locality <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control" id="inputBranchLocal" placeholder="Enter Branch Locality" formControlName="t2_1_local_name"/>
-                              <div *ngIf="formbranchadd.controls['t2_1_local_name'].touched" class="text-danger">
-                                <small *ngIf="formbranchadd.controls['t2_1_local_name'].errors?.['required']">Branch locality is required.</small>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <label for="inputBranchZipcode" class="form-label">Zipcode <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control" id="inputBranchZipcode" placeholder="Enter Branch Zipcode" formControlName="t2_zip_code"/>
-                              <div *ngIf="formbranchadd.controls['t2_zip_code'].touched" class="text-danger">
-                                <small *ngIf="formbranchadd.controls['t2_zip_code'].errors?.['required']">Zipcode is required.</small>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        
-
-                        
-
-
-
-                        
+                <div class="container mb-3">
+                  <div class="row align-items-center">
+                    <div class="col-md-6">
+                      <label for="inputBranchLocal" class="form-label"
+                        >Locality <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputBranchLocal"
+                        placeholder="Enter Branch Locality"
+                        formControlName="t2_1_local_name"
+                      />
+                      <div
+                        *ngIf="
+                          formbranchadd.controls['t2_1_local_name'].touched
+                        "
+                        class="text-danger"
+                      >
+                        <small
+                          *ngIf="formbranchadd.controls['t2_1_local_name'].errors?.['required']"
+                          >Branch locality is required.</small
+                        >
                       </div>
-                      <div class="text-end">
-                        <button type="button" (click)="previoustocompany()" class="primary-btn">Previous</button>
-                      </div>
-                      <div class="text-end">
-                        <button type="button" (click)="nexttouser()" class="primary-btn">Next</button>
-                      </div>
-                      </form>
                     </div>
-                    <div id="test-l-3" class="content">
-                      <form  [formGroup]="formuseradd" class="row g-3" >
-
-                      <div class="form-group">
-                        <div class="container mb-3">
-                          <div class="row align-items-center">
-                            <div class="col-md-6">
-                              <label for="inputUserFirstName" class="form-label">First Name <span class="text-danger">*</span></label>
-                              <input type="text" class="form-control" id="inputUserFirstName" placeholder="Enter First Name" formControlName="t5_first_name"/>
-                              <div *ngIf="formuseradd.controls['t5_first_name']?.touched && formuseradd.controls['t5_first_name'].invalid" class="text-danger">
-                                <small *ngIf="formuseradd.controls['t5_first_name'].errors?.['required']">First name is required.</small>
-                                <small *ngIf="!formuseradd.controls['t5_first_name'].errors?.['required'] && formuseradd.controls['t5_first_name'].errors?.['invalidName']">Invalid name format.</small>
-                              </div>
-                            </div>
-                            <div class="col-md-6">
-                              <label for="inputUserLastName" class="form-label">Last Name </label>
-                              <input type="text" class="form-control" id="inputUserLastName" placeholder="Enter Last Name" formControlName="t5_last_name"/>
-                              <div *ngIf="formuseradd.controls['t5_last_name'].value" class="text-danger">
-                                
-                                <small *ngIf="formuseradd.controls['t5_last_name'].errors?.['invalidName']"> Invalid name format</small>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                    <div class="col-md-6">
+                      <label for="inputBranchZipcode" class="form-label"
+                        >Zipcode <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputBranchZipcode"
+                        placeholder="Enter Branch Zipcode"
+                        formControlName="t2_zip_code"
+                      />
+                      <div
+                        *ngIf="formbranchadd.controls['t2_zip_code'].touched"
+                        class="text-danger"
+                      >
+                        <small
+                          *ngIf="formbranchadd.controls['t2_zip_code'].errors?.['required']"
+                          >Zipcode is required.</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-end">
+                <button
+                  type="button"
+                  (click)="previoustocompany()"
+                  class="primary-btn"
+                >
+                  Previous
+                </button>
+              </div>
+              <div class="text-end">
+                <button
+                  type="button"
+                  (click)="nexttouser()"
+                  class="primary-btn"
+                >
+                  Next
+                </button>
+              </div>
+            </form>
+          </div>
+          <div id="test-l-3" class="content">
+            <form [formGroup]="formuseradd" class="row g-3">
+              <div class="form-group">
+                <div class="container mb-3">
+                  <div class="row align-items-center">
+                    <div class="col-md-6">
+                      <label for="inputUserFirstName" class="form-label"
+                        >First Name <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputUserFirstName"
+                        placeholder="Enter First Name"
+                        formControlName="t5_first_name"
+                      />
+                      <div
+                        *ngIf="
+                          formuseradd.controls['t5_first_name']?.touched &&
+                          formuseradd.controls['t5_first_name'].invalid
+                        "
+                        class="text-danger"
+                      >
+                        <small
+                          *ngIf="formuseradd.controls['t5_first_name'].errors?.['required']"
+                          >First name is required.</small
+                        >
+                        <small
+                          *ngIf="!formuseradd.controls['t5_first_name'].errors?.['required'] && formuseradd.controls['t5_first_name'].errors?.['invalidName']"
+                          >Invalid name format.</small
+                        >
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <label for="inputUserLastName" class="form-label"
+                        >Last Name
+                      </label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputUserLastName"
+                        placeholder="Enter Last Name"
+                        formControlName="t5_last_name"
+                      />
+                      <div
+                        *ngIf="formuseradd.controls['t5_last_name'].value"
+                        class="text-danger"
+                      >
+                        <small
+                          *ngIf="formuseradd.controls['t5_last_name'].errors?.['invalidName']"
+                        >
+                          Invalid name format</small
+                        >
+                      </div>
+                    </div>
+                  </div>
+                </div>
 
                 <div class="container mb-3">
                   <div class="row align-items-center">
@@ -869,48 +936,52 @@
                 </button>
               </div>
 
-                      <div class="text-end">
-                        <button type="submit" class="primary-btn mt-5" (click)="onSubmit()"
-                        >Submit</button>
-                      </div>
-                      </form>
-                    </div>
-                </div>
+              <div class="text-end">
+                <button
+                  type="submit"
+                  class="primary-btn mt-5"
+                  (click)="onSubmit()"
+                >
+                  Submit
+                </button>
               </div>
-            </div>
-                                                                                        
-          
-            <!-- working <form class="row g-3">
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- working <form class="row g-3">
               <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Email</label>
                 <input type="email" class="form-control" id="inputEmail4" formControlName="email"> -->
 
-                <!-- <div *ngIf="form.controls['email'].touched && form.controls['email'].invalid" class="text-danger">
+    <!-- <div *ngIf="form.controls['email'].touched && form.controls['email'].invalid" class="text-danger">
                   <small *ngIf="form.controls['email'].errors?.['required']">Email is required.</small>
                   <small *ngIf="form.controls['email'].errors?.['invalidEmail']">Invalid email format.</small>
                 </div> -->
-            <!--   working                  
+    <!--   working                  
               </div>
             
               <div class="col-md-6">
                 <label for="inputPassword4" class="form-label">Password</label>
                 <input type="password" class="form-control" id="inputPassword4" formControlName="password"> -->
-                <!-- <div *ngIf="form.controls['password'].touched && form.controls['password'].invalid" class="text-danger">
+    <!-- <div *ngIf="form.controls['password'].touched && form.controls['password'].invalid" class="text-danger">
                   <small *ngIf="form.controls['password'].errors?.['required']">Password is required.</small>
                   <small *ngIf="form.controls['password'].errors?.['invalidPassword']">
                     Password must contain uppercase, lowercase, number, and at least 6 characters.
                   </small>
                 </div> -->
 
-              <!-- working </div>
+    <!-- working </div>
             
               <div class="col-12">
                 <label for="inputAddress" class="form-label">Address</label>
                 <input type="text" class="form-control" id="inputAddress" formControlName="address"> -->
-                <!-- <div *ngIf="form.controls['address'].touched && form.controls['address'].invalid" class="text-danger">
+    <!-- <div *ngIf="form.controls['address'].touched && form.controls['address'].invalid" class="text-danger">
                   <small>Address is required.</small>
                 </div> -->
-              <!-- working </div>
+    <!-- working </div>
             
               <div class="col-12">
                 <label for="inputAddress2" class="form-label">Address 2</label>
@@ -921,11 +992,11 @@
                 <label for="inputCity" class="form-label">City</label>
                 <input type="text" class="form-control" id="inputCity" formControlName="city"> -->
 
-                <!-- <div *ngIf="form.controls['city'].touched && form.controls['city'].invalid" class="text-danger">
+    <!-- <div *ngIf="form.controls['city'].touched && form.controls['city'].invalid" class="text-danger">
                   <small>City is required.</small>
                 </div> -->
 
-              <!-- working</div>
+    <!-- working</div>
             
               <div class="col-md-4">
                 <label for="inputState" class="form-label">State</label>
@@ -935,38 +1006,36 @@
                   <option value="state2">State 2</option>
                 </select> -->
 
-                <!-- <div *ngIf="form.controls['state'].touched && form.controls['state'].invalid" class="text-danger">
+    <!-- <div *ngIf="form.controls['state'].touched && form.controls['state'].invalid" class="text-danger">
                   <small>State is required.</small>
                 </div> -->
-              <!-- working </div>
+    <!-- working </div>
             
               <div class="col-md-2">
                 <label for="inputZip" class="form-label">Zip</label>
                 <input type="text" class="form-control" id="inputZip" formControlName="zip"> -->
 
-                <!-- <div *ngIf="form.controls['zip'].touched && form.controls['zip'].invalid" class="text-danger">
+    <!-- <div *ngIf="form.controls['zip'].touched && form.controls['zip'].invalid" class="text-danger">
                   <small *ngIf="form.controls['zip'].errors?.['required']">Zip is required.</small>
                   <small *ngIf="form.controls['zip'].errors?.['pattern']">Invalid zip format.</small>
                 </div> -->
-              <!-- working</div>
+    <!-- working</div>
             
               <div class="col-12">
                 <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="gridCheck" formControlName="check">
                   <label class="form-check-label" for="gridCheck">Check me out</label> -->
 
-                  <!-- <div *ngIf="form.controls['check'].touched && form.controls['check'].invalid" class="text-danger">
+    <!-- <div *ngIf="form.controls['check'].touched && form.controls['check'].invalid" class="text-danger">
                     <small>You must agree to continue.</small>
                   </div> -->
-                <!-- working</div>
+    <!-- working</div>
               </div>
             
               <div class="col-12 d-flex justify-content-end">
                 <button (click)="onSave()" type="submit" class="primary-btn">Add Company</button>
               </div>
             </form> -->
-            <!-- ------------- -->
-
-    </div>
+    <!-- ------------- -->
   </div>
 </div>
