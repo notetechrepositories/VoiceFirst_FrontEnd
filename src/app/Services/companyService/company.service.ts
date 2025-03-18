@@ -22,6 +22,9 @@ export class CompanyService {
   getSelectionType(filter: any) {
     return this.http.post<any>(`${this.apiUrl}/selection_values/get-all`, filter, { headers: this.headers });
   }
+  getBranchType() {
+    return this.http.get<any>(`${this.apiUrl}/selection_values/get-all-branch-type`, { headers: this.headers });
+  }
   registerCompany(requestData: any) {
     console.log(this.accessToken);
 

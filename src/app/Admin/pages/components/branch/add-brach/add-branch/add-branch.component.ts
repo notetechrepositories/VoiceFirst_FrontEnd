@@ -190,13 +190,13 @@ export class AddBranchComponent {
     });
   }
   getBranchType() {
-    const filterBranchType = {
-      filters: {
-        id_t4_selection: 'dbb3999e-36ba-4d63-827f-61e19cd698f9',
+    // const filterBranchType = {
+    //   filters: {
+    //     id_t4_selection: 'dbb3999e-36ba-4d63-827f-61e19cd698f9',
 
-      },
-    };
-    this.companyService.getSelectionType(filterBranchType).subscribe({
+    //   },
+    // };
+    this.companyService.getBranchType().subscribe({
       next: (res) => {
         console.log(res);
 
