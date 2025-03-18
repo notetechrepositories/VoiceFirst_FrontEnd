@@ -57,7 +57,7 @@ export class EditBranchComponent {
       }
   onClose() {
     this.closePopup();
-    this.router.navigate(['/components/branch'])
+    this.router.navigate(['/branch'])
   }
 
   onSubmit() {

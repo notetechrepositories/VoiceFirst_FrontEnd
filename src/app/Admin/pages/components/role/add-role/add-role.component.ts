@@ -167,7 +167,7 @@ export class AddRoleComponent {
 
   onClose() {
     this.closePopup();
-    this.router.navigate(['/components/role']);
+    this.router.navigate(['/role']);
   }
 
   onSave() {

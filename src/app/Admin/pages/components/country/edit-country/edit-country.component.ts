@@ -45,7 +45,7 @@ export class EditCountryComponent {
 
   onClose(){
     this.closePopup();
-    this.router.navigate(['/components/country'])
+    this.router.navigate(['/country'])
   }
 
   onSubmit(): void {
