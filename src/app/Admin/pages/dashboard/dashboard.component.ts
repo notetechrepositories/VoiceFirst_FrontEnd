@@ -1,5 +1,8 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Chart, ChartDataset } from 'chart.js/auto';
+import { LocalstorageService } from '../../../Services/localStorageService/localstorage.service';
+import { AuthService } from '../../../Services/authService/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -7,6 +10,32 @@ import { Chart, ChartDataset } from 'chart.js/auto';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements AfterViewInit {
+
+  userType:any;
+
+  constructor(private authService:AuthService,private router:Router,private localStorageService:LocalstorageService){}
+
+  ngOnInit(){
+
+
+    // this.userType = this.localStorageService.getItem('token');
+    // if (this.authService.isLoggedIn()) {
+    //   if(this.userType =='Notetech' || this.userType =="Company"){
+    //     this.router.navigate(['company/dashboard']);
+    //   }
+    //   else{
+    //     this.router.navigate(['user/home']);
+    //   }
+    // }
+  }
+
+
+
+
+
+
+
+
   ngAfterViewInit(): void {
     const canvas = document.getElementById('line-chart') as HTMLCanvasElement;
     if (!canvas) return;

@@ -6,6 +6,7 @@ import { FormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { UsersRoutes } from './user.routing.module';
 import { BranchDetailComponent } from './branch-detail/branch-detail.component';
+import { LandingpageComponent } from './landingpage/landingpage.component';
 
 
 
@@ -20,7 +21,8 @@ import { BranchDetailComponent } from './branch-detail/branch-detail.component';
   ],
   declarations: [
     HomeComponent,
-    BranchDetailComponent
+    BranchDetailComponent,
+    LandingpageComponent
   ],
   exports: [],
 })

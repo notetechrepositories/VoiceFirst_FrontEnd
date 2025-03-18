@@ -1,6 +1,8 @@
 import { Component, HostListener } from '@angular/core';
 import { BrachService } from '../../Services/branchService/brach.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../../Services/authService/auth.service';
+import { LocalstorageService } from '../../Services/localStorageService/localstorage.service';
 
 @Component({
   selector: 'app-home',
@@ -11,11 +13,14 @@ export class HomeComponent {
   searchQuery: string = '';
   filteredBusinesses: any[] = [];
   businesses: any[]=[];
+  userType:any;
 
-  constructor(private branchservice:BrachService, private router:Router){}
+  constructor(private branchservice:BrachService,private authService:AuthService,private router:Router,private localStorageService:LocalstorageService){}
 
   ngOnInit(){
     this.getBranch();
+
+
   }
 
   onSearch() {
