@@ -1,9 +1,9 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, PLATFORM_ID, AfterViewInit, Input } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, AfterViewInit, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../../Services/authService/auth.service';
 import Swal from 'sweetalert2';
-import { Router } from '@angular/router';
 import { LocalstorageService } from '../../../Services/localStorageService/localstorage.service';
+import { Router } from '@angular/router';
 
 
 
@@ -12,32 +12,22 @@ import { LocalstorageService } from '../../../Services/localStorageService/local
   templateUrl: './full.component.html',
   styleUrl: './full.component.css'
 })
-export class FullComponent implements AfterViewInit{
-
-
-   userType:any;
-  
-
-  
-
-
+export class FullComponent implements AfterViewInit, OnInit {
+  isShow = false;
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
-    private authService:AuthService,private router:Router,private localStorageService:LocalstorageService) {}
-
-    ngOnInit(){
-  
-  
-      // this.userType = this.localStorageService.getItem('token');
-      // if (this.authService.isLoggedIn()) {
-      //   if(this.userType =='Notetech' || this.userType =="Company"){
-      //     this.router.navigate(['company/dashboard']);
-      //   }
-      //   else{
-      //     this.router.navigate(['user/home']);
-      //   }
-      // }
+    private authService: AuthService,private router:Router,private localStorageService:LocalstorageService, private localstorageService: LocalstorageService) { }
+  async ngOnInit(): Promise<void> {
+    var role = await this.localstorageService.getItem('role')
+    if (role == "User") {
+      this.router.navigate(['/user/home']);
     }
+    else {
+      this.isShow = true;
+    }
+  }
+
+
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -50,23 +40,23 @@ export class FullComponent implements AfterViewInit{
       sidebarDropdowns.forEach((dropdown) => {
         dropdown.addEventListener('click', (e: Event) => {
           e.preventDefault();
-      
+
           const parent = (e.target as HTMLElement).parentElement!;
           const submenu = parent.querySelector('.sidebar-submenu') as HTMLElement;
-      
+
           // Check if the current submenu is already active/open
           const isOpen = parent.classList.contains('active');
-      
+
           // Close all submenus
           document.querySelectorAll('.sidebar-submenu').forEach((submenu) => {
             (submenu as HTMLElement).style.display = 'none';
           });
-      
+
           // Remove active class from all dropdowns
           document.querySelectorAll('.sidebar-dropdown').forEach((dropdown) => {
             dropdown.classList.remove('active');
           });
-      
+
           // If the current submenu was not open, open it
           if (!isOpen) {
             parent.classList.add('active');
@@ -74,7 +64,7 @@ export class FullComponent implements AfterViewInit{
           }
         });
       });
-      
+
       closeSidebar?.addEventListener('click', () => {
         pageWrapper?.classList.remove('toggled');
       });
@@ -82,26 +72,26 @@ export class FullComponent implements AfterViewInit{
       showSidebar?.addEventListener('click', () => {
         pageWrapper?.classList.add('toggled');
       });
-      
+
     }
   }
 
-  logout(){
+  logout() {
 
-      Swal.fire({
-        title: "Are you sure?",
-        // text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, logout!"
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.authService.logout();
-        }
-      });
-    
+    Swal.fire({
+      title: "Are you sure?",
+      // text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, logout!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.authService.logout();
+      }
+    });
+
   }
-  
+
 }

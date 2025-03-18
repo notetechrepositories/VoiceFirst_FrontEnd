@@ -22,7 +22,7 @@ import Swal from 'sweetalert2';
   styleUrl: './company-add.component.css',
 })
 export class CompanyAddComponent implements OnInit {
-  @Output() closePopup = () => {};
+  @Output() closePopup = () => { };
 
   constructor(
     private router: Router,
@@ -31,7 +31,7 @@ export class CompanyAddComponent implements OnInit {
     private companyService: CompanyService,
     private countryService: CountryService,
     private sweetalert: SweetalertService
-  ) {}
+  ) { }
 
   formcompanyadd!: FormGroup;
   formbranchadd!: FormGroup;
@@ -66,7 +66,6 @@ export class CompanyAddComponent implements OnInit {
   ngOnInit(): void {
     this.stepperFn();
     this.getCompanyType();
-    this.getBranchType();
     this.getCountries();
     this.initializeForm();
     this.getYears();
@@ -76,12 +75,12 @@ export class CompanyAddComponent implements OnInit {
   initializeForm() {
     console.log('Form initialized');
     this.formcompanyadd = this.fb.group({
-      t1_company_name: ['', ],
-      id_company_type: ['',],
+      t1_company_name: ['', [Validators.required]],
+      id_company_type: ['', [Validators.required]],
+      company_type: [''],
     });
     this.formbranchadd = this.fb.group({
       t2_company_branch_name: ['', [Validators.required]],
-      t2_id_branch_type: ['', [Validators.required]],
       t2_email: ['', [Validators.required, ValidationService.email]],
       t2_mobile_no: ['', [Validators.required, ValidationService.phone]],
       t2_phone_no: ['', [ValidationService.phone]],
@@ -89,28 +88,43 @@ export class CompanyAddComponent implements OnInit {
       t2_address_2: [''],
       id_t2_1_country: ['', [Validators.required]],
       id_t2_1_div1: ['', [Validators.required]],
-      id_t2_1_div2: ['', [Validators.required]],
-      id_t2_1_div3: ['', Validators.required],
+      id_t2_1_div2: [''],
+      id_t2_1_div3: ['',],
       t2_1_local_name: ['', [Validators.required]],
       t2_zip_code: ['', [Validators.required]],
     });
     this.formuseradd = this.fb.group({
       t5_first_name: ['', [Validators.required, ValidationService.personName]],
-      t5_last_name: ['', [ValidationService.personName]],
+      t5_last_name: ['', [Validators.required, ValidationService.personName]],
       t5_birth_year: [''],
       t5_sex: [''],
       t5_email: ['', [Validators.required, ValidationService.email]],
       t5_mobile_no: ['', [Validators.required, ValidationService.phone]],
-      t5_address_1: [''],
+      t5_address_1: ['', [Validators.required]],
       t5_address_2: [''],
-      id_t2_1_country: [''],
+      id_t2_1_country: ['', [Validators.required]],
       id_t2_1_div1: [''],
       id_t2_1_div2: [''],
       id_t2_1_div3: [''],
-      t2_1_local_name: [''],
-      t5_zip_code: [''],
-      id_t5_1_m_user_roles: [''],
+      t2_1_local_name: ['', [Validators.required]],
+      t5_zip_code: ['', [Validators.required]]
     });
+  }
+  showOtherCompanyType: boolean = false;
+
+  onCompanyTypeChange(event: any) {
+    const selectedValue = event.target.value;
+    this.showOtherCompanyType = selectedValue === 'other';
+
+    // Optional: clear or set validation for "other_company_type"
+    if (this.showOtherCompanyType) {
+      this.formcompanyadd.get('company_type')?.setValidators([Validators.required]);
+    } else {
+      this.formcompanyadd.get('company_type')?.clearValidators();
+      this.formcompanyadd.get('company_type')?.setValue('');
+    }
+
+    this.formcompanyadd.get('company_type')?.updateValueAndValidity();
   }
   getYears() {
     const currentYear = new Date().getFullYear();
@@ -150,6 +164,10 @@ export class CompanyAddComponent implements OnInit {
       this.stepper.next();
       this.currentStep++;
     }
+    else {
+      console.log('this.formbranchadd.valid', this.formbranchadd.valid);
+      console.log('this.currentStep < 3', this.currentStep < 3);
+    }
   }
   previoustocompany() {
     if (this.formcompanyadd.valid && this.currentStep > 1) {
@@ -170,13 +188,8 @@ export class CompanyAddComponent implements OnInit {
   }
 
   getCompanyType() {
-    const filterCompanyType = {
-      filters: {
-        id_t4_selection: '43E256AF-AC0F-4A89-AE2C-B0EAB8860C61',
-      },
-    };
 
-    this.companyService.getSelectionType(filterCompanyType).subscribe({
+    this.companyService.getCompanyType().subscribe({
       next: (res) => {
         if (res.status == 200) {
           this.companyType = res.data.Items;
@@ -191,27 +204,7 @@ export class CompanyAddComponent implements OnInit {
     });
   }
 
-  getBranchType() {
-    const filterBranchType = {
-      filters: {
-        id_t4_selection: 'dbb3999e-36ba-4d63-827f-61e19cd698f9',
-      },
-    };
-    this.companyService.getSelectionType(filterBranchType).subscribe({
-      next: (res) => {
-        if (res.status == 200) {
-          this.branchType = res.data.Items;
-          console.log(this.branchType);
-        } else {
-          console.log(res);
-        }
-      },
-      error: (error) => {
-        console.log(error);
-        this.sweetalert.showToast('error', 'Oops!Something went wrong');
-      },
-    });
-  }
+
   getCountries() {
     const filterCountries = {
       filters: {},
@@ -237,6 +230,8 @@ export class CompanyAddComponent implements OnInit {
     this.formbranchadd.controls['id_t2_1_div3'].reset();
     const eventValue = event.target as HTMLSelectElement;
     const id = eventValue.value;
+    console.log(id);
+
     const selectedCountry = this.countries.find(
       (country) => country.id_t2_1_country === id
     );
@@ -295,10 +290,12 @@ export class CompanyAddComponent implements OnInit {
         id_t2_1_country: id,
       },
     };
-
+    console.log(id);
     this.countryService.getDivisionOneByCountryId(filterDiv1).subscribe({
       next: (res) => {
         if (res.status == 200) {
+          console.log(res);
+
           this.div1 = res.data.Items;
           console.log('onChangeCountries result', this.div1);
         } else {
@@ -364,6 +361,8 @@ export class CompanyAddComponent implements OnInit {
     this.formuseradd.controls['id_t2_1_div3'].reset();
     const eventValue = event.target as HTMLSelectElement;
     const id = eventValue.value;
+    console.log(id);
+
     const selectedCountry = this.countries.find(
       (country) => country.id_t2_1_country === id
     );
@@ -421,9 +420,11 @@ export class CompanyAddComponent implements OnInit {
         id_t2_1_country: id,
       },
     };
+    console.log(id);
     this.countryService.getDivisionOneByCountryId(filterDiv1).subscribe({
       next: (res) => {
         if (res.status == 200) {
+
           this.userDiv1 = res.data.Items;
           console.log(this.userDiv1);
         } else {
@@ -492,23 +493,21 @@ export class CompanyAddComponent implements OnInit {
   // }
 
   onSubmit(): void {
-    console.log('Form formcompanyadd:', this.formcompanyadd.value);
-    console.log('Form formbranchadd:', this.formbranchadd.value);
-    console.log('Form formuseradd:', this.formuseradd.value);
+
 
     this.formuseradd.markAllAsTouched();
     if (
       this.formcompanyadd.valid &&
       this.formbranchadd.valid &&
-      this.formuseradd.valid 
-      
+      this.formuseradd.valid
+
     ) {
       const requestData = {
         t1_company_name: this.formcompanyadd.get('t1_company_name')?.value,
         id_company_type: this.formcompanyadd.get('id_company_type')?.value,
+        company_type: this.formcompanyadd.get('company_type')?.value,
         insertBranchDTOModel: {
           t2_company_branch_name: this.formbranchadd.get('t2_company_branch_name')?.value,
-          t2_id_branch_type: this.formbranchadd.get('t2_id_branch_type')?.value,
           t2_address_1: this.formbranchadd.get('t2_address_1')?.value,
           t2_address_2: this.formbranchadd.get('t2_address_2')?.value,
           t2_zip_code: this.formbranchadd.get('t2_zip_code')?.value,
@@ -539,6 +538,8 @@ export class CompanyAddComponent implements OnInit {
           t2_1_local_name: this.formuseradd.get('t2_1_local_name')?.value,
         },
       };
+      console.log(requestData);
+
       Swal.fire({
         title: 'Are you sure?',
         text: 'This action will add a new company',
@@ -567,22 +568,22 @@ export class CompanyAddComponent implements OnInit {
               } else {
                 Swal.fire({
                   icon: 'error',
-                  title:'Not inserted',
-                  text:res.message,
+                  title: 'Not inserted',
+                  text: res.message,
                   toast: true,
                   position: 'top-end',
                   showConfirmButton: false,
                   timer: 3000,
                   timerProgressBar: true
                 });
-                
+
               }
             },
-            
+
           });
         }
       });
-      
+
 
       // Combine the form data into a single object
       // const requestData = {
@@ -592,16 +593,16 @@ export class CompanyAddComponent implements OnInit {
       //   userDtoModel: this.formuseradd.value,
       // };
 
-      
+
 
       console.log('Combined Data:', requestData);
-      
+
     }
 
-   
+
   }
 
- 
+
 
   onClose() {
     this.closePopup();

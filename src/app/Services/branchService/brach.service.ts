@@ -8,49 +8,51 @@ import { LocalstorageService } from '../localStorageService/localstorage.service
 })
 export class BrachService {
 
- private apiUrl = environment.apiUrl;
+  private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient,private localStorageService:LocalstorageService) { }
+  constructor(private http: HttpClient, private localStorageService: LocalstorageService) { }
 
-    accessToken = this.localStorageService.getItem('token');
-    
-     
-    headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.accessToken}`
-    });
+  accessToken = this.localStorageService.getItem('token');
 
-    url=`${this.apiUrl}/branch`;
 
-        
-    // Get all Branch
-    getBranch(filter:any){
-      return this.http.post<any>(`${this.url}/get-all`,filter);  
-    }
+  headers = new HttpHeaders({
+    'Authorization': `Bearer ${this.accessToken}`
+  });
 
-   //Insert Branch
-   insertBranch(data: any){
+  url = `${this.apiUrl}/branch`;
+
+
+  // Get all Branch
+  getBranch(filter: any) {
+    return this.http.post<any>(`${this.url}/get-all`, filter);
+  }
+  getCompanyBranch() {
+    return this.http.get<any>(`${this.url}/get-all`, { headers: this.headers });
+  }
+  //Insert Branch
+  insertBranch(data: any) {
     console.log(data);
-    
-    return this.http.post<any>(this.url, data,{headers:this.headers}); 
+
+    return this.http.post<any>(this.url, data, { headers: this.headers });
   }
 
   //Update Branch
-  updateBranch(data:any){
-    const response = this.http.put<any>(this.url, data,{headers:this.headers}); 
+  updateBranch(data: any) {
+    const response = this.http.put<any>(this.url, data, { headers: this.headers });
     return response;
   }
 
   //Delete Branch
-  deleteBranch(branchId:any){
+  deleteBranch(branchId: any) {
     console.log(branchId);
-    
+
     const url = `${this.url}/${branchId}`;
     return this.http.delete<any>(url);
   }
   //GetById Branch
-  getBranchById(id_t2_company_branch:number){
+  getBranchById(id_t2_company_branch: number) {
     const url = `${this.url}/${id_t2_company_branch}`;
     return this.http.get<any>(url);
-   
+
   }
 }

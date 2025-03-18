@@ -12,140 +12,140 @@ export class CountryService {
 
   private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient,private localStorageService:LocalstorageService) { }
+  constructor(private http: HttpClient, private localStorageService: LocalstorageService) { }
 
-    accessToken = this.localStorageService.getItem('token');
-    headers = new HttpHeaders({
-      'Authorization': `Bearer ${this.accessToken}`
-    });
+  accessToken = this.localStorageService.getItem('token');
+  headers = new HttpHeaders({
+    'Authorization': `Bearer ${this.accessToken}`
+  });
 
-    url=`${this.apiUrl}/country`;
+  url = `${this.apiUrl}/country`;
 
-        
-    // Get all locations
-    getCountry(filter:any){
-      return this.http.post<any>(`${this.url}/get-all`,filter);  
-    }
 
-   //Insert Country
-   insertCountry(data: any){
+  // Get all locations
+  getCountry(filter: any) {
+    return this.http.post<any>(`${this.url}/get-all`, filter);
+  }
 
-    
-    return this.http.post<any>(this.url, data,{headers:this.headers}); 
+  //Insert Country
+  insertCountry(data: any) {
+
+
+    return this.http.post<any>(this.url, data, { headers: this.headers });
   }
 
   //Update Country
-  updateCountry(data:any){
-    const response = this.http.put<any>(this.url, data,{headers:this.headers}); 
+  updateCountry(data: any) {
+    const response = this.http.put<any>(this.url, data, { headers: this.headers });
     return response;
   }
 
   //Delete Country
-  deleteLocation(countryId:any){
+  deleteLocation(countryId: any) {
     const url = `${this.url}/${countryId}`;
     return this.http.delete<any>(url);
   }
   //GetById Country
-  getCountryById(countryId:number){
+  getCountryById(countryId: number) {
     const url = `${this.url}/${countryId}`;
     return this.http.get<any>(url);
-   
+
   }
-  uploadFile(file:any): Observable<any> {
+  uploadFile(file: any): Observable<any> {
     const url = `${this.url}/import`;
     return this.http.post(url, file);
   }
 
-// -------------------------------DivisionOne-------------------------------------------------------------
+  // -------------------------------DivisionOne-------------------------------------------------------------
 
-  divOneUrl=`${this.apiUrl}/division-one`;
+  divOneUrl = `${this.apiUrl}/division-one`;
 
-  getDivisionOneByCountryId(filter:any){
-    return this.http.post<any>(`${this.divOneUrl}/get-all`,filter);
+  getDivisionOneByCountryId(filter: any) {
+    return this.http.post<any>(`${this.divOneUrl}/get-all`, filter);
   }
-  
+
   ///Insert Division One-----------------
-  insertDivisionOne(data:any){
-    return this.http.post<any>(this.divOneUrl, data,{headers:this.headers}); 
+  insertDivisionOne(data: any) {
+    return this.http.post<any>(this.divOneUrl, data, { headers: this.headers });
   }
-// ---------Update Division One-----------------
-updateDivisionOne(data:any){
-  return this.http.put<any>(this.divOneUrl, data,{headers:this.headers}); 
-}
-// -----------Delete Division One-------------------
-deleteDivisionOne(id:any){
-  return this.http.delete<any>(`${this.divOneUrl}/${id}`);
+  // ---------Update Division One-----------------
+  updateDivisionOne(data: any) {
+    return this.http.put<any>(this.divOneUrl, data, { headers: this.headers });
+  }
+  // -----------Delete Division One-------------------
+  deleteDivisionOne(id: any) {
+    return this.http.delete<any>(`${this.divOneUrl}/${id}`);
 
-}
-getDivisionOneId(divisionOneId:any){
-  const apiUrl=`${this.divOneUrl}/${divisionOneId}`
-  return this.http.get<any>(apiUrl);
-}
-uploadFileDivisionOne(file:any): Observable<any> {
-  const url = `${this.divOneUrl}/import`;
-  return this.http.post(url, file);
-}
+  }
+  getDivisionOneId(divisionOneId: any) {
+    const apiUrl = `${this.divOneUrl}/${divisionOneId}`
+    return this.http.get<any>(apiUrl);
+  }
+  uploadFileDivisionOne(file: any): Observable<any> {
+    const url = `${this.divOneUrl}/import`;
+    return this.http.post(url, file);
+  }
 
-// ----------------------DivisionTwo--------------------------------------------------------------------------------
-  
-   divTwourl=`${this.apiUrl}/division-two`;
+  // ----------------------DivisionTwo--------------------------------------------------------------------------------
 
-   getDivisionTwoByDivisionOneId(filter:any){
-      return this.http.post<any>(`${this.divTwourl}/get-all`,filter);
-    }
-    ///Insert Division Two-----------------
-    insertDivisionTwo(data:any){
-      return this.http.post<any>(this.divTwourl, data,{headers:this.headers}); 
-    }
-    // ---------Update Division Two-----------------
-    updateDivisionTwo(data:any){
-      return this.http.put<any>(this.divTwourl, data,{headers:this.headers}); 
-    }
-    // -----------Delete Division Two-------------------
-    deleteDivisionTwo(id:any){
-      return this.http.delete<any>(`${this.divTwourl}/${id}`); 
-    }
-    uploadFileDivisionTwo(file:any): Observable<any> {
-      const url = `${this.divTwourl}/import`;
-      return this.http.post(url, file);
-    }
-// ------------------------------------ DivisionThree -------------------------------------------
-  divThreeurl=`${this.apiUrl}/division-three`;
+  divTwourl = `${this.apiUrl}/division-two`;
+
+  getDivisionTwoByDivisionOneId(filter: any) {
+    return this.http.post<any>(`${this.divTwourl}/get-all`, filter);
+  }
+  ///Insert Division Two-----------------
+  insertDivisionTwo(data: any) {
+    return this.http.post<any>(this.divTwourl, data, { headers: this.headers });
+  }
+  // ---------Update Division Two-----------------
+  updateDivisionTwo(data: any) {
+    return this.http.put<any>(this.divTwourl, data, { headers: this.headers });
+  }
+  // -----------Delete Division Two-------------------
+  deleteDivisionTwo(id: any) {
+    return this.http.delete<any>(`${this.divTwourl}/${id}`);
+  }
+  uploadFileDivisionTwo(file: any): Observable<any> {
+    const url = `${this.divTwourl}/import`;
+    return this.http.post(url, file);
+  }
+  // ------------------------------------ DivisionThree -------------------------------------------
+  divThreeurl = `${this.apiUrl}/division-three`;
 
   //Insert Division Two-----------------
 
-    insertDivisionThree(data:any){
-        return this.http.post<any>(this.divThreeurl, data,{headers:this.headers}); 
-    }
+  insertDivisionThree(data: any) {
+    return this.http.post<any>(this.divThreeurl, data, { headers: this.headers });
+  }
 
   // ---------Update Division Three-----------------
 
-  updateDivisionThree(data:any){
-    return this.http.put<any>(this.divThreeurl, data,{headers:this.headers}); 
+  updateDivisionThree(data: any) {
+    return this.http.put<any>(this.divThreeurl, data, { headers: this.headers });
   }
-    // -----------Delete Division Two-------------------
+  // -----------Delete Division Two-------------------
 
-    deleteDivisionThree(id:any){
-      return this.http.delete<any>(`${this.divThreeurl}/${id}`); 
-    }
-   //---------------------Get ---------------------------
+  deleteDivisionThree(id: any) {
+    return this.http.delete<any>(`${this.divThreeurl}/${id}`);
+  }
+  //---------------------Get ---------------------------
 
-   //Get Division3 By Division 2--------------------------
- 
-   getDivisionThree(filter:any){
-    return this.http.post<any>(`${this.divThreeurl}/get-all`,filter);
+  //Get Division3 By Division 2--------------------------
+
+  getDivisionThree(filter: any) {
+    return this.http.post<any>(`${this.divThreeurl}/get-all`, filter);
   }
 
-  getDivisionThreeByDivisionTwoId(filter:any){
-    return this.http.post<any>(`${this.divThreeurl}/get-all`,filter);
+  getDivisionThreeByDivisionTwoId(filter: any) {
+    return this.http.post<any>(`${this.divThreeurl}/get-all`, filter);
   }
   // ---------------Import----------------------------------
-  uploadFileDivisionThree(file:any): Observable<any> {
+  uploadFileDivisionThree(file: any): Observable<any> {
     const url = `${this.divThreeurl}/import`;
     console.log(url);
     console.log(file);
-    
-    
+
+
     return this.http.post(url, file);
   }
 }
