@@ -17,25 +17,7 @@ export class DashboardComponent implements AfterViewInit {
 
   ngOnInit(){
 
-
-    // this.userType = this.localStorageService.getItem('token');
-    // if (this.authService.isLoggedIn()) {
-    //   if(this.userType =='Notetech' || this.userType =="Company"){
-    //     this.router.navigate(['company/dashboard']);
-    //   }
-    //   else{
-    //     this.router.navigate(['user/home']);
-    //   }
-    // }
   }
-
-
-
-
-
-
-
-
   ngAfterViewInit(): void {
     const canvas = document.getElementById('line-chart') as HTMLCanvasElement;
     if (!canvas) return;

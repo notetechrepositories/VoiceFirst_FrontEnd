@@ -17,7 +17,7 @@ constructor(private authService:AuthService,private router:Router,private localS
 }
 
 ngOnInit(){
-  this.userType = this.localStorageService.getItem('token');
+  this.userType = this.localStorageService.getItem('role');
   if (this.authService.isLoggedIn()) {
     if(this.userType =='Notetech' || this.userType =="Company"){
       this.router.navigate(['company/dashboard']);
@@ -25,6 +25,9 @@ ngOnInit(){
     else{
       this.router.navigate(['user/home']);
     }
+  }
+  else{
+    this.router.navigate(['']);
   }
 }
 
