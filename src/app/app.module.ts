@@ -12,6 +12,7 @@ import { SubscriptionComponent } from './Admin/layout/subscription/subscription.
 import { FilterPipe } from './filter.pipe';
 import { NavbarComponent } from './User/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { NotfoundComponent } from './User/notfound/notfound.component';
 
 export function appInitializer(authService: AuthService): () => Promise<void> {
   return () =>
@@ -26,6 +27,7 @@ export function appInitializer(authService: AuthService): () => Promise<void> {
     BlankComponent,
     FullComponent,
     SubscriptionComponent,
+    NotfoundComponent,
     FilterPipe,
     NavbarComponent
   ],

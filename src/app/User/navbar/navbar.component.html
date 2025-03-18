@@ -1,46 +1,112 @@
 <nav class="nav-container">
-    <div class="nav-logo">
-      <img src="assets/images/logo.png" alt="logo" />
-      <!-- <h1>LOGO</h1> -->
-    </div>
-    <ul class="nav-list" [class.nav-active]="isMenuOpen">
-      <li>
-        <a href="#">Home</a>
-      </li>
-      <li>
-        <a href="#">Services</a>
-      </li>
-      <li>
-        <a href="#">Blog</a>
-      </li>
-      <li>
-        <a href="#">Contact Us</a>
-      </li>
-    </ul>
-    <div class="nav-toggle" (click)="toggleMenu()">
-      <span class="nav-line" [class.nav-toggle-active]="isMenuOpen"></span>
-      <span class="nav-line" [class.nav-toggle-active]="isMenuOpen"></span>
-      <span class="nav-line" [class.nav-toggle-active]="isMenuOpen"></span>
-    </div>
-  </nav>
-  
-  <div class="nav-menu" [class.nav-menu-active]="isMenuOpen">
-    <ul class="nav-menu-list">
-      <li>
-        <a href="#">Home</a>
-      </li>
-      <li>
-        <a href="#">Services</a>
-      </li>
-      <li>
-        <a href="#">Blog</a>
-      </li>
-      <li>
-        <a href="#">Contact Us</a>
-      </li>
-    </ul>
+  <div class="nav-logo">
+    <img src="assets/images/logo-vf.png" alt="logo" />
+    <!-- <h1>OICE FIRST</h1> -->
   </div>
-  
-  
+  <ul class="nav-list" [class.nav-active]="isMenuOpen">
+    <li>
+      @if(isloggedin){
+        <a routerLink="user/home" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      }
+      @else {
+        <a routerLink="user/landing" routerLinkActive="active-link" [routerLinkActiveOptions]="{ exact: true }">Home</a>
+      }
+    </li>
+    <li><a routerLink="/contact-us" routerLinkActive="active-link">Contact us</a></li>
+    <li>
+      @if(isloggedin){
+        <button class="action-btn" (click)="logout()">Logout</button>
+      }
+      @else {
+        <button class="action-btn" routerLink="authentication/login">Login</button>
+      }
+      
+  </li>
+  </ul>
 
-<router-outlet/>
+  <div class="nav-toggle" (click)="toggleMenu()">
+    <span class="nav-line" [class.nav-toggle-active]="isMenuOpen"></span>
+    <span class="nav-line" [class.nav-toggle-active]="isMenuOpen"></span>
+    <span class="nav-line" [class.nav-toggle-active]="isMenuOpen"></span>
+  </div>
+</nav>
+
+<!-- Overlay -->
+<div class="nav-overlay" [class.active]="isMenuOpen" (click)="toggleMenu()"></div>
+
+<!-- Mobile Menu -->
+<div class="nav-menu" [class.nav-menu-active]="isMenuOpen">
+<ul class="nav-menu-list">
+  <li routerLinkActive="active-link" routerLink="/home" [routerLinkActiveOptions]="{ exact: true }" (click)="onMenuClick()">
+    <a >Home</a>
+  </li>
+  <li routerLinkActive="active-link" routerLink="/contact-us" (click)="onMenuClick()">
+    <a>Contact us</a>
+  </li>
+</ul>
+
+</div>
+
+<main>
+  <router-outlet/>
+</main>
+
+<footer class="vf-footer">
+  <div class="vf-container vf-row">
+    <div class="vf-footer-col">
+      <div class="nav-logo flex-column justify-content-start">
+        <img src="assets/images/logo-vf.png" alt="logo" />
+        <h1>VOICE FIRST</h1>
+      </div>
+      <p></p>
+    </div>
+    <div class="vf-footer-col">
+      <h4>Menu</h4>
+      <ul>
+        <li><a routerLink="/overview" routerLinkActive="active-link">Product Overview</a></li>
+        <li><a routerLink="/how-it-works" routerLinkActive="active-link">How it works</a></li>
+        <li><a routerLink="/use-case" routerLinkActive="active-link">Industries & Use cases</a></li>
+        <li><a routerLink="/casestudy-testimonial" routerLinkActive="active-link">Case study</a></li>
+      </ul>
+    </div>
+    <div class="vf-footer-col">
+      <h4>get help</h4>
+      <ul>
+        <li><a routerLink="/pricing" routerLinkActive="active-link">Pricing & Subscription</a></li>
+        <li><a routerLink="/download" routerLinkActive="active-link">Download</a></li>
+        <li><a routerLink="/faq" routerLinkActive="active-link">FAQ</a></li>
+        <li><a routerLink="/contact-us" routerLinkActive="active-link">Contact us</a></li>
+      </ul>
+    </div>
+    <div class="vf-footer-col">
+      <h4>follow us</h4>
+      <div class="vf-social-links">
+        <a href="https://www.linkedin.com/company/notetech-software/" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://twitter.com/Notetech_IT" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+        <a href="https://www.instagram.com/notetechsoftware/" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+        
+      </div>
+    </div>
+  </div>
+  <hr>
+  <div class="d-flex justify-content-center">
+    <p class="right-link">© Copyright 2025 Voice First | Notetech Software. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<!--  -->
+
+<a
+id="scroll-up"
+class="scroll-up"
+[class._show-scroll]="showScroll"
+(click)="scrollToTop()"
+>
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0 0h24v24H0z" fill="none"></path>
+  <path
+    fill="rgba(255,255,255,1)"
+    d="M11.9997 10.8284L7.04996 15.7782L5.63574 14.364L11.9997 8L18.3637 14.364L16.9495 15.7782L11.9997 10.8284Z"
+  ></path>
+</svg>
+</a>

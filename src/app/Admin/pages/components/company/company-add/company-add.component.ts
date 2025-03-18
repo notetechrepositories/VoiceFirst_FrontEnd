@@ -76,8 +76,8 @@ export class CompanyAddComponent implements OnInit {
   initializeForm() {
     console.log('Form initialized');
     this.formcompanyadd = this.fb.group({
-      t1_company_name: ['', [Validators.required]],
-      id_company_type: ['', [Validators.required]],
+      t1_company_name: ['', ],
+      id_company_type: ['',],
     });
     this.formbranchadd = this.fb.group({
       t2_company_branch_name: ['', [Validators.required]],

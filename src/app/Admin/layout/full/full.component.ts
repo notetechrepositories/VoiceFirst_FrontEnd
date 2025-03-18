@@ -2,6 +2,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Component, Inject, PLATFORM_ID, AfterViewInit, Input } from '@angular/core';
 import { AuthService } from '../../../Services/authService/auth.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
+import { LocalstorageService } from '../../../Services/localStorageService/localstorage.service';
 
 
 
@@ -12,9 +14,30 @@ import Swal from 'sweetalert2';
 })
 export class FullComponent implements AfterViewInit{
 
+
+   userType:any;
+  
+
+  
+
+
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
-    private authService:AuthService) {}
+    private authService:AuthService,private router:Router,private localStorageService:LocalstorageService) {}
+
+    ngOnInit(){
+  
+  
+      // this.userType = this.localStorageService.getItem('token');
+      // if (this.authService.isLoggedIn()) {
+      //   if(this.userType =='Notetech' || this.userType =="Company"){
+      //     this.router.navigate(['company/dashboard']);
+      //   }
+      //   else{
+      //     this.router.navigate(['user/home']);
+      //   }
+      // }
+    }
 
   ngAfterViewInit() {
     if (isPlatformBrowser(this.platformId)) {
