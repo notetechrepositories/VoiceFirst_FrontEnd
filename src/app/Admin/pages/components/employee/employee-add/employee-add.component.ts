@@ -49,6 +49,7 @@ ngOnInit(): void {
   this.getYears();
   // this.getEmployeeRoles();
   this.getCountries();
+  this.getEmployeeRoles();
 }
 initialise(){
   this.formuseradd = this.fb.group({
@@ -71,10 +72,8 @@ initialise(){
 }
 
 getEmployeeRoles(){
-  const body={
-   
-  };
-  this.roleService.getRole(body).subscribe({
+  
+  this.roleService.getRole().subscribe({
     next: (res)=>{
       if(res.status==200){
         console.log("roles get:",res.data.Items);

@@ -6,8 +6,6 @@
         <i class="ti ti-x" (click)="onClose()"></i>
        </div>
         <form  [formGroup]="formuseradd" class="row g-3" >
-
-            <div class="form-group">
               <div class="container mb-3">
                 <div class="row align-items-center">
                   <div class="col-md-6">
@@ -95,7 +93,7 @@
                     <label for="inputUserRole" class="form-label">Role</label>
                     <select class="form-select" id="selectUserRole"  formControlName="id_t2_1_country">
                       <option value="" disabled selected>Select Role of employee</option>
-                      <option *ngFor="let country of countries" value={{country.id_t2_1_country}} >{{ country.t2_1_country_name }}</option>
+                      <option *ngFor="let role of roles" value={{role.id_t5_1_m_user_roles}} >{{ role.t5_1_m_user_roles_name }}</option>
                     </select>
                   </div>
                 </div>
@@ -164,17 +162,11 @@
                   </div>
                 </div>
               </div>
-
-            </div>
-
-            <!-- <div class="text-end">
-              <button type="button" (click)="previoustobranch()" class="primary-btn">Previous</button>
-            </div> -->
-
-            <div class="text-end">
-              <button type="submit" class="primary-btn mt-5" (click)="onSubmit()"
-              >Submit</button>
-            </div>
+         
+              <div class="text-end">
+                <button type="submit" class="primary-btn mt-5" (click)="onSubmit()"
+                >Submit</button>
+              </div>
             </form>
     </div>
 </div>

@@ -63,7 +63,7 @@ export class EmployeeComponent {
     EmployeeView(employee:any){
       console.log(employee);
   
-      this.router.navigate(['/components/employee/employee-view'], {
+      this.router.navigate(['/components/employee/employee-add'], {
         state: { employee },
       });
       
@@ -186,6 +186,7 @@ export class EmployeeComponent {
        this.popupContainer.clear();
      };
   }
+ 
   
   show() {
     this.sweetalert.success() 
