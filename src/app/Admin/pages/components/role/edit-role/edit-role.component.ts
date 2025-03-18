@@ -193,7 +193,7 @@ export class EditRoleComponent {
   /** Close the popup */
   onClose() {
     this.closePopup();
-    this.router.navigate(['/role']);
+    this.router.navigate(['/company/role']);
   }
 
   /** Save form data */

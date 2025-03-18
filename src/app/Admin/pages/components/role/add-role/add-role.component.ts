@@ -167,7 +167,7 @@ export class AddRoleComponent {
 
   onClose() {
     this.closePopup();
-    this.router.navigate(['/role']);
+    this.router.navigate(['/company/role']);
   }
 
   onSave() {

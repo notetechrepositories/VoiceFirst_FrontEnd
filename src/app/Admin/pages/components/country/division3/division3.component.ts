@@ -164,7 +164,7 @@ export class Division3Component {
   }
   onClose(){
     this.closePopup();
-    this.router.navigate(['/country'])
+    this.router.navigate(['/company/country'])
   }
   onChangeDivisionthree(event:Event): void {
       const selectElement = event.target as HTMLSelectElement; 

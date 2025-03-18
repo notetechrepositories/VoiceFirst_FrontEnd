@@ -66,7 +66,7 @@ export class CompanyComponent {
   companyView(company:any){
     console.log(company);
 
-    this.router.navigate(['/components/company/company-view'], {
+    this.router.navigate(['/company/company/company-view'], {
       state: { company },
     });
     

@@ -13,7 +13,7 @@ export class AddpopupComponent {
 
   onClose() {
     this.closePopup();
-    this.router.navigate(['/index'])
+    this.router.navigate(['/company/index'])
   }
 
   onSave() {
