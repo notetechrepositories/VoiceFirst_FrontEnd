@@ -1,11 +1,13 @@
-<div class="page-wrapper chiller-theme toggled">
+<div class="page-wrapper chiller-theme toggled" *ngIf="isShow">
   <a id="show-sidebar" class="btn btn-sm btn-light">
-    <i class="fas fa-bars" style="color: black;"></i>
+    <i class="fas fa-bars" style="color: black"></i>
   </a>
   <nav id="sidebar" class="sidebar-wrapper">
     <div class="sidebar-content">
       <div class="sidebar-brand">
-        <img src="assets/images/logo.png" width="35"><a href="#">oice First</a>
+        <img src="assets/images/logo.png" width="35" /><a href="#"
+          >oice First</a
+        >
         <div id="close-sidebar">
           <i class="fas fa-times"></i>
         </div>
@@ -18,26 +20,30 @@
             <span>General</span>
           </li>
           <li>
-            <a routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a
+              routerLink="/dashboard"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
               <i class="fa fa-tachometer-alt"></i>
               <span>Dashboard</span>
             </a>
           </li>
           <li>
             <a routerLink="components/company" routerLinkActive="active">
-              <i class='bx bx-buildings' ></i>
+              <i class="bx bx-buildings"></i>
               <span>Company</span>
             </a>
           </li>
           <li>
             <a routerLink="components/role" routerLinkActive="active">
-              <i class='bx bxs-user-badge'></i>
+              <i class="bx bxs-user-badge"></i>
               <span>Role</span>
             </a>
           </li>
           <li>
             <a routerLink="components/country" routerLinkActive="active">
-              <i class='bx bxs-flag-alt' ></i>
+              <i class="bx bxs-flag-alt"></i>
               <span>Country</span>
             </a>
           </li>
@@ -49,19 +55,25 @@
             <div class="sidebar-submenu">
               <ul>
                 <li>
-                  <a routerLink="components/selection-values" routerLinkActive="active">Selection Values</a>
+                  <a
+                    routerLink="components/selection-values"
+                    routerLinkActive="active"
+                    >Selection Values</a
+                  >
                 </li>
-
               </ul>
             </div>
           </li>
           <li>
-            <a routerLink="components/branch" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <a
+              routerLink="components/branch"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+            >
               <i class="fa fa-tachometer-alt"></i>
               <span>Branch</span>
             </a>
           </li>
-
 
           <!-- <li>
             <a routerLink="components/test" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
@@ -178,25 +190,28 @@
   <!-- sidebar-wrapper  -->
   <!-- <header class="header"></header> -->
   <main class="page-content">
-
-
     <div class="container-fluid">
       <!--  -->
       <div>
         <router-outlet />
       </div>
       <!--  -->
-      <hr>
+      <hr />
 
       <footer class="text-center">
         <div class="mb-2">
           <small>
-            © 2024 <a target="_blank" rel="noopener noreferrer" href="https://notetech.com">notetech.com</a>
+            © 2024
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://notetech.com"
+              >notetech.com</a
+            >
           </small>
         </div>
-
       </footer>
-      </div>
+    </div>
   </main>
   <!-- page-content" -->
 </div>

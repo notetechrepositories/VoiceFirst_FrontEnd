@@ -13,14 +13,14 @@ import { EditBranchComponent } from './edit-branch/edit-branch.component';
 })
 export class BranchComponent {
   branch: Branch[] = [];
- @Input() branches: any[] = [];
-  constructor(private componentFactoryResolver: ComponentFactoryResolver,private sweetalert:SweetalertService,
-    private branchservice:BrachService) {}
-    ngOnInit(): void {
-      this.getBranch();
-      
-    }
-  
+  @Input() branches: any[] = [];
+  constructor(private componentFactoryResolver: ComponentFactoryResolver, private sweetalert: SweetalertService,
+    private branchservice: BrachService) { }
+  ngOnInit(): void {
+    this.getBranch();
+
+  }
+
   itemsPerPage = 2;
   currentPage = 1;
   paginatedOrders = this.branch.slice(0, this.itemsPerPage);
@@ -73,189 +73,189 @@ export class BranchComponent {
   filterStatus = '';
   filteredOrders = [...this.branch];
 
-applyFilters() {
-  let orders = [...this.branch];
+  applyFilters() {
+    let orders = [...this.branch];
 
-  // Filter by search term
-  if (this.searchTerm) {
-    const search = this.searchTerm.toLowerCase();
-    orders = orders.filter(
-      (order) =>
-        order.branchName.toLowerCase().includes(search) ||
-        order.branchType.toLowerCase().includes(search)
-    );
+    // Filter by search term
+    if (this.searchTerm) {
+      const search = this.searchTerm.toLowerCase();
+      orders = orders.filter(
+        (order) =>
+          order.branchName.toLowerCase().includes(search) ||
+          order.branchType.toLowerCase().includes(search)
+      );
+    }
+
+    // Filter by date
+    if (this.filterDate) {
+      orders = orders.filter(
+        (order) => new Date(order.country).toDateString() === new Date(this.filterDate).toDateString()
+      );
+    }
+
+    // Filter by status
+    // if (this.filterStatus) {
+    //   orders = orders.filter(
+    //     (order) => order.deliveryStatus === this.filterStatus
+    //   );
+    // }
+
+    this.filteredOrders = orders;
+    this.updatePaginatedOrders();
   }
 
-  // Filter by date
-  if (this.filterDate) {
-    orders = orders.filter(
-      (order) => new Date(order.country).toDateString() === new Date(this.filterDate).toDateString()
-    );
-  }
 
-  // Filter by status
-  // if (this.filterStatus) {
-  //   orders = orders.filter(
-  //     (order) => order.deliveryStatus === this.filterStatus
-  //   );
-  // }
-
-  this.filteredOrders = orders;
-  this.updatePaginatedOrders();
-}
+  // ----------------------------------POP UP----------------------------------------
 
 
-// ----------------------------------POP UP----------------------------------------
-
-
-@ViewChild('popupContainer', { read: ViewContainerRef })
-popupContainer!: ViewContainerRef;
+  @ViewChild('popupContainer', { read: ViewContainerRef })
+  popupContainer!: ViewContainerRef;
 
 
 
-openAddCompany() {
-  // Clear previous components if necessary
-  this.popupContainer.clear();
-
-  // Create a component factory for AddCompanyComponent
-  const factory = this.componentFactoryResolver.resolveComponentFactory(AddBranchComponent);
-
-  // Create the component dynamically
-  const componentRef = this.popupContainer.createComponent(factory);
-
-  // Listen to events or data changes if necessary
-  componentRef.instance.closePopup = () => {
+  openAddCompany() {
+    // Clear previous components if necessary
     this.popupContainer.clear();
-  };
-}
-openUpdateCompany(){
+
+    // Create a component factory for AddCompanyComponent
+    const factory = this.componentFactoryResolver.resolveComponentFactory(AddBranchComponent);
+
+    // Create the component dynamically
+    const componentRef = this.popupContainer.createComponent(factory);
+
+    // Listen to events or data changes if necessary
+    componentRef.instance.closePopup = () => {
+      this.popupContainer.clear();
+    };
+  }
+  openUpdateCompany() {
     // Clear previous components if necessary
     this.popupContainer.clear();
 
     // Create a component factory for AddCompanyComponent
     const factory = this.componentFactoryResolver.resolveComponentFactory(EditBranchComponent);
-  
+
     // Create the component dynamically
     const componentRef = this.popupContainer.createComponent(factory);
-  
+
     // Listen to events or data changes if necessary
     componentRef.instance.closePopup = () => {
       this.popupContainer.clear();
     };
-}
+  }
 
-show() {
-  this.sweetalert.success()
-}
+  show() {
+    this.sweetalert.success()
+  }
 
-deleteBranch(id:any){
-  Swal.fire({
-     title: "Are you sure?",
-     text: "You won't be able to revert this!",
-     icon: "warning",
-     showCancelButton: true,
-     confirmButtonColor: "#3085d6",
-     cancelButtonColor: "#d33",
-     confirmButtonText: "Yes, delete it!"
-   }).then((result) => {
-     if (result.isConfirmed) {
-      console.log(id);
-      
-       this.branchservice.deleteBranch(id).subscribe({
-         next: (res) => {
-           if(res.message=="Success"){
-             this.sweetalert.showToast('success','Succefully deleted');
-             //this.paginatedOrders = this.locations.filter(item => item.id_t2_1_country !== id);
-             this.getBranch();
-           }
-         },
-         error: (error) => {
-           this.sweetalert.showToast('error','Oops! Something went wrong.');
-         },
-       });
-      
-     }
-   });
-}
-
-successtoast(){
-  this.sweetalert.showToast('success','Successfully created.');
-}
-
- updatePopup() {
-  console.log("workng");
-  
-  (async () => {
-    const inputValue = "input value";
-    const { value: ipAddress } = await Swal.fire({
-      // title: "Enter your IP address",
-      input: "text",
-      inputLabel: "Division One",
-      inputValue,
-      confirmButtonText: "Update",
+  deleteBranch(id: any) {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
       showCancelButton: true,
-      inputValidator: (value) => {
-        if (!value) {
-          return "You need to write something!";
-        }
-        return null;
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log(id);
+
+        this.branchservice.deleteBranch(id).subscribe({
+          next: (res) => {
+            if (res.message == "Success") {
+              this.sweetalert.showToast('success', 'Succefully deleted');
+              //this.paginatedOrders = this.locations.filter(item => item.id_t2_1_country !== id);
+              this.getBranch();
+            }
+          },
+          error: (error) => {
+            this.sweetalert.showToast('error', 'Oops! Something went wrong.');
+          },
+        });
+
       }
     });
-    if (ipAddress) {
-      this.sweetalert.showToast('success','Successfully created.');
-    }
-  })()
-}
-// ------------------Get---------------------------
-getBranch(): void {
-  const body = { 
-    filters: { 
+  }
 
-    }
-  };
+  successtoast() {
+    this.sweetalert.showToast('success', 'Successfully created.');
+  }
 
-  this.branchservice.getBranch(body).subscribe({
-    next: (res) => {
-      console.log(res);
-      this.branch = res.data.Items || [];
-      this.updatePaginatedOrders(); 
-    },
-    error: (error) => {
-      console.log('Failed to load locations:', error);
-      this.branch = [];
-      this.updatePaginatedOrders(); 
-    },
-  });       
-}
-// ------------GetById------------------------------
+  updatePopup() {
+    console.log("workng");
 
-  getBranchById(id_t2_company_branch:number){
-    const body = { 
-      filters: { 
+    (async () => {
+      const inputValue = "input value";
+      const { value: ipAddress } = await Swal.fire({
+        // title: "Enter your IP address",
+        input: "text",
+        inputLabel: "Division One",
+        inputValue,
+        confirmButtonText: "Update",
+        showCancelButton: true,
+        inputValidator: (value) => {
+          if (!value) {
+            return "You need to write something!";
+          }
+          return null;
+        }
+      });
+      if (ipAddress) {
+        this.sweetalert.showToast('success', 'Successfully created.');
+      }
+    })()
+  }
+  // ------------------Get---------------------------
+  getBranch(): void {
+    // const body = { 
+    //   filters: { 
+
+    //   }
+    // };
+
+    this.branchservice.getCompanyBranch().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.branch = res.data.Items || [];
+        this.updatePaginatedOrders();
+      },
+      error: (error) => {
+        console.log('Failed to load locations:', error);
+        this.branch = [];
+        this.updatePaginatedOrders();
+      },
+    });
+  }
+  // ------------GetById------------------------------
+
+  getBranchById(id_t2_company_branch: number) {
+    const body = {
+      filters: {
         id_t2_company_branch: id_t2_company_branch
       }
     };
     this.branchservice.getBranch(body).subscribe({
-      next:(response)=>{
+      next: (response) => {
         console.log(response);
-        
-        this.branches=response;
+
+        this.branches = response;
       }
     })
   }
-//----------------Update------------------
-  UpdateBranch(branch:any):void{
-    
+  //----------------Update------------------
+  UpdateBranch(branch: any): void {
+
+    this.popupContainer.clear();
+    const factory = this.componentFactoryResolver.resolveComponentFactory(EditBranchComponent);
+    const componentRef = this.popupContainer.createComponent(factory);
+    componentRef.instance.branchData = branch;
+    componentRef.instance.closePopup = () => {
       this.popupContainer.clear();
-          const factory = this.componentFactoryResolver.resolveComponentFactory(EditBranchComponent);
-          const componentRef = this.popupContainer.createComponent(factory);
-          componentRef.instance.branchData = branch;
-          componentRef.instance.closePopup = () => {
-            this.popupContainer.clear();
-            this.getBranch(); 
-          };
-    
-  
-    
+      this.getBranch();
+    };
+
+
+
   }
 }
