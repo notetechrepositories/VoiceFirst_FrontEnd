@@ -62,14 +62,8 @@ export const routes: Routes = [
     ],
   },
   {
-    path: '**',
-    component: BlankComponent,
-    children: [
-      {
         path: '**',
         component: NotfoundComponent,
-      },
-    ],
   },
 
   // {

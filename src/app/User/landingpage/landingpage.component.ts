@@ -18,12 +18,14 @@ constructor(private authService:AuthService,private router:Router,private localS
 
 ngOnInit(){
   this.userType = this.localStorageService.getItem('role');
+  this.localStorageService.removeItem('branchId');
   if (this.authService.isLoggedIn()) {
     if(this.userType =='Notetech' || this.userType =="Company"){
       this.router.navigate(['company/dashboard']);
     }
     else{
       this.router.navigate(['user/home']);
+      
     }
   }
   else{

@@ -32,10 +32,10 @@ export class NavbarComponent {
     this.userType = await this.localStorageService.getItem('role');
     if (await this.authService.isLoggedIn()) {
       if(this.userType =="Notetech" || this.userType =="Company"){
-        this.router.navigate(['/company']);
+        // this.router.navigate(['/company']);
       }
       else{
-        this.router.navigate(['user/home']);
+        // this.router.navigate(['user/home']);
         this.isloggedin=true;
       }
     }

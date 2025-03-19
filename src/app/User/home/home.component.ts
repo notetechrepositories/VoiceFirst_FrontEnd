@@ -19,7 +19,7 @@ export class HomeComponent {
 
   ngOnInit(){
     this.getBranch();
-
+    this.localStorageService.removeItem('branchId');
 
   }
 
@@ -40,8 +40,9 @@ export class HomeComponent {
 
   selectBusiness(business: any) {
     this.searchQuery = business.t2_company_branch_name;
+    localStorage.setItem('branchId',business.id_t2_company_branch);
     this.router.navigate(['user/commercial'])
-    // this.filteredBusinesses = []; // Hide suggestions after selection
+ 
   }
 
 

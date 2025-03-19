@@ -72,7 +72,7 @@
   <div class="container w-100">
     <div class="row w-100">
     
-      <div class="col-md-5 mb-3">
+      <div class="col-md-6 mb-3">
         <select class="form-select" aria-label="Default select example">
           <option selected disabled>Select Company</option>
           <option value="1">One</option>
@@ -81,7 +81,7 @@
         </select>
       </div>
   
-      <div class="col-md-5 mb-3">
+      <div class="col-md-6 mb-3">
         <select class="form-select" aria-label="Default select example">
           <option selected disabled>Select Branch</option>
           <option value="1">One</option>
@@ -90,22 +90,61 @@
         </select>
       </div>
 
-      <div class="col-lg-2 col-md-6 mb-4">
-        <button class="button">
-          Search
-          <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-            <path
-              fill-rule="evenodd"
-              d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
-              clip-rule="evenodd"
-            ></path>
-          </svg>
-        </button>
-        
-      </div>
+
     </div>
   </div>
+
+  <!--  -->
+
+  <div class="container mt-5">
+    <div class="row w-100">
+      <div class="col-md-4 mb-3" *ngFor="let business of businesses">
+        <div class="card h-100 d-flex flex-column">
+          <img 
+            src="https://images.unsplash.com/photo-1621114957135-7f88c8447439?q=80&w=1931&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+            class="card-img-top" 
+            alt="..." 
+            style="object-fit: cover; height: 200px;"
+          >
+          
+          <div class="card-body d-flex flex-column">
+            <!-- Content -->
+            <h5>{{ business.t2_company_branch_name }}</h5>
+            <p class="card-text mb-0">{{ business.t2_address_1 }}</p>
+            <p class="card-text">
+              <small>
+                {{ business.t2_1_local_name }}, {{ business.t2_1_div3_name }},
+                {{ business.t2_1_div2_name }}, {{ business.t2_1_div1_name }},
+                {{ business.t2_1_country_name }},
+                {{ business.t2_zip_code }}
+              </small>
+            </p>
+      
+            <!-- Spacer pushes button to bottom -->
+            <div class="mt-auto">
+              <button class="button w-100 d-flex align-items-center justify-content-center" (click)="selectBusiness(business)">
+                Report Issue
+                <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
+                  <path
+                    fill-rule="evenodd"
+                    d="M12 2.25c-5.385 0-9.75 4.365-9.75 9.75s4.365 9.75 9.75 9.75 9.75-4.365 9.75-9.75S17.385 2.25 12 2.25zm4.28 10.28a.75.75 0 000-1.06l-3-3a.75.75 0 10-1.06 1.06l1.72 1.72H8.25a.75.75 0 000 1.5h5.69l-1.72 1.72a.75.75 0 101.06 1.06l3-3z"
+                    clip-rule="evenodd"
+                  ></path>
+                </svg>
+              </button>
+            </div>
+      
+          </div>
+        </div>
+      </div>
+      
+      
+
+    </div>
+   </div>
   
 </section>
+
+
 
 
