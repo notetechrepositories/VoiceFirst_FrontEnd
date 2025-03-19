@@ -22,7 +22,7 @@ export class UserService {
         return this.http.post<any>(`${this.apiUrl}/user/get-all`, filters, { headers: this.headers });
     }
     getEmployeeDetails(){
-      return this.http.get<any>(`${this.apiUrl}/user/get-all`, { headers: this.headers });
+      return this.http.get<any>(`${this.apiUrl}/user/get-all-employee`, { headers: this.headers });
   }
     postUserDetails(userData:any){
         return this.http.post<any>(`${this.apiUrl}/user/user-register`, userData, {headers:this.headers});

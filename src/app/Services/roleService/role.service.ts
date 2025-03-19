@@ -25,7 +25,7 @@ export class RoleService {
   }
 
   getRole() {
-    return this.http.get<ApiResponse>(`${this.apiUrl}/role/get-all`, { headers: this.headers });
+    return this.http.get<any>(`${this.apiUrl}/role/get-all`, { headers: this.headers });
   }
 
   getRoleandPermission(id: string) {
