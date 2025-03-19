@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './home/home.component';
 import { UsersRoutes } from './user.routing.module';
 import { BranchDetailComponent } from './branch-detail/branch-detail.component';
@@ -16,8 +16,8 @@ import { LandingpageComponent } from './landingpage/landingpage.component';
     CommonModule,
     FormsModule,
     RouterModule.forChild(UsersRoutes),
-    RouterOutlet
-    
+    RouterOutlet,
+    ReactiveFormsModule
   ],
   declarations: [
     HomeComponent,
