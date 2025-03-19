@@ -30,10 +30,10 @@ export class EmployeeComponent {
     
     
     getAllEmployee(){
-      const filterCompany = {
-        filters: {},
-      };
-      this.userService.getUserDetails(filterCompany).subscribe({
+      // const filterCompany = {
+      //   filters: {},
+      // };
+      this.userService.getEmployeeDetails().subscribe({
         next:(res)=>{
           if(res.status==200){
             console.log("received employees",res.data.Items);
