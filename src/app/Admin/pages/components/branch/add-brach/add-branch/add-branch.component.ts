@@ -62,7 +62,7 @@ export class AddBranchComponent {
   }
   onClose() {
     this.closePopup();
-    this.router.navigate(['/components/branch'])
+    this.router.navigate(['/company/branch'])
   }
   onBranchTypeChange(event: any) {
     const selectedValue = event.target.value;

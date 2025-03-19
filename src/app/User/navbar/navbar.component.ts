@@ -3,6 +3,7 @@ import { AuthService } from '../../Services/authService/auth.service';
 import Swal from 'sweetalert2';
 import { Router } from '@angular/router';
 import { LocalstorageService } from '../../Services/localStorageService/localstorage.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-navbar',
@@ -12,21 +13,26 @@ import { LocalstorageService } from '../../Services/localStorageService/localsto
 export class NavbarComponent {
   isMenuOpen = false;
   isloggedin : boolean=false;
+  isloginVisible :boolean=false;
 
     userType:any;
   
-    constructor(private authService:AuthService,private router:Router,private localStorageService:LocalstorageService){}
+    constructor(
+      private authService:AuthService,
+      private router:Router,
+      private localStorageService:LocalstorageService,
+      private fb: FormBuilder){
+        
+      }
   
 
 
   async ngOnInit(): Promise<void> {
     this.checkScreenSize();
-    console.log(this.isloggedin);
-    
     this.userType = await this.localStorageService.getItem('role');
     if (await this.authService.isLoggedIn()) {
       if(this.userType =="Notetech" || this.userType =="Company"){
-        this.router.navigate(['/dashboard']);
+        this.router.navigate(['/company']);
       }
       else{
         this.router.navigate(['user/home']);
@@ -37,6 +43,8 @@ export class NavbarComponent {
       this.router.navigate(['']);
       this.isloggedin=false ;
     }
+    this.error='';
+    this.loginFormInit();
   }
 
   toggleMenu(): void {
@@ -111,11 +119,62 @@ logout(){
   }).then((result) => {
     if (result.isConfirmed) {
       this.authService.logout();
+      this.isloggedin=false;
     }
   });
 
 }
 
+
+// ==============================================
+
+loginForm!: FormGroup;
+error: string = '';
+
+openLogin(){
+  this.isloginVisible=true;
+}
+onClose(){
+  this.isloginVisible=false;
+}
+
+
+
+  loginFormInit(){
+    this.loginForm = this.fb.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required, Validators.minLength(5)]],
+    });
+  }
+
+  onLogin(): void {
+    if (this.loginForm.valid) {
+      const loginData = this.loginForm.value;
+      this.authService.login(loginData).subscribe({
+        next: (res) => {
+          console.log(res);
+          if (res.status == 200) {
+            this.onClose();
+            this.localStorageService.setItem('token', res.data.token);
+            this.localStorageService.setItem('role', res.data.role);
+            if(res.data.role =="Notetech" || res.data.role == "Company"){
+              this.router.navigate(['/company']);
+            }
+            else{
+              this.router.navigate(['/user/home']);
+            }
+            
+          }
+          else {
+            this.error = res.message;
+          }
+        },
+        error: (error) => {
+          console.error(error);
+        },
+      });
+    }
+  }
 
 
 

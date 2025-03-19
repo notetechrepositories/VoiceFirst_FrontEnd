@@ -1,8 +1,8 @@
-<h3 class="mb-4">Company</h3>
+<h3 class="mb-4">Employees</h3>
 <div class="filter-buttons col-md-12 d-flex justify-content-end">
   <button class="filter-btn import" data-toggle="tooltip" data-placement="top" title="Import" ><i class='bx bx-import'></i></button>
   <button class="filter-btn export" data-toggle="tooltip" data-placement="top" title="Export" ><i class='bx bx-export'></i></button>
-  <button  class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="openAddCompany()" ><i class='bx bx-plus'></i></button>
+  <button  class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="openAddEmployee()" ><i class='bx bx-plus'></i></button>
 </div>
 <div>
     <div class="filter-section">
@@ -27,15 +27,7 @@
                 placeholder="Filter by Date"
               />
             </div> -->
-            <div class="col-md-4">
-              <select class="form-select" [(ngModel)]="filterStatus" (change)="applyFilters()">
-                <option [value]="null" disabled selected>Filter by status</option> 
-                <option value=''>All Status</option>
-                <option value='1'>Active</option>
-                <option value='0'>Inactive</option>
-               
-              </select>
-            </div>
+            
           </div>
         </div>
       </div>
@@ -46,33 +38,26 @@
         <thead class="thead-light">
           <tr>
             <th>#</th>
-            <th>Company Name</th>
-            <th>Company Type</th>
-            <th>Status</th>
-            <th>Expire on</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Dasignation</th>
+            
             <th></th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let company of paginatedCompanies; let i = index">
+          <tr *ngFor="let employee of paginatedEmployees; let i = index">
             <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
             
-            <td>{{ company.t1_company_name }}</td>
-            <td>{{ company.company_type }}</td>
-            <td>
-              <span class="badge" [ngClass]="getActiveStatusClass(company.is_active)">
-                {{getActiveStatusText(company.is_active)}}
-              </span>
-            </td>
-            <td>
-              <span  [ngClass]="getStatusClass(company.is_active_till_date)">
-                {{ getFormattedDate(company.is_active_till_date) }}
-              </span>
-            </td>
+            <td>{{ employee.t5_first_name }} {{employee.t5_last_name}}</td>
+            <td>{{ employee.t5_email }}</td>
+            <td>designation</td>
+          
+            
             <td class="actions text-end">
               <!-- <a class="action-btn danger" [routerLink]="['/components/company/company-view',company.id_t1_company]" ><i class="ti ti-eye"></i></a> -->
-              <a class="action-btn danger" (click)="companyView(company)" ><i class='bx bx-bullseye p-1'></i></a>
-              <!-- <button class="action-btn info"><i class='bx bxs-edit p-1'></i></button> -->
+              <a class="action-btn danger" (click)="openAddEmployee()" ><i class="ti ti-eye"></i></a>
+              <button class="action-btn info"><i class='bx bxs-edit p-1'></i></button>
               <button class="action-btn danger" (click)="deleteFn()"><i class='bx bx-trash p-1'></i></button>
             </td>
           </tr>

@@ -81,12 +81,12 @@ export class RoleComponent {
 
   getAllRole() {
     this.isLoading = true;
-    const body = { 
-      filters: { 
-        is_delete: "0" 
-      }
-    };  
-    this.roleService.getRole(body).subscribe({
+    // const body = { 
+    //   filters: { 
+    //     is_delete: "0" 
+    //   }
+    // };  
+    this.roleService.getRole().subscribe({
       next: (res) => {
         console.log(res);
         

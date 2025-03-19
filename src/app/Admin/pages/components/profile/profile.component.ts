@@ -19,15 +19,18 @@ export class ProfileComponent {
     private fb:FormBuilder
   ){}
 
+
   encryUserId!:string;
   userDetails!: any;
   userDataForm!: FormGroup;
+  temp_var:any;
+  id!:string;
   
   isEditing: boolean=false;
   ngOnInit(){
+    
     this.initialiseForm();
     this.getUserDetails();
-    
   }
 
   initialiseForm(){
@@ -92,6 +95,8 @@ export class ProfileComponent {
       }
     }) 
   }
+
+  
 
   onEditClick(event: Event) {
     event.preventDefault(); // Prevents default link behavior

@@ -182,7 +182,7 @@ export class Division2Component {
 
   onClose(){
     this.closePopup();
-    this.router.navigate(['/components/country'])
+    this.router.navigate(['/company/country'])
   }
 
 }

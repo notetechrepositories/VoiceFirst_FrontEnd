@@ -1,0 +1,172 @@
+<div class="popup">
+    <div class="popup-content">
+
+      <div class="d-flex justify-content-between mb-3">
+        <h4>Add Employee</h4>
+        <i class="ti ti-x" (click)="onClose()"></i>
+       </div>
+        <form  [formGroup]="formuseradd" class="row g-3" >
+              <div class="container mb-3">
+                <div class="row align-items-center">
+                  <div class="col-md-6">
+                    <label for="inputUserFirstName" class="form-label">First Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputUserFirstName" placeholder="Enter First Name" formControlName="firstName"/>
+                    <div *ngIf="formuseradd.controls['firstName']?.touched && formuseradd.controls['firstName'].invalid" class="text-danger">
+                      <small *ngIf="formuseradd.controls['firstName'].errors?.['required']">First name is required.</small>
+                      <small *ngIf="!formuseradd.controls['firstName'].errors?.['required'] && formuseradd.controls['firstName'].errors?.['invalidName']">Invalid name format.</small>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputUserLastName" class="form-label">Last Name </label>
+                    <input type="text" class="form-control" id="inputUserLastName" placeholder="Enter Last Name" formControlName="lastName"/>
+                    <div *ngIf="formuseradd.controls['lastName'].value" class="text-danger">
+                      
+                      <small *ngIf="formuseradd.controls['lastName'].errors?.['invalidName']"> Invalid name format</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container mb-3">
+                <div class="row align-items-center">
+                  <div class="col-md-6">
+                    <label for="inputUserYearofBirth" class="form-label">Year of Birth <span class="text-danger">*</span></label>
+                    <select  class="form-select" id="inputUserYearofBirth" placeholder="Enter year of birth" formControlName="birthDate">
+                      <option value="" disabled selected> Select year</option>
+                      <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="selectUserGender" class="form-label">Gender </label>
+                    <select class="form-select" id="selectUserGender" formControlName="sex">
+                      <option value="" disabled selected>Select Gender</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container mb-3">
+                <div class="row align-items-center">
+                  <div class="col-md-6">
+                    <label for="inputUserEmail" class="form-label">Email <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="inputUserEmail" placeholder="Enter Email" formControlName="email" />
+                    <div *ngIf="formuseradd.controls['email']?.touched && formuseradd.controls['email'].invalid" class="text-danger">
+                      <small *ngIf="formuseradd.controls['email'].errors?.['required']">Email is required.</small>
+                      <small *ngIf="!formuseradd.controls['email'].errors?.['required'] && formuseradd.controls['email'].errors?.['invalidEmail']">Invalid email format.</small>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputUserMobile" class="form-label">Mobile no. <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="inputUserMobile" placeholder="Enter Mobile no." formControlName="mobile"/>
+                    <div *ngIf="formuseradd.controls['mobile'].touched && formuseradd.controls['mobile'].invalid" class="text-danger">
+                      <small *ngIf="formuseradd.controls['mobile'].errors?.['required']">User mobile is required.</small>
+                      <small *ngIf="!formuseradd.controls['mobile'].errors?.['required'] && formuseradd.controls['mobile'].errors?.['invalidPhone']"> Invalid mobile number</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container mb-3">
+                <div class="row align-items-center">
+                  <div class="col-md-12">
+                    <label for="inputUserAddress1" class="form-label">Address1 </label>
+                    <input type="email" class="form-control" id="inputUserAddress1" placeholder="Enter Address1" formControlName="address1" />
+                  </div>
+                </div>
+              </div>
+
+              <div class="container mb-3">
+                <div class="row align-items-center">
+                  <div class="col-md-12">
+                    <label for="inputUserAddress2" class="form-label">Address2</label>
+                    <input type="email" class="form-control" id="inputUserAddress2" placeholder="Enter Address2" formControlName="address2"/>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container mb-3">
+                <div class="row align-items-center">
+                  <div class="col-md-12">
+                    <label for="inputUserRole" class="form-label">Role</label>
+                    <select class="form-select" id="selectUserRole"  formControlName="id_t2_1_country">
+                      <option value="" disabled selected>Select Role of employee</option>
+                      <option *ngFor="let role of roles" value={{role.id_t5_1_m_user_roles}} >{{ role.t5_1_m_user_roles_name }}</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container mb-3">
+                <div class="row align-items-center">
+                  <div class="col-md-12">
+                    <label for="selectUserCountry" class="form-label">Country</label>
+                    <select class="form-select" id="selectUserCountry" (change)="onChangeUserCountry($event)" formControlName="id_t2_1_country">
+                      <option value="" disabled selected>Select Country</option>
+                      <option *ngFor="let country of countries" value={{country.id_t2_1_country}} >{{ country.t2_1_country_name }}</option>
+                    </select>
+                    <div *ngIf="formuseradd.controls['id_t2_1_country'].touched" class="text-danger">
+                      <small *ngIf="formuseradd.controls['id_t2_1_country'].errors?.['required']">Country is required.</small>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="container mb-3">
+                <div class="row align-items-center">
+                  <div class="col-md" *ngIf="showDivision1User">
+                    <label for="selectUserDiv1" class="form-label">{{div1LabelUser}} <span class="text-danger">*</span></label>
+                    <select class="form-select" id="selectUserDiv1" (change)="onChangeUserDivision1($event)" formControlName="id_t2_1_div1">
+                      <option value="" disabled selected>Select {{div1LabelUser}}</option>
+                      <option *ngFor="let userDivision1 of userDiv1" value={{userDivision1.id_t2_1_div1}} >{{ userDivision1.t2_1_div1_name }}</option>
+                    </select>
+                    <div *ngIf="formuseradd.controls['id_t2_1_div1'].touched" class="text-danger">
+                      <small *ngIf="formuseradd.controls['id_t2_1_div1'].errors?.['required']">{{div1LabelUser}} is required.</small>
+                    </div>
+                  </div>
+                  <div class="col-md" *ngIf="showDivision2User">
+                    <label for="selectUserDiv2" class="form-label">{{div2LabelUser}} <span class="text-danger">*</span></label>
+                    <select class="form-select" id="selectUserDiv2" (change)="onChangeUserDivision2($event)" formControlName="id_t2_1_div2">
+                      <option value="" disabled selected>Select {{div2LabelUser}}</option>
+                      <option *ngFor="let userDivision2 of userDiv2" value={{userDivision2.id_t2_1_div2}} >{{ userDivision2.t2_1_div2_name }}</option>
+                    </select>
+                    <div *ngIf="formuseradd.controls['id_t2_1_div2'].touched" class="text-danger">
+                      <small *ngIf="formuseradd.controls['id_t2_1_div2'].errors?.['required']">{{div2LabelUser}} is required.</small>
+                    </div>
+                  </div>
+                  <div class="col-md" *ngIf="showDivision3User">
+                    <label for="selectUserDiv3" class="form-label">{{div3LabelUser}}<span class="text-danger">*</span></label>
+                    <select class="form-select" id="selectUserDiv3" formControlName="id_t2_1_div3">
+                      <option value="" disabled selected>Select {{div3LabelUser}}</option>
+                      <option *ngFor="let userDivision3 of userDiv3" value={{userDivision3.id_t2_1_div3}} >{{ userDivision3.t2_1_div3_name }}</option>
+                    </select>
+                    <div *ngIf="formuseradd.controls['id_t2_1_div3'].touched" class="text-danger">
+                      <small *ngIf="formuseradd.controls['id_t2_1_div3'].errors?.['required']">{{div3LabelUser}} is required.</small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="container mb-3">
+                <div class="row align-items-center">
+                  <div class="col-md-6">
+                    <label for="inputUserLocal" class="form-label">Locality</label>
+                    <input type="text" class="form-control" id="inputUserLocal" placeholder="Enter Locality" formControlName="local" />
+                  </div>
+                  <div class="col-md-6">
+                    <label for="inputUserZipcode" class="form-label">Zipcode</label>
+                    <input type="text" class="form-control" id="inputUserZipcode" placeholder="Enter Zipcode" formControlName="zipCode"/>
+                  </div>
+                </div>
+              </div>
+         
+              <div class="text-end">
+                <button type="submit" class="primary-btn mt-5" (click)="onSubmit()"
+                >Submit</button>
+              </div>
+            </form>
+    </div>
+</div>

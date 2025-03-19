@@ -606,7 +606,7 @@ export class CompanyAddComponent implements OnInit {
 
   onClose() {
     this.closePopup();
-    this.router.navigate(['/components/company']);
+    this.router.navigate(['/company/company']);
   }
 
   onSave() {

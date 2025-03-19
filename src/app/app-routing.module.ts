@@ -19,10 +19,15 @@ export const routes: Routes = [
         component: LandingpageComponent, // Default landing page component
       },
       {
+        path: 'landing',
+        component: LandingpageComponent, // Default landing page component
+      },
+      {
         path: 'user',
         loadChildren: () =>
           import('./User/user.module').then((m) => m.UsersModule),
       },
+      
       {
         path: 'authentication',
         loadChildren: () =>
@@ -30,11 +35,15 @@ export const routes: Routes = [
             (m) => m.AuthenticationModule
           ),
       },
+      {
+        path:'subscription',
+        component:SubscriptionComponent
+      }
     ],
   },
 
   {
-    path: 'dashboard',
+    path: 'company',
     component: FullComponent,
     canActivate: [AuthGuard],
     children: [
@@ -44,7 +53,7 @@ export const routes: Routes = [
           import('./Admin/pages/pages.module').then((m) => m.PagesModule),
       },
       {
-        path: 'components',
+        path: '',
         loadChildren: () =>
           import('./Admin/pages/components/component.module').then(
             (m) => m.ComponentModule
