@@ -21,6 +21,14 @@ export class UserService {
     getUserDetails(filters:any){
         return this.http.post<any>(`${this.apiUrl}/user/get-all`, filters, { headers: this.headers });
     }
+    postUserDetails(userData:any){
+        return this.http.post<any>(`${this.apiUrl}/user/user-register`, userData, {headers:this.headers});
+    }
+
+    getEmployeeById(filters:any){
+      return this.http.post<any>(`${this.apiUrl}/user/get-by-id`, filters , {headers:this.headers});
+    }
+    
     getAdminProfile(){
       return this.http.get<any>(`${this.apiUrl}/user/get-profile`,{headers: this.headers});
     }
