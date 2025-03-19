@@ -31,7 +31,7 @@ export class BrachService {
   }
   //Insert Branch
   insertBranch(data: any) {
-    console.log(data);
+
 
     return this.http.post<any>(this.url, data, { headers: this.headers });
   }

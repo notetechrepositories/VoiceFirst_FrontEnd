@@ -30,6 +30,7 @@ export class AddBranchComponent {
   div1: string = '';
   div2: string = '';
   div3: string = '';
+  isOtherSelected = false;
   @Output() closePopup = () => { };
 
   constructor(private router: Router, private fb: FormBuilder, private brachService: BrachService
@@ -40,6 +41,7 @@ export class AddBranchComponent {
       t2_company_branch_name: [''],
       id_t1_company: [''],
       t2_id_branch_type: [''],
+      branch_type: [''],
       t2_email: [''],
       t2_mobile_no: [''],
       t2_phone_no: [''],
@@ -62,7 +64,19 @@ export class AddBranchComponent {
     this.closePopup();
     this.router.navigate(['/components/branch'])
   }
+  onBranchTypeChange(event: any) {
+    const selectedValue = event.target.value;
 
+    if (selectedValue === 'other') {
+      this.isOtherSelected = true;
+      this.branchForm.get('branch_type')?.setValidators([Validators.required]);
+      this.branchForm.get('branch_type')?.updateValueAndValidity();
+    } else {
+      this.isOtherSelected = false;
+      this.branchForm.get('branch_type')?.clearValidators();
+      this.branchForm.get('branch_type')?.updateValueAndValidity();
+    }
+  }
   onSubmit(): void {
     const data = this.branchForm.value;
     console.log("Form Data Sent:", data); // ✅ Check form data
@@ -71,7 +85,7 @@ export class AddBranchComponent {
       next: (response) => {
         console.log("API Response:", response); // ✅ Check API response
 
-        if (response.status === "200") {
+        if (response.status == 200) {
           this.sweetalert.showToast("success", "Successfully created.");
           this.closePopup();
           this.branchForm.reset();

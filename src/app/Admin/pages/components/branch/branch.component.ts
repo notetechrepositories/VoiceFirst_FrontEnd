@@ -81,8 +81,7 @@ export class BranchComponent {
       const search = this.searchTerm.toLowerCase();
       orders = orders.filter(
         (order) =>
-          order.branchName.toLowerCase().includes(search) ||
-          order.branchType.toLowerCase().includes(search)
+          order.branchName.toLowerCase().includes(search)
       );
     }
 
