@@ -71,6 +71,7 @@ export const routes: Routes = [
       },
     ],
   },
+
   // {
   //   path: '**',  
   //   redirectTo: '/authentication/login', // Or replace with a 404 error component if desired
@@ -81,4 +82,4 @@ export const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }
