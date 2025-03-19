@@ -27,6 +27,10 @@ import { BranchComponent } from './branch/branch.component';
 import { AddBranchComponent } from './branch/add-brach/add-branch/add-branch.component';
 import { EditBranchComponent } from './branch/edit-branch/edit-branch.component';
 import { CompanyViewComponent } from './company/company-view/company-view.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { EmployeeAddComponent } from './employee/employee-add/employee-add.component';
+import { EmployeeViewComponent } from './employee/employee-view/employee-view.component';
+
 
 
 
@@ -60,7 +64,11 @@ import { CompanyViewComponent } from './company/company-view/company-view.compon
     BranchComponent,
     AddBranchComponent,
     EditBranchComponent,
-    CompanyViewComponent
+    CompanyViewComponent,
+    EmployeeComponent,
+    EmployeeAddComponent,
+    EmployeeViewComponent
+    
   ],
 })
 export class ComponentModule {}

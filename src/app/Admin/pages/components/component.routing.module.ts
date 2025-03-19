@@ -10,6 +10,10 @@ import { CompanyComponent } from './company/company.component';
 import { ProfileComponent } from './profile/profile.component';
 import { BranchComponent } from './branch/branch.component';
 import { CompanyViewComponent } from './company/company-view/company-view.component';
+import { EmployeeComponent } from './employee/employee.component';
+import { EmployeeAddComponent } from './employee/employee-add/employee-add.component';
+import { EmployeeViewComponent } from './employee/employee-view/employee-view.component';
+
 
 
 export const ComponentRoutes: Routes = [
@@ -71,7 +75,24 @@ export const ComponentRoutes: Routes = [
             component: CompanyViewComponent
           },
         ]
-      }
+      },
+      
+      {
+        path: '',
+        children: [
+          {
+            path: 'employee',
+            component: EmployeeComponent,
+          },
+
+          {
+            path: 'employee/employee-view',
+            component: EmployeeViewComponent
+          },
+        ]
+      },
+      
+     
       
     ],
   },
