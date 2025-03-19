@@ -52,7 +52,7 @@ export class Division1Component {
 
   onClose() {
     this.closePopup();
-    this.router.navigate(['/components/country'])
+    this.router.navigate(['/company/country'])
   }
 
   // -----------------Get Division One-------------------------------------

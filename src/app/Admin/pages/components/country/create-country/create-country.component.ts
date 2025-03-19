@@ -40,7 +40,7 @@ export class CreateCountryComponent {
 
   onClose() {
     this.closePopup();
-    this.router.navigate(['/components/country'])
+    this.router.navigate(['/company/country'])
   }
 
 

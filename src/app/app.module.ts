@@ -13,6 +13,7 @@ import { FilterPipe } from './filter.pipe';
 import { NavbarComponent } from './User/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotfoundComponent } from './User/notfound/notfound.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 export function appInitializer(authService: AuthService): () => Promise<void> {
   return () =>
@@ -29,7 +30,8 @@ export function appInitializer(authService: AuthService): () => Promise<void> {
     SubscriptionComponent,
     NotfoundComponent,
     FilterPipe,
-    NavbarComponent
+    NavbarComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -37,6 +39,7 @@ export function appInitializer(authService: AuthService): () => Promise<void> {
     AppRoutingModule,
     RouterOutlet,
     HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     {

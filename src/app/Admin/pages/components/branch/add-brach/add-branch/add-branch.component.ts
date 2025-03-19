@@ -60,7 +60,7 @@ export class AddBranchComponent {
   }
   onClose() {
     this.closePopup();
-    this.router.navigate(['/components/branch'])
+    this.router.navigate(['/company/branch'])
   }
 
   onSubmit(): void {
