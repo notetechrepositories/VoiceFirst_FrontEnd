@@ -21,6 +21,9 @@ export class UserService {
     getUserDetails(filters:any){
         return this.http.post<any>(`${this.apiUrl}/user/get-all`, filters, { headers: this.headers });
     }
+    getEmployeeDetails(){
+      return this.http.get<any>(`${this.apiUrl}/user/get-all`, { headers: this.headers });
+  }
     postUserDetails(userData:any){
         return this.http.post<any>(`${this.apiUrl}/user/user-register`, userData, {headers:this.headers});
     }
