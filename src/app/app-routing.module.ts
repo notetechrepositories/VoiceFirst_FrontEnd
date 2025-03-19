@@ -27,6 +27,7 @@ export const routes: Routes = [
         loadChildren: () =>
           import('./User/user.module').then((m) => m.UsersModule),
       },
+      
       {
         path: 'authentication',
         loadChildren: () =>
@@ -34,6 +35,10 @@ export const routes: Routes = [
             (m) => m.AuthenticationModule
           ),
       },
+      {
+        path:'subscription',
+        component:SubscriptionComponent
+      }
     ],
   },
 
