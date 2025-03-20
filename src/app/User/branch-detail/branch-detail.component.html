@@ -3,8 +3,15 @@
         <div class="row align-items-center flex-row-reverse">
             <div class="col-lg-6">
                 <div class="about-text go-to">
-                    <h3 class="dark-color">About Me</h3>
-                    <h6 class="theme-color lead">A Lead UX &amp; UI designer based in Canada</h6>
+                    <h3 class="dark-color">{{ branchDetails[0]?.t2_company_branch_name }}</h3>
+                    <h6 class="theme-color lead">
+                        {{ branchDetails[0]?.t2_1_local_name }},
+                        {{ branchDetails[0]?.t2_1_div3_name }},
+                        {{ branchDetails[0]?.t2_1_div2_name }},
+                        {{ branchDetails[0]?.t2_1_div1_name }},
+                        {{ branchDetails[0]?.t2_1_country_name }},
+                        {{ branchDetails[0]?.t2_zip_code }}
+                    </h6>
                     <div class="row about-list">
                         <div class="col-md-6">
                             <div class="media">
@@ -73,7 +80,7 @@
                           </div> -->
                           <div class="rvw-card">
                             <div>
-                                <textarea type="text" class="form-control form-control-lg" id="inputAddress" placeholder="Message"></textarea>
+                                <textarea type="text" class="form-control form-control-lg"  [(ngModel)]="issueText" name="issueText" id="inputAddress" placeholder="Message"></textarea>
                             </div>
                                 <div class="recorder">
                                         <div>
@@ -105,13 +112,16 @@
                                 <!-- Card 1 -->
                                 <div class="col-md-4 col-sm-6">
                                     <div class="card">
-                                        <label>Bill Image Upload</label>
+                                        <label class="fw-bold">Bill Image Upload</label>
                                         <div class="img-thumbs">
                                                 <div>
                                                     <label for="upload-img1" class="custom-file-upload">
                                                         <span class="plus-icon"><i class='bx bxs-image-add'></i></span>
                                                     </label>
-                                                    <input type="file" (change)="onFileSelected($event, 'images1')" multiple id="upload-img1" accept="image/*" />
+                                                    <input type="file" (change)="onFileSelected($event, 'images1')" multiple id="upload-img1" accept="image/*" [disabled]="selectedImages1.length >= 4"/>
+                                                    <small *ngIf="selectedImages2.length >= 4" class="text-danger">
+                                                        Maximum of 4 Bill Images uploaded.
+                                                      </small>
                                                 </div>
                                                 <div>
                                                     <div *ngFor="let preview of previews1; let i = index" class="wrapper-thumb mb-1">
@@ -129,13 +139,16 @@
                                 <!-- Card 2 -->
                                 <div class="col-md-4 col-sm-6">
                                     <div class="card">
-                                        <label>Evidence Image Upload</label>
+                                        <label class="fw-bold">Evidence Image Upload</label>
                                         <div class="img-thumbs">
                                                 <div>
                                                     <label for="upload-img2" class="custom-file-upload">
                                                         <span class="plus-icon"><i class='bx bxs-image-add'></i></span>
                                                       </label>
-                                                      <input type="file" (change)="onFileSelected($event, 'images2')" multiple id="upload-img2" accept="image/*" />
+                                                      <input type="file" (change)="onFileSelected($event, 'images2')" multiple id="upload-img2" accept="image/*" [disabled]="selectedImages2.length >= 2"/>
+                                                      <small *ngIf="selectedImages2.length >= 4" class="text-danger">
+                                                        Maximum of 2 Evidence Images uploaded.
+                                                      </small>
                                                 </div>
                                                 <div >
                                                     <div *ngFor="let preview of previews2; let i = index" class="wrapper-thumb mb-1">
@@ -153,13 +166,16 @@
                                 <!-- Card 3 -->
                                 <div class="col-md-4 col-sm-6 mx-auto">
                                     <div class="card">
-                                        <label>Video Upload</label>
+                                        <label class="fw-bold">Video Upload</label>
                                         <div class="img-thumbs">
                                                 <div>
                                                     <label for="upload-video" class="custom-file-upload">
                                                         <span class="plus-icon"><i class='bx bxs-video-plus'></i></span>
                                                       </label>
-                                                      <input type="file" (change)="onFileSelected($event, 'videos')" multiple id="upload-video" accept="video/*" />
+                                                      <input type="file" (change)="onFileSelected($event, 'videos')" multiple id="upload-video" accept="video/*" [disabled]="selectedVideos.length >= 4" />
+                                                      <small *ngIf="selectedVideos.length >= 4" class="text-danger">
+                                                        Maximum of 4 Evidence Images uploaded.
+                                                      </small>
                                                 </div>
                                                 <div>
                                                     <div *ngFor="let preview of videoPreviews; let i = index" class="wrapper-thumb mb-1">
@@ -180,7 +196,7 @@
                         </div>
     <!--  -->
                         <div class="mt-3">
-                          <button type="submit" class="btn btn-primary w-100">Submit</button>
+                          <button type="submit" class="submit-btn w-100" (click)=" submitForm()">Submit</button>
                         </div>
                       </form>
                 </div>

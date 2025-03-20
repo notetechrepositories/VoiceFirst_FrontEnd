@@ -62,20 +62,10 @@ export const routes: Routes = [
     ],
   },
   {
-    path: '**',
-    component: BlankComponent,
-    children: [
-      {
         path: '**',
         component: NotfoundComponent,
-      },
-    ],
   },
 
-  // {
-  //   path: '**',  
-  //   redirectTo: '/authentication/login', // Or replace with a 404 error component if desired
-  // },
 ];
 
 @NgModule({

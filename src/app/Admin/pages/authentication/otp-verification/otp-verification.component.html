@@ -1,18 +1,17 @@
 
 
 <div class="d-flex justify-content-center align-items-center auth-container" 
-style="background: url(assets/images/loginbg.jpg);height: 100vh;
+style="background: url(assets/images/loginbg.jpg);
 background-size: cover;
 background-attachment: fixed;">
     <div class="reset-wrap">
 
-        <div class="reset-html">
             <div class="d-flex flex-column justify-content-center align-items-center">
               <h3 class="tab mt-1">Verify your OTP</h3>
               <p class="text-center">Enter 6-digit OTP sent to email or phone</p>
           </div>
           
-          <form class="reset-form mt-3" [formGroup]="otpForm" (ngSubmit)="onVerifyOtp()">
+          <form class="form mt-3" [formGroup]="otpForm" (ngSubmit)="onVerifyOtp()">
               <div class="d-flex justify-content-center gap-2">
                 <input
                   type="text"
@@ -57,12 +56,12 @@ background-attachment: fixed;">
                   (keydown)="moveToNext($event, '', 'digit5')"
                 >
               </div>
-              <div class="mt-4 text-center" *ngIf="timeLeft">
-                  <p>Enter OTP in <strong>{{ timeLeft }}</strong> seconds</p>
+              <div class="mt-4 text-center mb-0" *ngIf="timeLeft">
+                  <p class="mb-0">Enter OTP in <strong>{{ timeLeft }}</strong> seconds</p>
               </div>
+              <small class="text-center text-danger mb-2" *ngIf="invalidMessage">Invalid OTP</small>
 
-
-              <div class="group mt-4">
+              <div class="group">
                 @if(verifyButton){
                   <button type="button" class="button" [disabled]="loading" (click)="onVerifyOtp()">
                     <span *ngIf="!loading">Verify OTP</span>
@@ -80,17 +79,18 @@ background-attachment: fixed;">
                 }
                   
                 </div>
+
+                <!-- <p class="p">Back to <span class="span" routerLink="/authentication/login">Sign In</span></p> -->
+
+
             </form>
-            <div class="d-flex justify-content-center mb-2">
-              <a type="button" class="primary-btn" style="color: aliceblue;" routerLink="/authentication/login">Back to Login</a>
-            </div>  
-            <div class="alert alert-warning" style="margin-bottom: 15px;">
+            <div class="alert alert-warning mt-4" style="margin-bottom: 15px;">
               ⚠️ Please do not refresh this page. Refreshing will reset your session.
             </div>
 
                 
                            
-        </div>
+
     </div>
 </div>
 

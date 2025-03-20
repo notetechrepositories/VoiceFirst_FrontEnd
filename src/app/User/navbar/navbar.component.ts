@@ -14,7 +14,7 @@ export class NavbarComponent {
   isMenuOpen = false;
   isloggedin : boolean=false;
   isloginVisible :boolean=false;
-
+  isSignInForm:boolean=true;
     userType:any;
   
     constructor(
@@ -32,15 +32,14 @@ export class NavbarComponent {
     this.userType = await this.localStorageService.getItem('role');
     if (await this.authService.isLoggedIn()) {
       if(this.userType =="Notetech" || this.userType =="Company"){
-        this.router.navigate(['/company']);
+        // this.router.navigate(['/company']);
       }
       else{
-        this.router.navigate(['user/home']);
+        // this.router.navigate(['user/home']);
         this.isloggedin=true;
       }
     }
     else{
-      this.router.navigate(['']);
       this.isloggedin=false ;
     }
     this.error='';
@@ -138,6 +137,12 @@ onClose(){
   this.isloginVisible=false;
 }
 
+onSignUp(){
+  this.isSignInForm=false;
+}
+onSignIn(){
+  this.isSignInForm=true;
+}
 
 
   loginFormInit(){

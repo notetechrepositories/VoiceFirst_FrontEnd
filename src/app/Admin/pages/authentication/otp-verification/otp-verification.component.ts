@@ -31,7 +31,7 @@ export class OtpVerificationComponent {
 
   remainingTime: number = 10;
 
-
+  invalidMessage: boolean=false
 
 
   constructor(
@@ -126,6 +126,7 @@ export class OtpVerificationComponent {
             else{
               this.loading = false;
               console.log(res); 
+              this.invalidMessage=true;
             }
           },
           error:error=>{
@@ -139,6 +140,7 @@ export class OtpVerificationComponent {
     }
 
     onResendOtp(){
+      this.invalidMessage=false;
       if (this.loading) return; // Prevent multiple clicks
       this.loading = true;
       this.encryptedOtp='';
