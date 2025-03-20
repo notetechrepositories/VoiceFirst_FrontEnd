@@ -24,7 +24,7 @@ export class BrachService {
 
   // Get all Branch
   getBranch() {
-    return this.http.post<any>(`${this.url}/get-all-branch`, { headers: this.headers });
+    return this.http.get<any>(`${this.url}/get-all-branch`, { headers: this.headers });
   }
   getCompanyBranch() {
     return this.http.get<any>(`${this.url}/get-all`, { headers: this.headers });
