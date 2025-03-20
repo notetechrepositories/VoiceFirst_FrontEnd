@@ -154,7 +154,7 @@ export class BranchDetailComponent {
 
     console.log('Sending getBranch request body:', body);
 
-    this.branchservice.getBranch(body).subscribe({
+    this.branchservice.getBranch().subscribe({
       next: (res) => {
         console.log('getBranch response:', res);
         this.branchDetails = res.data.Items || [];
