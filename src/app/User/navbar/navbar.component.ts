@@ -14,7 +14,7 @@ export class NavbarComponent {
   isMenuOpen = false;
   isloggedin : boolean=false;
   isloginVisible :boolean=false;
-
+  isSignInForm:boolean=true;
     userType:any;
   
     constructor(
@@ -40,7 +40,6 @@ export class NavbarComponent {
       }
     }
     else{
-      this.router.navigate(['']);
       this.isloggedin=false ;
     }
     this.error='';
@@ -138,6 +137,12 @@ onClose(){
   this.isloginVisible=false;
 }
 
+onSignUp(){
+  this.isSignInForm=false;
+}
+onSignIn(){
+  this.isSignInForm=true;
+}
 
 
   loginFormInit(){

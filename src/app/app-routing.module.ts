@@ -66,10 +66,6 @@ export const routes: Routes = [
         component: NotfoundComponent,
   },
 
-  // {
-  //   path: '**',  
-  //   redirectTo: '/authentication/login', // Or replace with a 404 error component if desired
-  // },
 ];
 
 @NgModule({

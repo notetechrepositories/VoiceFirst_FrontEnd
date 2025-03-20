@@ -29,7 +29,7 @@ ngOnInit(){
     }
   }
   else{
-    this.router.navigate(['']);
+    // this.router.navigate(['']);
   }
 }
 

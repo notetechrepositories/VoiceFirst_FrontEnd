@@ -1,1 +1,139 @@
-<p>register works!</p>
+
+<div class="d-flex justify-content-center align-items-center auth-container" 
+style="background: url(assets/images/loginbg.jpg);
+background-size: cover;
+background-attachment: fixed;">
+    <div class="register-wrap">
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <h3 class="tab mt-1">Register</h3>
+        </div>
+        
+        <form class="form mt-3" [formGroup]="registerForm">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>First Name </label>
+                  <input type="text" placeholder="Enter email">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Last Name </label>
+                  <input type="text" placeholder="Enter email">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Email</label>
+                  <input type="email" placeholder="Enter email">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Mobile</label>
+                  <input type="text" placeholder="Enter email">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Address 1</label>
+                  <input type="text" placeholder="Enter email">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Address 2 (Optional)</label>
+                  <input type="text" placeholder="Enter email">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Birth Year</label>
+                  <input
+                  id="birthYear"
+                  type="number"
+                  min="1900"
+                  max="2099"
+                  step="1"
+                  placeholder="Enter year"
+                  style="padding-right:1rem"
+                />
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Gender</label>
+                  <select>
+                      <option selected disabled>Select Gender</option>
+                      <option value="">Male</option>
+                      <option value="">Female</option>
+                      <option value="">Others</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Country</label>
+                  <select>
+                      <option selected disabled>Select Country</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Division 1</label>
+                  <select>
+                      <option selected disabled>Select Country</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Division 2</label>
+                  <select>
+                      <option selected disabled>Select Country</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Division 3</label>
+                  <select>
+                      <option selected disabled>Select Country</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>City</label>
+                  <input type="text" placeholder="Enter email">
+                </div>
+              </div>
+
+              <div class="col-md-6">
+                <div class="input-container">
+                  <label>Zip Code</label>
+                  <input type="text" placeholder="Enter email">
+                </div>
+              </div>
+
+            </div>
+
+            <button class="button-submit" (click)="onRegister()">Sign Up</button>
+            <p class="p">Already have an account? <span class="span" routerLink="/authentication/login">Sign In</span></p>
+          </form>
+    </div>
+</div>
+
