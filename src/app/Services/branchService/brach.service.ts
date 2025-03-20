@@ -23,16 +23,14 @@ export class BrachService {
 
 
   // Get all Branch
-  getBranch(filter: any) {
-    return this.http.post<any>(`${this.url}/get-all`, filter);
+  getBranch() {
+    return this.http.post<any>(`${this.url}/get-all-branch`, { headers: this.headers });
   }
   getCompanyBranch() {
     return this.http.get<any>(`${this.url}/get-all`, { headers: this.headers });
   }
   //Insert Branch
   insertBranch(data: any) {
-
-
     return this.http.post<any>(this.url, data, { headers: this.headers });
   }
 
@@ -50,9 +48,9 @@ export class BrachService {
     return this.http.delete<any>(url);
   }
   //GetById Branch
-  getBranchById(id_t2_company_branch: number) {
-    const url = `${this.url}/${id_t2_company_branch}`;
-    return this.http.get<any>(url);
+  getBranchById(body:any) {
+    const url = `${this.url}/get-by-id`;
+    return this.http.get<any>(url,body);
 
   }
 }

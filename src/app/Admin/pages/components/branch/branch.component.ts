@@ -21,7 +21,7 @@ export class BranchComponent {
 
   }
 
-  itemsPerPage = 2;
+  itemsPerPage = 7;
   currentPage = 1;
   paginatedOrders = this.branch.slice(0, this.itemsPerPage);
 
@@ -230,15 +230,13 @@ export class BranchComponent {
 
   getBranchById(id_t2_company_branch: number) {
     const body = {
-      filters: {
-        id_t2_company_branch: id_t2_company_branch
-      }
+      filters: {},
+      id:id_t2_company_branch
     };
-    this.branchservice.getBranch(body).subscribe({
+    this.branchservice.getBranchById(body).subscribe({
       next: (response) => {
         console.log(response);
 
-        this.branches = response;
       }
     })
   }

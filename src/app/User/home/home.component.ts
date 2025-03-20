@@ -53,7 +53,7 @@ export class HomeComponent {
       }
     };
   
-    this.branchservice.getBranch(body).subscribe({
+    this.branchservice.getBranch().subscribe({
       next: (res) => {
         console.log(res);
         this.businesses = res.data.Items || [];
