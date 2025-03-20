@@ -1,142 +1,103 @@
-<div class="page-wrapper chiller-theme toggled" *ngIf="isShow">
-  <a id="show-sidebar" class="btn btn-sm btn-light">
-    <i class="fas fa-bars" style="color: black"></i>
-  </a>
-  <nav id="sidebar" class="sidebar-wrapper">
-    <div class="sidebar-content">
-      <div class="sidebar-brand">
-        <img src="assets/images/logo.png" width="35" /><a href="#"
-          >oice First</a
-        >
-        <div id="close-sidebar">
-          <i class="fas fa-times"></i>
-        </div>
+<!-- Sidebar -->
+<div class="l-navbar" [ngClass]="{ 'collapsed': !isSidebarExpanded }">
+  <nav class="nav">
+    <div>
+      <!-- Brand + Toggle -->
+      <div class="nav-brand">
+        <a  routerLink="/company" class="nav-logo">
+          <span *ngIf="isSidebarExpanded">VOICE FIRST</span>
+        </a>
+        <i class="fas fa-bars nav-toggle" (click)="toggleSidebar()"></i>
       </div>
 
-      <!-- sidebar-header  -->
-      <div class="sidebar-menu">
-        <ul>
-          <li class="header-menu">
-            <span>General</span>
-          </li>
-          <li>
-            <a
-              routerLink="/company"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Dashboard</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="company" routerLinkActive="active">
-              <i class="bx bx-buildings"></i>
-              <span>Company</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="role" routerLinkActive="active">
-              <i class="bx bxs-user-badge"></i>
-              <span>Role</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="country" routerLinkActive="active">
-              <i class="bx bxs-flag-alt"></i>
-              <span>Country</span>
-            </a>
-          </li>
-          <li>
-            <a routerLink="selection-values" routerLinkActive="active">
-              <i class="bx bxs-flag-alt"></i>
-              <span>Selection Values</span>
-            </a>
-          </li>
-          <!-- <li class="sidebar-dropdown">
-            <a>
-              <i class="far fa-gem"></i>
-              <span>Constant</span>
-            </a>
-            <div class="sidebar-submenu">
-              <ul>
-                <li>
-                  <a
-                    routerLink="selection-values"
-                    routerLinkActive="active"
-                    >Selection Values</a
-                  >
-                </li>
-              </ul>
-            </div>
-          </li> -->
-          <li>
-            <a
-              routerLink="branch"
-              routerLinkActive="active"
-              [routerLinkActiveOptions]="{ exact: true }"
-            >
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Branch</span>
-            </a>
-          </li>
-         
+      <!-- Navigation Links -->
+      <div class="nav-list">
 
-          <li>
-            <a routerLink="employee" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-              <i class="fa fa-tachometer-alt"></i>
-              <span>Employees</span>
-            </a>
-          </li>
-        </ul>
+        <a class="nav-link" routerLink="/company" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fas fa-tachometer-alt"></i>
+          <span *ngIf="isSidebarExpanded" class="nav-name">Dashboard</span>
+        </a>
+
+        <a class="nav-link" routerLink="company" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fa-solid fa-building"></i>
+          <span *ngIf="isSidebarExpanded" class="nav-name">Company</span>
+        </a>
+
+        <a class="nav-link" routerLink="role" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fa-solid fa-users-gear"></i>
+          <span *ngIf="isSidebarExpanded" class="nav-name">Role</span>
+        </a>
+
+        <a class="nav-link" routerLink="country" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fa-solid fa-earth-americas"></i>
+          <span *ngIf="isSidebarExpanded" class="nav-name">Country</span>
+        </a>
+
+        <a class="nav-link" routerLink="selection-values" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fa-solid fa-square-check"></i>
+          <span *ngIf="isSidebarExpanded" class="nav-name">Selection Value</span>
+        </a>
+
+        <a class="nav-link" routerLink="branch" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fa-solid fa-code-branch"></i>
+          <span *ngIf="isSidebarExpanded" class="nav-name">Branch</span>
+        </a>
+
+        <a class="nav-link" routerLink="employee" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fa-solid fa-users"></i>
+          <span *ngIf="isSidebarExpanded" class="nav-name">Employees</span>
+        </a>
+
+        <!-- Projects Submenu -->
+        <!-- <div class="nav-link collapse">
+          <div (click)="toggleSubMenu('projects')">
+            <i class="fas fa-project-diagram"></i>
+            <span *ngIf="isSidebarExpanded" class="nav-name">Projects</span>
+            <i *ngIf="isSidebarExpanded" class="fas fa-chevron-down" [ngClass]="{ 'rotate': activeSubMenu === 'projects' }"></i>
+          </div>
+          <ul class="collapse-menu" [ngClass]="{ 'showCollapse': activeSubMenu === 'projects' }">
+            <a href="#" class="collapse-sublink">Data</a>
+            <a href="#" class="collapse-sublink">Group</a>
+            <a href="#" class="collapse-sublink">Members</a>
+          </ul>
+        </div> -->
+
+        <!-- Team Submenu -->
+        <!-- <div class="nav-link collapse">
+          <div (click)="toggleSubMenu('team')">
+            <i class="fas fa-users"></i>
+            <span *ngIf="isSidebarExpanded" class="nav-name">Team</span>
+            <i *ngIf="isSidebarExpanded" class="fas fa-chevron-down" [ngClass]="{ 'rotate': activeSubMenu === 'team' }"></i>
+          </div>
+          <ul class="collapse-menu" [ngClass]="{ 'showCollapse': activeSubMenu === 'team' }">
+            <a href="#" class="collapse-sublink">Data</a>
+            <a href="#" class="collapse-sublink">Group</a>
+            <a href="#" class="collapse-sublink">Members</a>
+          </ul>
+        </div> -->
+
+        <!-- <a href="#" class="nav-link" [ngClass]="{ 'active': activeLink === 'analytics' }" (click)="setActiveLink('analytics')">
+          <i class="fas fa-chart-line"></i>
+          <span *ngIf="isSidebarExpanded" class="nav-name">Analytics</span>
+        </a>
+
+        <a href="#" class="nav-link" [ngClass]="{ 'active': activeLink === 'settings' }" (click)="setActiveLink('settings')">
+          <i class="fas fa-cogs"></i>
+          <span *ngIf="isSidebarExpanded" class="nav-name">Settings</span>
+        </a> -->
+
       </div>
-      <!-- sidebar-menu  -->
     </div>
-    <!-- sidebar-content  -->
-    <div class="sidebar-footer">
-      <a href="#">
-        <i class="fa fa-bell"></i>
-        <span class="badge badge-pill badge-warning notification">3</span>
-      </a>
-      <a href="#">
-        <i class="fa fa-envelope"></i>
-        <span class="badge badge-pill badge-success notification">7</span>
-      </a>
-      <a routerLink="/company/profile">
-        <i class="fa fa-user"></i>
-        <span class="badge-sonar"></span>
-      </a>
-      <a (click)="logout()">
-        <i class="fa fa-power-off"></i>
-      </a>
-    </div>
+
+    <!-- Logout -->
+    <a class="nav-link" (click)="logout()">
+      <i class="fas fa-sign-out-alt"></i>
+      <span *ngIf="isSidebarExpanded" class="nav-name">Logout</span>
+    </a>
   </nav>
-  <!-- sidebar-wrapper  -->
-  <!-- <header class="header"></header> -->
-  <main class="page-content">
-    <div class="container-fluid">
-      <!--  -->
-      <div>
-        <router-outlet />
-      </div>
-      <!--  -->
-      <hr />
-
-      <footer class="text-center">
-        <div class="mb-2">
-          <small>
-            © 2024
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://notetech.com"
-              >notetech.com</a
-            >
-          </small>
-        </div>
-      </footer>
-    </div>
-  </main>
-  <!-- page-content" -->
 </div>
-<!-- page-wrapper -->
+
+<!-- Main Content -->
+<div class="main-content" [ngClass]="{ 'body-pd': !isSidebarExpanded }">
+  <router-outlet/>
+</div>

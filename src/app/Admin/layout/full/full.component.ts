@@ -94,4 +94,30 @@ export class FullComponent implements AfterViewInit, OnInit {
 
   }
 
+  // ==========================================================================================================================
+
+  isSidebarExpanded: boolean = true;
+
+  // Active link
+  activeLink: string = 'dashboard';
+
+  // Active submenu (projects/team)
+  activeSubMenu: string = '';
+
+
+  // Sidebar toggle (Expand / Collapse)
+  toggleSidebar() {
+    this.isSidebarExpanded = !this.isSidebarExpanded;
+  }
+
+  // Active link logic
+  setActiveLink(linkName: string) {
+    this.activeLink = linkName;
+    this.activeSubMenu = '';
+  }
+
+  // Toggle submenus
+  toggleSubMenu(menuName: string) {
+    this.activeSubMenu = this.activeSubMenu === menuName ? '' : menuName;
+  }
 }

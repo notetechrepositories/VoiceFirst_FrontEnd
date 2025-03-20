@@ -21,11 +21,10 @@ ngOnInit(){
   this.localStorageService.removeItem('branchId');
   if (this.authService.isLoggedIn()) {
     if(this.userType =='Notetech' || this.userType =="Company"){
-      this.router.navigate(['company/dashboard']);
+      this.router.navigate(['company']);
     }
     else{
       this.router.navigate(['user/home']);
-      
     }
   }
   else{
