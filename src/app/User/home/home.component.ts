@@ -47,11 +47,7 @@ export class HomeComponent {
 
 
   getBranch(): void {
-    const body = { 
-      filters: { 
-  
-      }
-    };
+
   
     this.branchservice.getBranch().subscribe({
       next: (res) => {
