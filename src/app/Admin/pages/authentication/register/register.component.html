@@ -12,43 +12,60 @@ background-attachment: fixed;">
             <div class="row">
               <div class="col-md-6">
                 <div class="input-container">
-                  <label>First Name </label>
-                  <input type="text" placeholder="Enter email">
+                  <label>First Name</label>
+                  <input type="text" placeholder="Enter First Name" id="t5_first_name" formControlName="t5_first_name">
+                  
+                  <div class="text-danger" *ngIf="registerForm.get('t5_first_name')?.invalid && registerForm.get('t5_first_name')?.touched">
+                    <small *ngIf="registerForm.get('t5_first_name')?.errors?.['required']">First Name is required.</small>
+                    <small *ngIf="registerForm.get('t5_first_name')?.errors?.['pattern']">Only alphabets are allowed.</small>
+                  </div>
                 </div>
               </div>
 
               <div class="col-md-6">
                 <div class="input-container">
                   <label>Last Name </label>
-                  <input type="text" placeholder="Enter email">
+                  <input type="text" placeholder="Enter Last Name" id="t5_last_name"  formControlName="t5_last_name">
                 </div>
               </div>
 
               <div class="col-md-6">
                 <div class="input-container">
                   <label>Email</label>
-                  <input type="email" placeholder="Enter email">
+                  <input type="email" placeholder="Enter Email" id="t5_email" formControlName="t5_email">
+                  <div class="text-danger" *ngIf="registerForm.get('t5_email')?.invalid && registerForm.get('t5_email')?.touched">
+                    <small *ngIf="registerForm.get('t5_email')?.errors?.['required']">Email is required.</small>
+                    <small *ngIf="registerForm.get('t5_email')?.errors?.['email']">Enter a valid email.</small>
+                  </div>
                 </div>
               </div>
-
+              
               <div class="col-md-6">
                 <div class="input-container">
                   <label>Mobile</label>
-                  <input type="text" placeholder="Enter email">
+                  <input type="text" placeholder="Enter Mobile Number" id="t5_mobile_no" formControlName="t5_mobile_no">
+                  <div class="text-danger" *ngIf="registerForm.get('t5_mobile_no')?.invalid && registerForm.get('t5_mobile_no')?.touched">
+                    <small *ngIf="registerForm.get('t5_mobile_no')?.errors?.['required']">Mobile number is required.</small>
+                    <small *ngIf="registerForm.get('t5_mobile_no')?.errors?.['pattern']">Enter a valid 10-digit number.</small>
+                  </div>
                 </div>
               </div>
-
+              
               <div class="col-md-6">
                 <div class="input-container">
                   <label>Address 1</label>
-                  <input type="text" placeholder="Enter email">
+                  <input type="text" placeholder="Enter Address" id="t5_address_1" formControlName="t5_address_1">
+                  <div class="text-danger" *ngIf="registerForm.get('t5_address_1')?.invalid && registerForm.get('t5_address_1')?.touched">
+                    <small *ngIf="registerForm.get('t5_address_1')?.errors?.['required']">Address is required.</small>
+                  </div>
                 </div>
               </div>
+              
 
               <div class="col-md-6">
                 <div class="input-container">
                   <label>Address 2 (Optional)</label>
-                  <input type="text" placeholder="Enter email">
+                  <input type="text" placeholder="Enter Address"  id="t5_address_2" formControlName="t5_address_2">
                 </div>
               </div>
 
@@ -63,6 +80,8 @@ background-attachment: fixed;">
                   step="1"
                   placeholder="Enter year"
                   style="padding-right:1rem"
+                  formControlName="t5_birth_year"
+                  
                 />
                 </div>
               </div>
@@ -70,11 +89,11 @@ background-attachment: fixed;">
               <div class="col-md-6">
                 <div class="input-container">
                   <label>Gender</label>
-                  <select>
+                  <select  formControlName="t5_sex">
                       <option selected disabled>Select Gender</option>
-                      <option value="">Male</option>
-                      <option value="">Female</option>
-                      <option value="">Others</option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Others">Others</option>
                   </select>
                 </div>
               </div>
@@ -82,35 +101,66 @@ background-attachment: fixed;">
               <div class="col-md-6">
                 <div class="input-container">
                   <label>Country</label>
-                  <select>
-                      <option selected disabled>Select Country</option>
+                  <select   id="id_t2_1_country"
+                  formControlName="id_t2_1_country"
+                  (change)="onChangeCountry($event)">
+                      <option  *ngFor="let country of countries"
+                      [value]="country.id_t2_1_country">{{ country.t2_1_country_name }}</option>
                   </select>
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-6" *ngIf="showDivisionOne">
                 <div class="input-container">
-                  <label>Division 1</label>
-                  <select>
-                      <option selected disabled>Select Country</option>
+                  <label>{{ div1 }}</label>
+                  <select
+                  class="form-select"
+                  id="selectBranchType"
+                  formControlName="id_t2_1_div1"
+                  (change)="onChangeDivisionOne($event)"
+                >
+                  <option value="" disabled selected>Select Division one</option>
+                  <option
+                    *ngFor="let divisionOne of divisionOnes"
+                    [value]="divisionOne.id_t2_1_div1"
+                  >
+                    {{ divisionOne.t2_1_div1_name }}
+                  </option>
                   </select>
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-6" *ngIf="showDivisionTwo">
                 <div class="input-container">
-                  <label>Division 2</label>
-                  <select>
-                      <option selected disabled>Select Country</option>
+                  <label>{{ div2 }}</label>
+                  <select
+                  class="form-select"
+                  id="selectBranchType"
+                  formControlName="id_t2_1_div2"
+                  (change)="onChangeDivisionTwo($event)"
+                >
+                  <option value="" disabled selected>Select Division Two</option>
+                  <option
+                    *ngFor="let divisiontwo of divisionTwo"
+                    [value]="divisiontwo.id_t2_1_div2"
+                  >
+                    {{ divisiontwo.t2_1_div2_name }}
+                  </option>
                   </select>
                 </div>
               </div>
 
-              <div class="col-md-6">
+              <div class="col-md-6" *ngIf="showDivisionThree">
                 <div class="input-container">
-                  <label>Division 3</label>
-                  <select>
-                      <option selected disabled>Select Country</option>
+                  <label>{{ div3 }}</label>
+                  <select  formControlName="id_t2_1_div3">
+                    <option value="" disabled selected>Select Division Three</option>
+                    <option
+                      *ngFor="let divisionthree of divisionThree"
+                      [value]="divisionthree.id_t2_1_div3"
+                    >
+                      {{ divisionthree.t2_1_div3_name }}
+                    </option>
                   </select>
                 </div>
               </div>
@@ -118,14 +168,15 @@ background-attachment: fixed;">
               <div class="col-md-6">
                 <div class="input-container">
                   <label>City</label>
-                  <input type="text" placeholder="Enter email">
+                  <input type="text" placeholder="Enter City"  id="t2_1_local_name"
+                  formControlName="t2_1_local_name" >
                 </div>
               </div>
 
               <div class="col-md-6">
                 <div class="input-container">
                   <label>Zip Code</label>
-                  <input type="text" placeholder="Enter email">
+                  <input type="text" placeholder="Enter Zip Code" formControlName="t5_zip_code"  id="t5_zip_code">
                 </div>
               </div>
 
