@@ -57,12 +57,9 @@ export class RegisterComponent {
 
     onRegister(){
       const data = this.registerForm.value;
-      console.log("Form Data Sent:", data);
       this.registerForm.markAllAsTouched();
       this.userService.postUserDetails(data).subscribe({
         next: (response) => {
-          console.log("API Response:", response); 
-  
           if (response.status == 200) {
             this.sweetalert.showToast("success", "Successfully created.");
             this.router.navigate(['/authentication/login'])
@@ -72,7 +69,6 @@ export class RegisterComponent {
           }
         },
         error: (error) => {
-          console.error("API Error:", error); // ✅ Check the actual error
           this.sweetalert.showToast("error", "Oops! Something went wrong.");
         }
       });
@@ -90,11 +86,10 @@ export class RegisterComponent {
           if (res.status == 200) {
             this.countries = res.data.Items;
           } else {
-            console.log(res);
+            
           }
         },
         error: (error) => {
-          console.log(error);
           this.sweetalert.showToast('error', 'Oops!Something went wrong');
         },
       });
@@ -127,11 +122,9 @@ export class RegisterComponent {
             this.divisionOnes = res.data.Items;
   
           } else {
-            console.log(res);
-          }
+          }     
         },
         error: (error) => {
-          console.log(error);
           this.sweetalert.showToast('error', 'Oops!Something went wrong');
         },
       });
@@ -149,11 +142,9 @@ export class RegisterComponent {
           if (res.status == 200) {
             this.divisionTwo = res.data.Items;
           } else {
-            console.log(res);
           }
         },
         error: (error) => {
-          console.log(error);
           this.sweetalert.showToast('error', 'Oops!Something went wrong');
         },
       });
@@ -168,17 +159,13 @@ export class RegisterComponent {
       };
       this.countryService.getDivisionThreeByDivisionTwoId(filterCountries).subscribe({
         next: (res) => {
-          console.log(res);
-  
           if (res.status == 200) {
             this.divisionThree = res.data.Items;
   
           } else {
-            console.log(res);
           }
         },
         error: (error) => {
-          console.log(error);
           this.sweetalert.showToast('error', 'Oops!Something went wrong');
         },
       });
