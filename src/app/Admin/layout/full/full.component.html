@@ -12,42 +12,54 @@
 
       <!-- Navigation Links -->
       <div class="nav-list">
-
+        @if(role=="Company" || role=="Notetech"){
         <a class="nav-link" routerLink="/company" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <i class="fas fa-tachometer-alt"></i>
           <span *ngIf="isSidebarExpanded" class="nav-name">Dashboard</span>
         </a>
-
+        }
+        @if(role=="Notetech"){
         <a class="nav-link" routerLink="company" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <i class="fa-solid fa-building"></i>
           <span *ngIf="isSidebarExpanded" class="nav-name">Company</span>
         </a>
-
-        <a class="nav-link" routerLink="role" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
-          <i class="fa-solid fa-users-gear"></i>
-          <span *ngIf="isSidebarExpanded" class="nav-name">Role</span>
-        </a>
-
+        }
+        @if(role=="Company"){
+          <a class="nav-link" routerLink="company-role" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fa-solid fa-users-gear"></i>
+            <span *ngIf="isSidebarExpanded" class="nav-name">Role</span>
+          </a>
+        }
+        @if(role=="Notetech"){
         <a class="nav-link" routerLink="country" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <i class="fa-solid fa-earth-americas"></i>
           <span *ngIf="isSidebarExpanded" class="nav-name">Country</span>
         </a>
-
+        }
+        @if(role=="Notetech"){
         <a class="nav-link" routerLink="selection-values" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <i class="fa-solid fa-square-check"></i>
           <span *ngIf="isSidebarExpanded" class="nav-name">Selection Value</span>
         </a>
-
+        }
+        @if(role=="Company"){
         <a class="nav-link" routerLink="branch" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <i class="fa-solid fa-code-branch"></i>
           <span *ngIf="isSidebarExpanded" class="nav-name">Branch</span>
         </a>
-
+        }
+        @if(role=="Company"){
         <a class="nav-link" routerLink="employee" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <i class="fa-solid fa-users"></i>
           <span *ngIf="isSidebarExpanded" class="nav-name">Employees</span>
         </a>
-
+        }
+        @if(role=="Notetech"){
+        <a class="nav-link" routerLink="system-role" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+          <i class="fa-solid fa-users-gear"></i>
+          <span *ngIf="isSidebarExpanded" class="nav-name">System Roles</span>
+        </a>
+        }
         <!-- Projects Submenu -->
         <!-- <div class="nav-link collapse">
           <div (click)="toggleSubMenu('projects')">
@@ -88,16 +100,24 @@
 
       </div>
     </div>
-
-    <!-- Logout -->
-    <a class="nav-link" (click)="logout()">
-      <i class="fas fa-sign-out-alt"></i>
-      <span *ngIf="isSidebarExpanded" class="nav-name">Logout</span>
-    </a>
   </nav>
+</div>
+
+<!-- header -->
+
+<div class="header">
+  <div class="header-icons">
+    <div class="icon-container" title="Profile">
+      <i class="fa-regular fa-user" routerLink="profile"></i>
+    </div>
+    <div class="icon-container" title="Logout">
+      <i class="fa-solid fa-arrow-right-from-bracket" (click)="logout()"></i>
+    </div>
+  </div>
 </div>
 
 <!-- Main Content -->
 <div class="main-content" [ngClass]="{ 'body-pd': !isSidebarExpanded }">
+
   <router-outlet/>
 </div>

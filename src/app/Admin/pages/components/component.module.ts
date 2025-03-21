@@ -30,6 +30,9 @@ import { CompanyViewComponent } from './company/company-view/company-view.compon
 import { EmployeeComponent } from './employee/employee.component';
 import { EmployeeAddComponent } from './employee/employee-add/employee-add.component';
 import { EmployeeViewComponent } from './employee/employee-view/employee-view.component';
+import { CompanyRoleComponent } from './company-role/company-role.component';
+import { SystemRoleComponent } from './system-role/system-role.component';
+
 
 
 
@@ -67,8 +70,9 @@ import { EmployeeViewComponent } from './employee/employee-view/employee-view.co
     CompanyViewComponent,
     EmployeeComponent,
     EmployeeAddComponent,
-    EmployeeViewComponent
-    
+    EmployeeViewComponent,
+    CompanyRoleComponent,
+    SystemRoleComponent
   ],
 })
 export class ComponentModule {}

@@ -29,7 +29,7 @@ h1, p {
   height: 100vh;
   background-color: #12192C;
   color: #FFFFFF;
-  padding: 1.5rem 1rem;
+  padding: .7rem 1rem;
   transition: 0.3s;
   z-index: 100;
 }
@@ -41,7 +41,7 @@ h1, p {
 /* Main Content (Reversed Behavior for Padding) */
 .main-content {
   margin-left: 250px;
-  padding: 2rem;
+  padding: 2rem 2rem 2rem 3.3rem;
   transition: 0.3s;
 }
 
@@ -150,4 +150,42 @@ h1, p {
 .rotate {
   transform: rotate(180deg);
   transition: 0.3s;
+}
+
+
+/* ========================================================================================= */
+
+.header {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 1rem 2rem;
+  height: 60px;
+  background-color: #f3f6fd;
+}
+
+
+.header-icons {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem; /* Space between icons */
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+}
+
+.icon-container i {
+  font-size: 1rem;
+  color: #9b9b9b;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.icon-container:hover i {
+  color: #4b4b4b;
+  transform: scale(1.1);
 }

@@ -16,9 +16,9 @@ export class BranchComponent {
   @Input() branches: any[] = [];
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private sweetalert: SweetalertService,
     private branchservice: BrachService) { }
-  ngOnInit(): void {
-    this.getBranch();
 
+  async ngOnInit(): Promise<void> {
+    await this.getBranch();
   }
 
   itemsPerPage = 7;
@@ -125,6 +125,7 @@ export class BranchComponent {
     // Listen to events or data changes if necessary
     componentRef.instance.closePopup = () => {
       this.popupContainer.clear();
+      this.getBranch();
     };
   }
   openUpdateCompany() {
