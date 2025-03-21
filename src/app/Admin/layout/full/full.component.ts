@@ -12,67 +12,19 @@ import { Router } from '@angular/router';
   templateUrl: './full.component.html',
   styleUrl: './full.component.css'
 })
-export class FullComponent implements AfterViewInit, OnInit {
+export class FullComponent implements OnInit {
   isShow = false;
+  role:any
   constructor(
     @Inject(PLATFORM_ID) private platformId: any,
     private authService: AuthService,private router:Router,private localStorageService:LocalstorageService, private localstorageService: LocalstorageService) { }
   async ngOnInit(): Promise<void> {
-    var role = await this.localstorageService.getItem('role')
-    if (role == "User") {
+    this.role = await this.localstorageService.getItem('role')
+    if (this.role == "User") {
       this.router.navigate(['/user/home']);
     }
     else {
       this.isShow = true;
-    }
-  }
-
-
-
-  ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      // Run your document-related code here
-      const sidebarDropdowns = document.querySelectorAll('.sidebar-dropdown > a');
-      const closeSidebar = document.getElementById('close-sidebar');
-      const showSidebar = document.getElementById('show-sidebar');
-      const pageWrapper = document.querySelector('.page-wrapper');
-
-      sidebarDropdowns.forEach((dropdown) => {
-        dropdown.addEventListener('click', (e: Event) => {
-          e.preventDefault();
-
-          const parent = (e.target as HTMLElement).parentElement!;
-          const submenu = parent.querySelector('.sidebar-submenu') as HTMLElement;
-
-          // Check if the current submenu is already active/open
-          const isOpen = parent.classList.contains('active');
-
-          // Close all submenus
-          document.querySelectorAll('.sidebar-submenu').forEach((submenu) => {
-            (submenu as HTMLElement).style.display = 'none';
-          });
-
-          // Remove active class from all dropdowns
-          document.querySelectorAll('.sidebar-dropdown').forEach((dropdown) => {
-            dropdown.classList.remove('active');
-          });
-
-          // If the current submenu was not open, open it
-          if (!isOpen) {
-            parent.classList.add('active');
-            submenu.style.display = 'block';
-          }
-        });
-      });
-
-      closeSidebar?.addEventListener('click', () => {
-        pageWrapper?.classList.remove('toggled');
-      });
-
-      showSidebar?.addEventListener('click', () => {
-        pageWrapper?.classList.add('toggled');
-      });
-
     }
   }
 
@@ -98,26 +50,8 @@ export class FullComponent implements AfterViewInit, OnInit {
 
   isSidebarExpanded: boolean = true;
 
-  // Active link
-  activeLink: string = 'dashboard';
-
-  // Active submenu (projects/team)
-  activeSubMenu: string = '';
-
-
-  // Sidebar toggle (Expand / Collapse)
   toggleSidebar() {
     this.isSidebarExpanded = !this.isSidebarExpanded;
   }
 
-  // Active link logic
-  setActiveLink(linkName: string) {
-    this.activeLink = linkName;
-    this.activeSubMenu = '';
-  }
-
-  // Toggle submenus
-  toggleSubMenu(menuName: string) {
-    this.activeSubMenu = this.activeSubMenu === menuName ? '' : menuName;
-  }
 }

@@ -494,14 +494,18 @@ export class CompanyAddComponent implements OnInit {
 
   onSubmit(): void {
 
-
+    console.log("working");
+    
     this.formuseradd.markAllAsTouched();
     if (
       this.formcompanyadd.valid &&
       this.formbranchadd.valid &&
       this.formuseradd.valid
 
-    ) {
+    )
+    console.log("working if");
+     
+    {
       const requestData = {
         t1_company_name: this.formcompanyadd.get('t1_company_name')?.value,
         id_company_type: this.formcompanyadd.get('id_company_type')?.value,
