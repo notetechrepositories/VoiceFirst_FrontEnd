@@ -60,6 +60,14 @@ updateSystemRole(data: any) {
 deleteSystemRole(id: string) {
   return this.http.delete<any>(`${this.apiUrl}/role/delete-sys-role?id=${id}`,{ headers: this.headers });
 }
-
-
+////////////////////////////COMPANY ROLE//////////////////////////////////////////////////////////////////////////////////////////////////////
+getCompanyRole() {
+  return this.http.get<any>(`${this.apiUrl}/role/get-all-company-role`, { headers: this.headers });
+}
+insertCompanyRole(data: any) {
+  return this.http.post<any>(`${this.apiUrl}/role/list-of-add-company-role`, data, { headers: this.headers });
+}
+updateCompanyRole(data: any) {
+  return this.http.put<any>(`${this.apiUrl}/role/list-of-update-company-role`, data, { headers: this.headers });
+}
 }

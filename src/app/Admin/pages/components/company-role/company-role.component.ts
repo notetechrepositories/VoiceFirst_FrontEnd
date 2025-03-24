@@ -1,38 +1,61 @@
 import { Component } from '@angular/core';
 import { SweetalertService } from '../../../../Services/sweetAlertService/sweetalert.service';
+import { RoleService } from '../../../../Services/roleService/role.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+export interface Role{
+  id_t5_1_sys_roles:string;
+  t5_1_roles_name:string;
+  t5_1_all_location_access:string;
+  t5_1_all_issues:string;
+}
 @Component({
   selector: 'app-company-role',
   templateUrl: './company-role.component.html',
   styleUrl: './company-role.component.css'
 })
 export class CompanyRoleComponent {
-  availableRoles: string[] = [
-    'Management',
-    'Branch Management',
-    'Staff',
-    'Vendor',
-    'Marketing team',
-  ];
-
-  selectedRoles: string[] = [];
-
-  // New role properties
-  newRole: string = '';
-  allLocationAccess: boolean = false;
-  allIssueAccess: boolean = false;
-
-  // Modal control
-  showAddRoleModal: boolean = false;
+   systemRoles:any[] = [];
+  
+    filteredRoles: any[] = [];
+    paginatedOrders: any[] = [];
+    selectedRoles: any[] = [];
+    companyRoles:Role[]=[];
+    companyForm!:FormGroup;
+    newRole: string = '';
+    allLocationAccess: boolean = false;
+    allIssueAccess: boolean = false;
+    showAddRoleModal: boolean = false;
 
   constructor(
-    private sweetalert:SweetalertService
+    private sweetalert:SweetalertService, private roleService: RoleService, private fb:FormBuilder
   ) {}
-
-  toggleRoleSelection(role: string): void {
-    const index = this.selectedRoles.indexOf(role);
+  ngOnInit() {
+    this.getAllSystemRoles();
+    this.initializeForm();
+    this.getCompanyRole();
+  }
+   initializeForm() {
+      this.companyForm = this.fb.group({
+        id_t5_1_company_roles:[''],
+        id_t5_1_sys_roles:[''],
+        t5_1_roles_name: ['', [Validators.required]],  
+        t5_1_all_location_access: [false], 
+        t5_1_all_issues: [false]
+      });
+    }
+  toggleRoleSelection(rolename: string,id:string,location:string,issue:string): void {
+    const index = this.selectedRoles.indexOf(rolename);
     if (index === -1) {
-      this.selectedRoles.push(role);
+      const rolelist={
+        id_t5_1_sys_roles: id,
+        t5_1_all_issues:issue,
+        t5_1_all_location_access:location,
+        t5_1_roles_name:rolename
+      }
+      this.selectedRoles.push(rolelist);
+      console.log(this.selectedRoles);
+      
     } else {
       this.selectedRoles.splice(index, 1);
     }
@@ -48,31 +71,33 @@ export class CompanyRoleComponent {
   closeAddRoleModal(): void {
     this.showAddRoleModal = false;
   }
+  getAllSystemRoles(){
+    this.roleService.getSystemRole().subscribe({
+      next: (res) => {
+        console.log(res);
+        
+        if (res.status == 200) {
+          this.systemRoles = res.data.Items;
+          
+        }
+      },
+      error: (error) => {
+        console.log(error);
+        this.sweetalert.showToast('error', 'Oops! Something went wrong');
+       
+      },
+    });
+  }
 
   addNewRole(): void {
-    const trimmedRole = this.newRole.trim();
-    console.log(trimmedRole);
-    
-    if (!trimmedRole) {
-      alert('Role name cannot be empty!');
-      return;
-    }
-
-    if (this.selectedRoles.includes(trimmedRole)) {
-      alert('This role is already selected!');
-      return;
-    }
-
-    // Add custom role to selectedRoles
-    this.selectedRoles.push(trimmedRole);
-
-    // Optionally log the checkbox values for backend or further use
-    console.log('All Location Access:', this.allLocationAccess);
-    console.log('All Issue Access:', this.allIssueAccess);
-
-    // Close modal
+    const data = this.companyForm.value;
+    data.t5_1_all_location_access = data.t5_1_all_location_access ? "y" : "n";
+    data.t5_1_all_issues = data.t5_1_all_issues ? "y" : "n";
+    this.selectedRoles = [...this.selectedRoles, data];
+    this.companyForm.reset();
     this.closeAddRoleModal();
   }
+  
 
   removeSelectedRole(role: string): void {
     const index = this.selectedRoles.indexOf(role);
@@ -86,8 +111,42 @@ export class CompanyRoleComponent {
   }
 
   onSubmit(){
-    if(this.selectedRoles.length>0){
-      this.sweetalert.showToast('success','Roles Added Successfully')
-    }
+    
+    console.log(this.selectedRoles);
+    
+    this.roleService.updateCompanyRole(this.selectedRoles).subscribe({
+      next: (response) => {
+        console.log(response);
+        
+        if (response.status == 200) {
+          this.sweetalert.showToast("success", "Successfully created.");
+          this.closeAddRoleModal();
+          this.companyForm.reset();
+        } else {
+          this.sweetalert.showToast("error", response.message);
+        }
+      },
+      error: (error) => {
+        this.sweetalert.showToast("error", "Oops! Something went wrong.");
+      }
+    });
+
+    // if(this.selectedRoles.length>0){
+    //   this.sweetalert.showToast('success','Roles Added Successfully')
+    // }
+  }
+
+  getCompanyRole(){
+    this.roleService.getCompanyRole().subscribe({
+      next: (res) => {
+        console.log(res);
+        this.selectedRoles = res.data.Items || [];
+        console.log(this.selectedRoles);
+       
+      },
+      error: (error) => {
+        console.log('Failed to load locations:', error);
+      },
+    });
   }
 }
