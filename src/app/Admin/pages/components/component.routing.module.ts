@@ -15,6 +15,7 @@ import { EmployeeAddComponent } from './employee/employee-add/employee-add.compo
 import { EmployeeViewComponent } from './employee/employee-view/employee-view.component';
 import { CompanyRoleComponent } from './company-role/company-role.component';
 import { SystemRoleComponent } from './system-role/system-role.component';
+import { SystemTypesComponent } from './system-types/system-types.component';
 
 
 
@@ -100,6 +101,10 @@ export const ComponentRoutes: Routes = [
       {
         path: 'company-role',
         component: CompanyRoleComponent,
+      },
+      {
+        path: 'system-type',
+        component: SystemTypesComponent,
       },
      
       
