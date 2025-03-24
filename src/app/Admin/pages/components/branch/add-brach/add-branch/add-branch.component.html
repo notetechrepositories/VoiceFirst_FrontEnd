@@ -16,6 +16,11 @@
           placeholder="Enter Branch Name"
           formControlName="t2_company_branch_name"
         />
+        <div class="text-danger" *ngIf="branchForm.get('t2_company_branch_name')?.invalid && branchForm.get('t2_company_branch_name')?.touched">
+          <small *ngIf="branchForm.get('t2_company_branch_name')?.errors?.['required']">
+            Branch Name is required.
+          </small>
+        </div>
       </div>
       <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Email</label>
@@ -25,10 +30,12 @@
           id="inputEmail4"
           formControlName="t2_email"
         />
-        <!-- <div *ngIf="branchForm.controls['t2_email'].touched && branchForm.controls['email'].invalid" class="text-danger">
-                      <small *ngIf="branchForm.controls['t2_email'].errors?.['required']">Email is required.</small>
-                      <small *ngIf="branchForm.controls['t2_email'].errors?.['invalidEmail']">Invalid email format.</small>
-                    </div> -->
+        <div class="text-danger"
+          *ngIf="branchForm.get('t2_email')?.invalid && branchForm.get('t2_email')?.touched"
+        >
+          <small *ngIf="branchForm.get('t2_email')?.errors?.['required']">Email is required.</small>
+          <small *ngIf="branchForm.get('t2_email')?.errors?.['email']">Invalid email format.</small>
+        </div>
       </div>
       <div class="col-md-6">
         <label for="selectBranchType" class="form-label">Branch Type</label>
@@ -54,6 +61,9 @@
           <!-- Add the 'Other' option -->
           <option value="other">Other</option>
         </select>
+        <div class="text-danger" *ngIf="branchForm.get('t2_id_branch_type')?.invalid && branchForm.get('t2_id_branch_type')?.touched">
+          <small>Branch Type is required.</small>
+        </div>
       </div>
 
       <!-- Show the input field when 'Other' is selected -->
@@ -72,15 +82,18 @@
 
       <div class="col-6">
         <label for="inputAddress" class="form-label">Address</label>
-        <textarea
+        <input
           type="text"
           class="form-control"
           id="inputAddress"
           formControlName="t2_address_1"
-        ></textarea>
-        <!-- <div *ngIf="form.controls['address'].touched && form.controls['address'].invalid" class="text-danger">
-                  <small>Address is required.</small>
-                </div> -->
+        />
+           <div
+                class="text-danger"
+                *ngIf="branchForm.get('t2_address_1')?.invalid && branchForm.get('t2_address_1')?.touched"
+              >
+                <small>Address is required.</small>
+            </div>
       </div>
 
       <div class="col-6">
@@ -89,7 +102,7 @@
           type="text"
           class="form-control"
           id="inputAddress2"
-          formControlName="t2_address_2"
+          formControlName="t2_address_2"    
         ></textarea>
       </div>
 
@@ -199,6 +212,13 @@
           id="t2_zip_code"
           formControlName="t2_zip_code"
         />
+        <div
+        class="text-danger"
+        *ngIf="branchForm.get('t2_zip_code')?.invalid && branchForm.get('t2_zip_code')?.touched"
+      >
+        <small *ngIf="branchForm.get('t2_zip_code')?.errors?.['required']">Zip Code is required.</small>
+       
+      </div>
       </div>
 
       <div class="col-12 d-flex justify-content-end">
