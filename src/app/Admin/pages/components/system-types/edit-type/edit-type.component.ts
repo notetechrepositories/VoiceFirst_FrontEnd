@@ -2,6 +2,7 @@ import { Component, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SweetalertService } from '../../../../../Services/sweetAlertService/sweetalert.service';
+import { SystemtypeService } from '../../../../../Services/systemTypeService/systemtype.service';
 
 @Component({
   selector: 'app-edit-type',
@@ -24,7 +25,8 @@ export class EditTypeComponent {
     constructor(
       private fb: FormBuilder,
       private router: Router,
-      private sweetalert: SweetalertService
+      private sweetalert: SweetalertService,
+              private sysTypeService:SystemtypeService 
     ) {
       this.form = this.fb.group({
         t4_1_sys_selection_values_name: ['',Validators.required],
@@ -55,5 +57,25 @@ export class EditTypeComponent {
   }
   
     onSave() {
+
+      if(this.form.valid){
+        this.sysTypeService.updateSysType(this.form.value).subscribe({
+          next:res=>{
+            if(res.status==200){
+              this.sweetalert.showToast("success", "Successfully updated.");
+              this.closePopup();
+    this.router.navigate(['/company/system-type']);
+            }
+            else{
+              this.sweetalert.showToast('error',res.message);
+            }
+            
+          },
+          error:error=>{
+            console.log(error);
+            
+          }
+        });
+      }
     }
 }
