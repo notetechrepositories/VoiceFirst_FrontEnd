@@ -28,7 +28,7 @@ export class CompanyComponent {
   companies:any[]=[];
   filteredCompanies:any[]=[];
   paginatedCompanies:any[]=[];
-  itemsPerPage:number=2;
+  itemsPerPage:number=7;
   currentPage:number = 1;
   
   

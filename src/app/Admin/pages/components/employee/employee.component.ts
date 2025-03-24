@@ -63,7 +63,7 @@ export class EmployeeComponent {
     EmployeeView(employee:any){
       console.log(employee);
   
-      this.router.navigate(['/components/employee/employee-add'], {
+      this.router.navigate(['/company/employee-add'], {
         state: { employee },
       });
       

@@ -1,0 +1,88 @@
+
+<div class="role-management-container">
+    <div class="d-flex justify-content-between">
+      <h3>System Roles</h3>
+      <button (click)="openAddRoleModal()" class="primary-btn" style="height: 40px;">
+        <i class="fas fa-plus"></i> Add Role
+      </button>
+    </div>
+  
+   
+  
+    <div class="role-sections row w-100 mt-5">
+  
+      <!-- Left section: Available roles only -->
+      <!-- <div class="role-left col-md-6">
+        <h5>System Roles</h5>
+  
+        <div class="role-list">
+          <div *ngFor="let role of availableRoles" class="role-item">
+            <label>
+              <input
+                type="checkbox"
+                [checked]="isSelected(role)"
+                (change)="toggleRoleSelection(role)"
+              />
+              {{ role }}
+            </label>
+          </div>
+        </div>
+      </div> -->
+  
+      <!-- Right section: Selected Roles (both available + custom) -->
+      <div class="role-right col-md-12">
+
+
+
+          <ul class="selected-role-list">
+  
+            <li *ngFor="let role of selectedRoles" class="selected-role-item">
+              <div>
+                <i class="fas fa-check-circle"></i> {{ role }}
+              </div>
+              <button class="remove-selected-btn" (click)="removeSelectedRole(role)">
+                <i class="fas fa-times"></i>
+              </button>
+            </li>
+          </ul>
+    
+  
+  
+      </div>
+  
+    </div>
+  
+    <!-- Modal for adding new role -->
+  
+  </div>
+  
+  <div class="popup" *ngIf="showAddRoleModal">
+    <div class="popup-content">
+      <!-- Changing Part -->
+      <div class="d-flex justify-content-between mb-3">
+        <h5>Add Role</h5>
+        <i class="ti ti-x" (click)="closeAddRoleModal()"></i>
+      </div>
+      <form action="">
+        <div class="form-group">
+          <label for="roleName">Role Name</label>
+          <input type="text" id="roleName" [(ngModel)]="newRole" name="newRole" placeholder="Enter role name" />
+        </div>
+    
+        <div class="form-group checkbox-group">
+          <label>
+            <input type="checkbox" [(ngModel)]="allLocationAccess" name="allLocationAccess" /> All Location Access
+          </label>
+          <label>
+            <input type="checkbox" [(ngModel)]="allIssueAccess" name="allIssueAccess" /> All Issue Access
+          </label>
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+          <button type="submit" class="primary-btn" (click)="addNewRole()">Submit</button>
+        </div>
+      </form>
+      <!-- ------------- -->
+    </div>
+  </div>
+  
+  

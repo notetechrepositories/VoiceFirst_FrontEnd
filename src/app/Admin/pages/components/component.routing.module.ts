@@ -13,6 +13,8 @@ import { CompanyViewComponent } from './company/company-view/company-view.compon
 import { EmployeeComponent } from './employee/employee.component';
 import { EmployeeAddComponent } from './employee/employee-add/employee-add.component';
 import { EmployeeViewComponent } from './employee/employee-view/employee-view.component';
+import { CompanyRoleComponent } from './company-role/company-role.component';
+import { SystemRoleComponent } from './system-role/system-role.component';
 
 
 
@@ -91,7 +93,14 @@ export const ComponentRoutes: Routes = [
           },
         ]
       },
-      
+      {
+        path: 'system-role',
+        component: SystemRoleComponent,
+      },
+      {
+        path: 'company-role',
+        component: CompanyRoleComponent,
+      },
      
       
     ],

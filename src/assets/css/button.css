@@ -75,5 +75,16 @@
   }
   .danger{
     background-color:#ff3b3b;
+  }
 
+  .view-btn{
+    border-color: transparent;
+    border-radius: 5px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    transition: transform 0.1s ease, box-shadow 0.1s ease;
+    background-color:#46abff;
+  }
+  .view-btn:active {
+    transform: scale(0.95); /* Slightly shrink the button */
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 4px 0px; /* Reduced shadow effect */
   }

@@ -291,10 +291,12 @@ onSubmit(): void {
           this.userService.postUserDetails(requestData).subscribe({
             next: (res) => {
               if (res.status == 200) {
+                console.log(res);
+                
                 Swal.fire({
                   icon: 'success',
                   title: 'Success!',
-                  text: 'Company added successfully.',
+                  text: 'Employee added successfully.',
                   toast: true,
                   position: 'top-end',
                   showConfirmButton: false,
@@ -340,7 +342,7 @@ onSubmit(): void {
   }
 onClose() {
   this.closePopup();
-  this.router.navigate(['/components/employee']);
+  this.router.navigate(['/company/employee']);
 }
 
 onSave() {
