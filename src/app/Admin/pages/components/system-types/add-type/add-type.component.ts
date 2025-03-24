@@ -48,8 +48,8 @@ export class AddTypeComponent {
           if(res.status==200){
             this.sweetalert.showToast("success", "Successfully created.");
             this.closePopup();
-    this.router.navigate(['/company/system-type']);
-          }
+             this.router.navigate(['/company/system-type']);
+           }
           else{
             this.sweetalert.showToast('error',res.message);
           }
@@ -60,6 +60,9 @@ export class AddTypeComponent {
           
         }
       });
+    } else {
+      this.form.markAllAsTouched();
+
     }
    
 

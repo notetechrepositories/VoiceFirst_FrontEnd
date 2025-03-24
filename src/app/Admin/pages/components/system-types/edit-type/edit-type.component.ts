@@ -77,5 +77,9 @@ export class EditTypeComponent {
           }
         });
       }
+      else {
+        this.form.markAllAsTouched();
+  
+      }
     }
 }
