@@ -32,6 +32,8 @@ import { EmployeeAddComponent } from './employee/employee-add/employee-add.compo
 import { EmployeeViewComponent } from './employee/employee-view/employee-view.component';
 import { CompanyRoleComponent } from './company-role/company-role.component';
 import { SystemRoleComponent } from './system-role/system-role.component';
+import { AddSystemRoleComponent } from './system-role/add-system-role/add-system-role.component';
+import { EditSystemRoleComponent } from './system-role/edit-system-role/edit-system-role/edit-system-role.component';
 
 
 
@@ -72,7 +74,9 @@ import { SystemRoleComponent } from './system-role/system-role.component';
     EmployeeAddComponent,
     EmployeeViewComponent,
     CompanyRoleComponent,
-    SystemRoleComponent
+    SystemRoleComponent,
+    AddSystemRoleComponent,
+    EditSystemRoleComponent
   ],
 })
 export class ComponentModule {}

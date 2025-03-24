@@ -47,5 +47,19 @@ export class RoleService {
   getProgramWithPermission() {
     return this.http.get<any>(`${this.apiUrl}/role/get-all-program-with-action`, { headers: this.headers });
   }
+////////////////////////////////////////////////////SYSTEM ROLE/////////////////////////////////////////////////////////////////////////////
+insertSystemRole(data: any) {
+  return this.http.post<any>(`${this.apiUrl}/role/add-sys-role`, data, { headers: this.headers });
+}
+getSystemRole() {
+  return this.http.get<any>(`${this.apiUrl}/role/get-all-sys-role`, { headers: this.headers });
+}
+updateSystemRole(data: any) {
+  return this.http.put<any>(`${this.apiUrl}/role/update-sys-role`, data, { headers: this.headers });
+}
+deleteSystemRole(id: string) {
+  return this.http.delete<any>(`${this.apiUrl}/role/delete-sys-role?id=${id}`,{ headers: this.headers });
+}
+
 
 }
