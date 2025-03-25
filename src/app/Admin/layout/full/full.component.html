@@ -60,6 +60,12 @@
           <span *ngIf="isSidebarExpanded" class="nav-name">System Roles</span>
         </a>
         }
+        @if(role=="Notetech"){
+          <a class="nav-link" routerLink="system-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fa-solid fa-list-check"></i>
+            <span *ngIf="isSidebarExpanded" class="nav-name">System Types</span>
+          </a>
+          }
         <!-- Projects Submenu -->
         <!-- <div class="nav-link collapse">
           <div (click)="toggleSubMenu('projects')">

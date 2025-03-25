@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Component, Inject, PLATFORM_ID, AfterViewInit, Input, OnInit } from '@angular/core';
+import { Component, Inject, PLATFORM_ID, AfterViewInit, Input, OnInit, HostListener } from '@angular/core';
 import { AuthService } from '../../../Services/authService/auth.service';
 import Swal from 'sweetalert2';
 import { LocalstorageService } from '../../../Services/localStorageService/localstorage.service';
@@ -19,6 +19,7 @@ export class FullComponent implements OnInit {
     @Inject(PLATFORM_ID) private platformId: any,
     private authService: AuthService,private router:Router,private localStorageService:LocalstorageService, private localstorageService: LocalstorageService) { }
   async ngOnInit(): Promise<void> {
+    this.checkScreenSize();
     this.role = await this.localstorageService.getItem('role')
     if (this.role == "User") {
       this.router.navigate(['/user/home']);
@@ -53,5 +54,19 @@ export class FullComponent implements OnInit {
   toggleSidebar() {
     this.isSidebarExpanded = !this.isSidebarExpanded;
   }
+
+   // Listen for window resize events
+   @HostListener('window:resize', [])
+   onWindowResize() {
+     this.checkScreenSize();
+   }
+ 
+   checkScreenSize() {
+     if (window.innerWidth < 768) {
+       this.isSidebarExpanded = false;
+     } else {
+       this.isSidebarExpanded = true;
+     }
+   }
 
 }

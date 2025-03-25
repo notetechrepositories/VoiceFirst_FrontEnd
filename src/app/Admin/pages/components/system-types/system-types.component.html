@@ -1,0 +1,79 @@
+
+
+<h3>System Types</h3>
+<div class="filter-buttons d-flex justify-content-end">
+
+  <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="openAddRole()"><i class='bx bx-plus'></i></button>
+
+</div>
+<div>
+    <div class="filter-section">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <label class="form-label mb-1">Organization Level</label>
+                <select class="form-select" (change)="applyFilters($event)">
+                  <option value="" selected>All</option>
+                  <option value="43E256AF-AC0F-4A89-AE2C-B0EAB8860C61">Company</option>
+                  <option value="dbb3999e-36ba-4d63-827f-61e19cd698f9">Branch</option>
+                  <option value="a1136325-b25e-4b52-aa7c-241db7214039">Section</option>
+                </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="table-responsive" style="padding: 1px;">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th>Type</th>
+            <th class="text-end"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Show loading spinner -->
+          <tr *ngIf="isLoading">
+            <td colspan="2" class="position-relative p-0" style="height: 150px;">
+              <div class="d-flex flex-column justify-content-center align-items-center position-absolute top-50 start-50 translate-middle w-100">
+                <div class="loader mb-2"></div>
+                <span>Loading...</span>
+              </div>
+            </td>
+          </tr>
+        
+          <!-- Show table rows when data is loaded -->
+          <ng-container *ngIf="!isLoading">
+            <tr *ngFor="let type of paginatedOrders; let i = index">
+              <td>{{ type.t4_1_sys_selection_values_name }}</td>
+              <td class="actions text-end">
+                <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="openEditRole(type.id_t4_sys_selection_values)"></i></button>
+                <button class="action-btn danger"><i class='bx bx-trash p-1' (click)="deleteFn(type.id_t4_sys_selection_values)"></i></button>
+              </td>
+            </tr>
+          </ng-container>
+        
+          <!-- Show no data message if no roles are found -->
+          <tr *ngIf="!isLoading && paginatedOrders.length === 0">
+            <td colspan="2" class="text-center">No data available.</td>
+          </tr>
+        </tbody>
+        
+      </table>
+    
+      <div class="pagination">
+        
+        <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
+      </div>
+    </div>
+  </div>
+  
+  
+  
+  <ng-container #popupContainer></ng-container>
+  
+  

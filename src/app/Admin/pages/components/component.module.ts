@@ -34,6 +34,9 @@ import { CompanyRoleComponent } from './company-role/company-role.component';
 import { SystemRoleComponent } from './system-role/system-role.component';
 import { AddSystemRoleComponent } from './system-role/add-system-role/add-system-role.component';
 import { EditSystemRoleComponent } from './system-role/edit-system-role/edit-system-role/edit-system-role.component';
+import { AddTypeComponent } from './system-types/add-type/add-type.component';
+import { EditTypeComponent } from './system-types/edit-type/edit-type.component';
+import { SystemTypesComponent } from './system-types/system-types.component';
 
 
 
@@ -77,6 +80,9 @@ import { EditSystemRoleComponent } from './system-role/edit-system-role/edit-sys
     SystemRoleComponent,
     AddSystemRoleComponent,
     EditSystemRoleComponent
+    SystemTypesComponent,
+    AddTypeComponent,
+    EditTypeComponent,
   ],
 })
 export class ComponentModule {}
