@@ -13,14 +13,14 @@
       <div class="col-lg-4 col-md-12">
         <div class="role-container w-100">
           <h5>System Roles</h5>
-            <div *ngFor="let role of availableRoles">
+            <div *ngFor="let role of systemRoles">
               <label>
                 <input
                   type="checkbox"
                   [checked]="isSelected(role)"
-                  (change)="toggleRoleSelection(role)"
+                  (change)="toggleRoleSelection(role.t5_1_sys_roles_name,role.id_t5_1_sys_roles,role.t5_1_sys_all_location_access,role.t5_1_sys_all_issues)"
                 />
-                {{ role }}
+                {{ role.t5_1_sys_roles_name }}
               </label>
             </div>
         </div>
@@ -36,16 +36,36 @@
             }
             @else {
               <ul class="selected-role-list">
-      
                 <li *ngFor="let role of selectedRoles" class="selected-role-item">
                   <div>
-                    <i class="fas fa-check-circle"></i> {{ role }}
+                    <i class="fas fa-check-circle"></i> 
+                    
+                    <!-- Show Input Field When Editing -->
+                    <input *ngIf="editingRoleId === role.id_t5_1_company_roles"
+                           type="text"
+                           [(ngModel)]="editedRole.t5_1_roles_name"
+                           (keydown.enter)="saveEditedRole()"
+                           (blur)="saveEditedRole()"
+                           class="edit-input"/>
+              
+                    <!-- Show Role Name When Not Editing -->
+                    <span *ngIf="editingRoleId !== role.id_t5_1_company_roles">
+                      {{ role.t5_1_roles_name }}
+                    </span>
                   </div>
-                  <button class="remove-selected-btn" (click)="removeSelectedRole(role)">
-                    <i class="fas fa-times"></i>
-                  </button>
+                  
+                  <div>
+                    <button class="edit-selected-btn" (click)="editSelectedRole(role)">
+                      <i class='bx bxs-edit p-1'></i>
+                    </button>
+                    <button class="remove-selected-btn" (click)="removeSelectedRole(role)">
+                      <i class="fas fa-times"></i>
+                    </button>
+                  </div>
                 </li>
               </ul>
+              
+              
             }
         </div>
         <div class="d-flex justify-content-end mt-2">
@@ -68,18 +88,18 @@
       <h5>Add Role</h5>
       <i class="ti ti-x" (click)="closeAddRoleModal()"></i>
     </div>
-    <form action="">
+    <form action="" [formGroup]="companyForm">
       <div class="form-group">
         <label for="roleName">Role Name</label>
-        <input type="text" id="roleName" [(ngModel)]="newRole" name="newRole" placeholder="Enter role name" />
+        <input type="text" id="roleName" formControlName="t5_1_roles_name" placeholder="Enter role name" />
       </div>
   
       <div class="form-group checkbox-group">
         <label>
-          <input type="checkbox" [(ngModel)]="allLocationAccess" name="allLocationAccess" /> All Location Access
+          <input type="checkbox" formControlName="t5_1_all_location_access" /> All Location Access
         </label>
         <label>
-          <input type="checkbox" [(ngModel)]="allIssueAccess" name="allIssueAccess" /> All Issue Access
+          <input type="checkbox" formControlName="t5_1_all_issues" /> All Issue Access
         </label>
       </div>
       <div class="col-12 d-flex justify-content-end">

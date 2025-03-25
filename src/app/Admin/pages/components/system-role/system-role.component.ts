@@ -1,5 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 import { SweetalertService } from '../../../../Services/sweetAlertService/sweetalert.service';
+import Swal from 'sweetalert2';
+import { AddRoleComponent } from '../role/add-role/add-role.component';
+import { RoleService } from '../../../../Services/roleService/role.service';
+import { Role } from '../../../Models/role_model';
+import { EditRoleComponent } from '../role/edit-role/edit-role.component';
+import { AddSystemRoleComponent } from './add-system-role/add-system-role.component';
+import { EditSystemRoleComponent } from './edit-system-role/edit-system-role/edit-system-role.component';
 
 @Component({
   selector: 'app-system-role',
@@ -7,96 +14,163 @@ import { SweetalertService } from '../../../../Services/sweetAlertService/sweeta
   styleUrl: './system-role.component.css'
 })
 export class SystemRoleComponent {
-  availableRoles: string[] = [
-    'Management',
-    'Branch Management',
-    'App Admin',
-    'App Branch Admin',
-    'Staff',
-    'Public',
-    'Vendor',
-    'Customer',
-    'Verified Customer',
-    'Third Party Company',
-    'Notetech Admin',
-    'Notetech Staff',
-    'Marketing team',
-    'Third Party Marketing Team'
-  ];
-
-  selectedRoles= this.availableRoles;
-
-  // New role properties
-  newRole: string = '';
-  allLocationAccess: boolean = false;
-  allIssueAccess: boolean = false;
-
-  // Modal control
-  showAddRoleModal: boolean = false;
-
   constructor(
-    private sweetalert:SweetalertService
-  ) {}
-
-  toggleRoleSelection(role: string): void {
-    const index = this.selectedRoles.indexOf(role);
-    if (index === -1) {
-      this.selectedRoles.push(role);
-    } else {
-      this.selectedRoles.splice(index, 1);
+      private componentFactoryResolver: ComponentFactoryResolver,
+      private sweetalert: SweetalertService,
+      private roleService: RoleService
+    ) {}
+  
+    roles: Role[] = [];
+    itemsPerPage = 12;
+    currentPage = 1;
+  
+    filteredRoles: Role[] = [];
+    paginatedOrders: any[] = [];
+  
+    searchTerm = '';
+  
+    isLoading: boolean = false; 
+  
+    ngOnInit() {
+      this.getAllSystemRole();
     }
-  }
-
-  openAddRoleModal(): void {
-    this.newRole = '';
-    this.allLocationAccess = false;
-    this.allIssueAccess = false;
-    this.showAddRoleModal = true;
-  }
-
-  closeAddRoleModal(): void {
-    this.showAddRoleModal = false;
-  }
-
-  addNewRole(): void {
-    const trimmedRole = this.newRole.trim();
-    console.log(trimmedRole);
-    
-    if (!trimmedRole) {
-      alert('Role name cannot be empty!');
-      return;
+  
+    get totalPages(): number {
+      return Math.ceil(this.filteredRoles.length / this.itemsPerPage);
     }
-
-    if (this.selectedRoles.includes(trimmedRole)) {
-      alert('This role is already selected!');
-      return;
+  
+    nextPage() {
+      if (this.currentPage < this.totalPages) {
+        this.currentPage++;
+        this.updatePaginatedOrders();
+      }
     }
-
-    // Add custom role to selectedRoles
-    this.selectedRoles.push(trimmedRole);
-
-    // Optionally log the checkbox values for backend or further use
-    console.log('All Location Access:', this.allLocationAccess);
-    console.log('All Issue Access:', this.allIssueAccess);
-
-    // Close modal
-    this.closeAddRoleModal();
-  }
-
-  removeSelectedRole(role: string): void {
-    const index = this.selectedRoles.indexOf(role);
-    if (index !== -1) {
-      this.selectedRoles.splice(index, 1);
+  
+    previousPage() {
+      if (this.currentPage > 1) {
+        this.currentPage--;
+        this.updatePaginatedOrders();
+      }
     }
-  }
-
-  isSelected(role: string): boolean {
-    return this.selectedRoles.includes(role);
-  }
-
-  onSubmit(){
-    if(this.selectedRoles.length>0){
-      this.sweetalert.showToast('success','Roles Added Successfully')
+  
+    updatePaginatedOrders() {
+      const start = (this.currentPage - 1) * this.itemsPerPage;
+      const end = start + this.itemsPerPage;
+      this.paginatedOrders = this.filteredRoles.slice(start, end);
     }
-  }
+  
+    applyFilters() {
+      let roles = [...this.roles];
+      if (this.searchTerm) {
+        roles = roles.filter((role) =>
+          role.t5_1_m_user_roles_name
+            .toLowerCase()
+            .includes(this.searchTerm.toLowerCase())
+        );
+      }
+      this.filteredRoles = roles;
+      this.updatePaginatedOrders();
+    }
+  
+    // -------------------------------------------------------------------------------
+  
+    getAllSystemRole() {
+      this.isLoading = true;
+      // const body = { 
+      //   filters: { 
+      //     is_delete: "0" 
+      //   }
+      // };  
+      this.roleService.getSystemRole().subscribe({
+        next: (res) => {
+          console.log(res);
+          
+          if (res.status == 200) {
+            this.roles = res.data.Items;
+            console.log(res);
+            this.filteredRoles = [...this.roles];
+            this.updatePaginatedOrders(); 
+          }
+          this.isLoading = false; 
+        },
+        error: (error) => {
+          console.log(error);
+          this.sweetalert.showToast('error', 'Oops! Something went wrong');
+          this.isLoading = false; 
+        },
+      });
+    }
+  
+    // ----------------------------------POP UP----------------------------------------
+  
+    @ViewChild('popupContainer', { read: ViewContainerRef })
+    popupContainer!: ViewContainerRef;
+  
+    openAddRole() {
+      this.popupContainer.clear();
+      const factory =
+        this.componentFactoryResolver.resolveComponentFactory(AddSystemRoleComponent);
+      const componentRef = this.popupContainer.createComponent(factory);
+      componentRef.instance.closePopup = () => {
+        this.popupContainer.clear();
+        this.getAllSystemRole();
+      };
+    }
+  
+    openEditRole(systemrole: string) {
+       this.popupContainer.clear();
+       const factory = this.componentFactoryResolver.resolveComponentFactory(EditSystemRoleComponent);
+       const componentRef = this.popupContainer.createComponent(factory);
+       componentRef.instance.roleData = systemrole;
+       componentRef.instance.closePopup = () => {
+         this.popupContainer.clear();
+         this.getAllSystemRole();
+       };
+   
+
+
+
+      // this.popupContainer.clear();
+      // this.roleService.getSystemRole().subscribe({
+      //   next: (res) => {
+      //     const factory =
+      //       this.componentFactoryResolver.resolveComponentFactory(
+      //         EditSystemRoleComponent
+      //       );
+      //     const componentRef = this.popupContainer.createComponent(factory);
+      //     componentRef.instance.roleData = res.data;
+      //     componentRef.instance.closePopup = () => {
+      //       this.popupContainer.clear();
+      //       this.getAllSystemRole();
+      //     };
+      //   },
+      //   error: (error) => {},
+      // });
+    }
+  
+    deleteFn(id: string) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.roleService.deleteSystemRole(id).subscribe({
+            next:res=>{
+              if(res.status==200){
+                this.getAllSystemRole();
+                this.sweetalert.showToast('success', 'Succefully deleted');
+              }
+              else{
+                this.sweetalert.showToast('error', res.message);
+              }
+            }
+          })
+        }
+      });
+    }
 }
