@@ -38,20 +38,33 @@
               <ul class="selected-role-list">
                 <li *ngFor="let role of selectedRoles" class="selected-role-item">
                   <div>
-                    <i class="fas fa-check-circle"></i> {{ role.t5_1_roles_name }}
+                    <i class="fas fa-check-circle"></i> 
+                    
+                    <!-- Show Input Field When Editing -->
+                    <input *ngIf="editingRoleId === role.id_t5_1_company_roles"
+                           type="text"
+                           [(ngModel)]="editedRole.t5_1_roles_name"
+                           (keydown.enter)="saveEditedRole()"
+                           (blur)="saveEditedRole()"
+                           class="edit-input"/>
+              
+                    <!-- Show Role Name When Not Editing -->
+                    <span *ngIf="editingRoleId !== role.id_t5_1_company_roles">
+                      {{ role.t5_1_roles_name }}
+                    </span>
                   </div>
-                  <div >
-                    <!-- <button class="edit-selected-btn" (click)="editSelectedRole(role)"><i class='bx bxs-edit p-1' ></i>  </button> -->
+                  
+                  <div>
+                    <button class="edit-selected-btn" (click)="editSelectedRole(role)">
+                      <i class='bx bxs-edit p-1'></i>
+                    </button>
                     <button class="remove-selected-btn" (click)="removeSelectedRole(role)">
                       <i class="fas fa-times"></i>
                     </button>
-                   
                   </div>
-                 
-                 
                 </li>
-               
               </ul>
+              
               
             }
         </div>

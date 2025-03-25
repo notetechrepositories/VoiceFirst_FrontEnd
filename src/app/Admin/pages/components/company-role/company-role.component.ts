@@ -149,4 +149,22 @@ export class CompanyRoleComponent {
       },
     });
   }
+  editingRoleId: string | null = null; // Track which role is being edited
+  editedRole: any = {}; // Store role data being edited
+  
+  editSelectedRole(role: any) {
+    this.editingRoleId = role.id_t5_1_company_roles; // Identify role being edited
+    this.editedRole = { ...role }; // Clone role data for editing
+  }
+  
+  saveEditedRole() {
+    if (this.editingRoleId) {
+      const index = this.selectedRoles.findIndex(role => role.id_t5_1_company_roles === this.editingRoleId);
+      if (index !== -1) {
+        this.selectedRoles[index] = { ...this.editedRole }; // Update the list
+      }
+      this.editingRoleId = null; // Exit edit mode
+    }
+  }
+  
 }
