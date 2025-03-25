@@ -35,6 +35,10 @@ import { SystemRoleComponent } from './system-role/system-role.component';
 import { AddTypeComponent } from './system-types/add-type/add-type.component';
 import { EditTypeComponent } from './system-types/edit-type/edit-type.component';
 import { SystemTypesComponent } from './system-types/system-types.component';
+import { BranchTypeComponent } from './branch-type/branch-type.component';
+import { SectionTypeComponent } from './section-type/section-type.component';
+import { BuisnessActivityComponent } from './buisness-activity/buisness-activity.component';
+import { CompanyBuisnessActivityComponent } from './company-buisness-activity/company-buisness-activity.component';
 
 
 
@@ -79,6 +83,10 @@ import { SystemTypesComponent } from './system-types/system-types.component';
     SystemTypesComponent,
     AddTypeComponent,
     EditTypeComponent,
+    BranchTypeComponent,
+    SectionTypeComponent,
+    BuisnessActivityComponent,
+    CompanyBuisnessActivityComponent
   ],
 })
 export class ComponentModule {}

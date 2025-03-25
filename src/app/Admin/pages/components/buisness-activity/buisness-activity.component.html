@@ -1,0 +1,110 @@
+<div class="activity-management-container">
+    <div class="d-flex justify-content-between align-items-center">
+      <h3>System Business Activities</h3>
+      <button (click)="openAddActivityModal()" class="primary-btn" style="height: 40px;">
+        <i class="fas fa-plus"></i> Add
+      </button>
+    </div>
+  
+    <div class="table-responsive mt-3" style="padding: 1px;">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <!-- <th>#</th> -->
+            <th>Name</th>
+            <th>Company</th>
+            <th>Branch</th>
+            <th>Section</th>
+            <th>Sub Section</th>
+            <th class="text-end">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Loading Spinner Row -->
+          <tr *ngIf="isLoading">
+            <td colspan="6" class="position-relative p-0" style="height: 150px;">
+              <div class="d-flex flex-column justify-content-center align-items-center position-absolute top-50 start-50 translate-middle w-100">
+                <div class="loader mb-2"></div>
+                <span>Loading...</span>
+              </div>
+            </td>
+          </tr>
+  
+          <!-- Data Rows -->
+          <ng-container *ngIf="!isLoading">
+            <tr *ngFor="let selection of paginatedOrders; let i = index">
+              <!-- <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td> -->
+              <td>{{ selection.t3_sys_business_activity_name }}</td>
+              <td>
+                <input type="checkbox" [checked]="selection.t3_sys_company === 'Y'" disabled>
+              </td>
+              <td>
+                <input type="checkbox" [checked]="selection.t3_sys_branch === 'Y'" disabled>
+              </td>
+              <td>
+                <input type="checkbox" [checked]="selection.t3_sys_section === 'Y'" disabled>
+              </td>
+              <td>
+                <input type="checkbox" [checked]="selection.t3_sys_sub_section === 'Y'" disabled>
+              </td>
+              <td class="actions text-end">
+                <button class="action-btn danger"><i class='bx bx-trash p-1' (click)="removeSelectedActivity(selection)"></i></button>
+              </td>
+            </tr>
+          </ng-container>
+  
+          <!-- No Data Row -->
+          <tr *ngIf="!isLoading && paginatedOrders.length === 0">
+            <td colspan="6" class="text-center">No data available.</td>
+          </tr>
+        </tbody>
+      </table>
+  
+      <!-- Pagination Controls -->
+      <div class="pagination d-flex justify-content-center align-items-center gap-2">
+        <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn btn-sm btn-outline-primary">
+          <i class='bx bx-chevron-left'></i>
+        </button>
+  
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+  
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="btn btn-sm btn-outline-primary">
+          <i class='bx bx-chevron-right'></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal for adding new Business Activity -->
+  <div class="popup" *ngIf="showAddActivityModal">
+    <div class="popup-content">
+      <div class="d-flex justify-content-between mb-3">
+        <h5>Add Business Activity</h5>
+        <i class="ti ti-x" (click)="closeAddActivityModal()"></i>
+      </div>
+  
+      <form (ngSubmit)="addNewActivity()">
+        <div class="form-group mb-3">
+          <label for="activityName">Activity Name</label>
+          <input type="text" id="activityName" [(ngModel)]="newActivity" name="newActivity" placeholder="Enter activity name" required />
+        </div>
+  
+        <div class="form-group checkbox-group d-flex justify-content-between mb-3" style="padding: 0px 5px;">
+          <label>
+            <input type="checkbox" [(ngModel)]="isCompany" name="isCompany" /> Company
+          </label>
+          <label>
+            <input type="checkbox" [(ngModel)]="isBranch" name="isBranch" /> Branch
+          </label>
+          <label>
+            <input type="checkbox" [(ngModel)]="isSection" name="isSection" /> Section
+          </label>
+        </div>
+  
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="primary-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
