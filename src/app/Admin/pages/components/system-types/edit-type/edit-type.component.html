@@ -9,23 +9,38 @@
       <!-- Form -->
       <form [formGroup]="form">
         <div class="row">
-            <div class="col-md-12 mb-2">
-                <label class="form-label mb-1">Organization Level</label>
-                <select class="form-select" formControlName="id_t4_selection">
-                  <option disabled selected>Choose...</option>
-                  <option value="43E256AF-AC0F-4A89-AE2C-B0EAB8860C61">Company</option>
-                  <option value="dbb3999e-36ba-4d63-827f-61e19cd698f9">Branch</option>
-                  <option value="a1136325-b25e-4b52-aa7c-241db7214039">Section</option>
-                </select>
-                
+          <div class="col-md-12 mb-2">
+            <label class="form-label mb-1">Organization Level</label>
+            <select
+              class="form-select"
+              formControlName="id_t4_selection"
+              [ngClass]="{ 'is-invalid': form.get('id_t4_selection')?.invalid && form.get('id_t4_selection')?.touched }"
+            >
+              <option disabled selected>Choose...</option>
+              <option value="43E256AF-AC0F-4A89-AE2C-B0EAB8860C61">Company</option>
+              <option value="dbb3999e-36ba-4d63-827f-61e19cd698f9">Branch</option>
+              <option value="a1136325-b25e-4b52-aa7c-241db7214039">Section</option>
+            </select>
+            <div *ngIf="form.get('id_t4_selection')?.invalid && form.get('id_t4_selection')?.touched" class="invalid-feedback">
+              Organization Level is required.
             </div>
-            <div class="col-md-12 mb-3">
-              <label class="form-label mb-1">Name</label>
-              <input type="text" class="form-control" formControlName="t4_1_sys_selection_values_name">
+          </div>
+          
+          <div class="col-md-12 mb-3">
+            <label class="form-label mb-1">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="t4_1_sys_selection_values_name"
+              [ngClass]="{ 'is-invalid': form.get('t4_1_sys_selection_values_name')?.invalid && form.get('t4_1_sys_selection_values_name')?.touched }"
+            />
+            <div *ngIf="form.get('t4_1_sys_selection_values_name')?.invalid && form.get('t4_1_sys_selection_values_name')?.touched" class="invalid-feedback">
+              Name is required.
             </div>
+          </div>
             <!-- Submit Button -->
             <div class="col-12 d-flex justify-content-end mt-3">
-                <button type="submit" class="primary-btn">Submit</button>
+                <button type="submit" class="primary-btn" (click)="onSave()">Submit</button>
             </div>
         </div>
       </form>

@@ -38,21 +38,21 @@ export class AddBranchComponent {
 
   ) {
     this.branchForm = this.fb.group({
-      t2_company_branch_name: [''],
+      t2_company_branch_name: ['',[Validators.required]],
       id_t1_company: [''],
-      t2_id_branch_type: [''],
+      t2_id_branch_type: ['',[Validators.required]],
+      t2_email: ['',[Validators.required,Validators.email]],  
+      t2_address_1: ['',[Validators.required]],  
       branch_type: [''],
-      t2_email: [''],
       t2_mobile_no: [''],
       t2_phone_no: [''],
-      t2_address_1: [''],
       t2_address_2: [''],
       id_t2_1_country: [''],
       id_t2_1_div1: [''],
       id_t2_1_div2: [''],
       id_t2_1_div3: [''],
       t2_1_local_name: [''],
-      t2_zip_code: ['']
+      t2_zip_code: ['',[Validators.required]]
 
     });
   }
@@ -79,12 +79,10 @@ export class AddBranchComponent {
   }
   onSubmit(): void {
     const data = this.branchForm.value;
-    console.log("Form Data Sent:", data); // ✅ Check form data
+    console.log("Form Data Sent:", data); 
 
     this.brachService.insertBranch(data).subscribe({
       next: (response) => {
-        console.log("API Response:", response); // ✅ Check API response
-
         if (response.status == 200) {
           this.sweetalert.showToast("success", "Successfully created.");
           this.closePopup();
@@ -94,7 +92,6 @@ export class AddBranchComponent {
         }
       },
       error: (error) => {
-        console.error("API Error:", error); // ✅ Check the actual error
         this.sweetalert.showToast("error", "Oops! Something went wrong.");
       }
     });
@@ -109,11 +106,9 @@ export class AddBranchComponent {
         if (res.status == 200) {
           this.countries = res.data.Items;
         } else {
-          console.log(res);
         }
       },
       error: (error) => {
-        console.log(error);
         this.sweetalert.showToast('error', 'Oops!Something went wrong');
       },
     });
@@ -147,11 +142,9 @@ export class AddBranchComponent {
           this.divisionOnes = res.data.Items;
 
         } else {
-          console.log(res);
         }
       },
       error: (error) => {
-        console.log(error);
         this.sweetalert.showToast('error', 'Oops!Something went wrong');
       },
     });
@@ -169,11 +162,9 @@ export class AddBranchComponent {
         if (res.status == 200) {
           this.divisionTwo = res.data.Items;
         } else {
-          console.log(res);
         }
       },
       error: (error) => {
-        console.log(error);
         this.sweetalert.showToast('error', 'Oops!Something went wrong');
       },
     });
@@ -188,17 +179,14 @@ export class AddBranchComponent {
     };
     this.countryService.getDivisionThreeByDivisionTwoId(filterCountries).subscribe({
       next: (res) => {
-        console.log(res);
-
+      
         if (res.status == 200) {
           this.divisionThree = res.data.Items;
 
         } else {
-          console.log(res);
         }
       },
       error: (error) => {
-        console.log(error);
         this.sweetalert.showToast('error', 'Oops!Something went wrong');
       },
     });
@@ -212,17 +200,14 @@ export class AddBranchComponent {
     // };
     this.companyService.getBranchType().subscribe({
       next: (res) => {
-        console.log(res);
-
         if (res.status == 200) {
           this.branchType = res.data.Items;
           console.log(this.branchType);
         } else {
-          console.log(res);
+         
         }
       },
       error: (error) => {
-        console.log(error);
         this.sweetalert.showToast('error', 'Oops!Something went wrong');
       },
     });

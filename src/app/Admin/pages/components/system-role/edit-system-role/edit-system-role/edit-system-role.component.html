@@ -1,0 +1,30 @@
+<div class="popup">
+    <div class="popup-content">
+      <!-- Header -->
+      <div class="d-flex justify-content-between mb-3">
+        <h4>Update System Role</h4>
+        <i class="ti ti-x" (click)="onClose()"></i>
+      </div>
+  
+      <!-- Form -->
+      <form [formGroup]="editSystemForm">
+        <div class="form-group">
+            <label for="roleName">Role Name</label>
+            <input type="text"  id="t5_1_sys_roles_name" formControlName="t5_1_sys_roles_name"  placeholder="Enter role name" />
+          </div>
+      
+          <div class="form-group checkbox-group">
+            <label>
+              <input type="checkbox"   formControlName="t5_1_sys_all_location_access" id="t5_1_sys_all_location_access" /> All Location Access
+            </label>
+            <label>
+              <input type="checkbox" formControlName="t5_1_sys_all_issues" id="t5_1_sys_all_issues" /> All Issue Access
+            </label>
+          </div>
+          <div class="col-12 d-flex justify-content-end">
+            <button type="submit" class="primary-btn" (click)="onSave()">Submit</button>
+          </div>
+        </form>
+    </div>
+  </div>
+  

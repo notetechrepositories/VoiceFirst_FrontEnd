@@ -15,9 +15,9 @@
               <label class="form-label mb-1">Organization Level</label>
                 <select class="form-select" (change)="applyFilters($event)">
                   <option value="" selected>All</option>
-                  <option value="43E256AF-AC0F-4A89-AE2C-B0EAB8860C61">Company</option>
-                  <option value="dbb3999e-36ba-4d63-827f-61e19cd698f9">Branch</option>
-                  <option value="a1136325-b25e-4b52-aa7c-241db7214039">Section</option>
+                  <option value="43E256AF-AC0F-4A89-AE2C-B0EAB8860C61">Company Type</option>
+                  <option value="dbb3999e-36ba-4d63-827f-61e19cd698f9">Branch Type</option>
+                  <option value="a1136325-b25e-4b52-aa7c-241db7214039">Section Type</option>
                 </select>
             </div>
           </div>
@@ -30,6 +30,7 @@
         <thead class="thead-light">
           <tr>
             <th>Type</th>
+            <th>Organization Level</th>
             <th class="text-end"></th>
           </tr>
         </thead>
@@ -48,6 +49,8 @@
           <ng-container *ngIf="!isLoading">
             <tr *ngFor="let type of paginatedOrders; let i = index">
               <td>{{ type.t4_1_sys_selection_values_name }}</td>
+              <td>{{ type.t4_selection_name | titlecase }}</td>
+
               <td class="actions text-end">
                 <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="openEditRole(type.id_t4_sys_selection_values)"></i></button>
                 <button class="action-btn danger"><i class='bx bx-trash p-1' (click)="deleteFn(type.id_t4_sys_selection_values)"></i></button>

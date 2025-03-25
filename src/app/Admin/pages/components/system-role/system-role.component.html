@@ -1,88 +1,80 @@
 
-<div class="role-management-container">
-    <div class="d-flex justify-content-between">
-      <h3>System Roles</h3>
-      <button (click)="openAddRoleModal()" class="primary-btn" style="height: 40px;">
-        <i class="fas fa-plus"></i> Add Role
-      </button>
-    </div>
-  
-   
-  
-    <div class="role-sections row w-100 mt-5">
-  
-      <!-- Left section: Available roles only -->
-      <!-- <div class="role-left col-md-6">
-        <h5>System Roles</h5>
-  
-        <div class="role-list">
-          <div *ngFor="let role of availableRoles" class="role-item">
-            <label>
+<h3 class="mb-4">Roles</h3>
+<div class="filter-buttons d-flex justify-content-end">
+
+  <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="openAddRole()"><i class='bx bx-plus'></i></button>
+
+</div>
+<div>
+    <div class="filter-section">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-4">
               <input
-                type="checkbox"
-                [checked]="isSelected(role)"
-                (change)="toggleRoleSelection(role)"
+                type="text"
+                class="form-control"
+                placeholder="Search"
+                [(ngModel)]="searchTerm"
+                (input)="applyFilters()"
               />
-              {{ role }}
-            </label>
+            </div>
           </div>
         </div>
-      </div> -->
+      </div>
+    </div>
   
-      <!-- Right section: Selected Roles (both available + custom) -->
-      <div class="role-right col-md-12">
-
-
-
-          <ul class="selected-role-list">
-  
-            <li *ngFor="let role of selectedRoles" class="selected-role-item">
-              <div>
-                <i class="fas fa-check-circle"></i> {{ role }}
+    <div class="table-responsive" style="padding: 1px;">
+      <table class="table">
+        <thead class="thead-light">
+          <tr>
+            <th>Role Name</th>
+            <th class="text-end"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Show loading spinner -->
+          <tr *ngIf="isLoading">
+            <td colspan="2" class="position-relative p-0" style="height: 150px;">
+              <div class="d-flex flex-column justify-content-center align-items-center position-absolute top-50 start-50 translate-middle w-100">
+                <div class="loader mb-2"></div>
+                <span>Loading...</span>
               </div>
-              <button class="remove-selected-btn" (click)="removeSelectedRole(role)">
-                <i class="fas fa-times"></i>
-              </button>
-            </li>
-          </ul>
+            </td>
+          </tr>
+        
+          <!-- Show table rows when data is loaded -->
+          <ng-container *ngIf="!isLoading">
+            <tr *ngFor="let role of paginatedOrders; let i = index">
+              <td>{{ role.t5_1_sys_roles_name }}</td>
+              <td>{{ role.t5_1_sys_all_location_access ==='y' ? 'Yes' : 'No' }}</td>
+              <td>{{ role.t5_1_sys_all_issues ==='y' ? 'Yes' : 'No' }}</td>
+              <td class="actions text-end">
+                <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="openEditRole(role)"></i></button>
+                <button class="action-btn danger"><i class='bx bx-trash p-1' (click)="deleteFn(role.id_t5_1_sys_roles)"></i></button>
+              </td>
+            </tr>
+          </ng-container>
+        
+          <!-- Show no data message if no roles are found -->
+          <tr *ngIf="!isLoading && paginatedOrders.length === 0">
+            <td colspan="2" class="text-center">No data available.</td>
+          </tr>
+        </tbody>
+        
+      </table>
     
-  
-  
+      <div class="pagination">
+        
+        <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
+        <span>Page {{ currentPage }} of {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
       </div>
-  
-    </div>
-  
-    <!-- Modal for adding new role -->
-  
-  </div>
-  
-  <div class="popup" *ngIf="showAddRoleModal">
-    <div class="popup-content">
-      <!-- Changing Part -->
-      <div class="d-flex justify-content-between mb-3">
-        <h5>Add Role</h5>
-        <i class="ti ti-x" (click)="closeAddRoleModal()"></i>
-      </div>
-      <form action="">
-        <div class="form-group">
-          <label for="roleName">Role Name</label>
-          <input type="text" id="roleName" [(ngModel)]="newRole" name="newRole" placeholder="Enter role name" />
-        </div>
-    
-        <div class="form-group checkbox-group">
-          <label>
-            <input type="checkbox" [(ngModel)]="allLocationAccess" name="allLocationAccess" /> All Location Access
-          </label>
-          <label>
-            <input type="checkbox" [(ngModel)]="allIssueAccess" name="allIssueAccess" /> All Issue Access
-          </label>
-        </div>
-        <div class="col-12 d-flex justify-content-end">
-          <button type="submit" class="primary-btn" (click)="addNewRole()">Submit</button>
-        </div>
-      </form>
-      <!-- ------------- -->
     </div>
   </div>
+  
+  
+  
+  <ng-container #popupContainer></ng-container>
   
   

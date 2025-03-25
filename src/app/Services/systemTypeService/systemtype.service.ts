@@ -39,4 +39,10 @@ private apiUrl = environment.apiUrl;
     );
   }
   
+  addSysType(data:any){
+    return this.http.post<any>(`${this.apiUrl}/selection_values/add-sys-selection-values`,data, { headers: this.headers });
+  }
+  updateSysType(data:any){
+    return this.http.put<any>(`${this.apiUrl}/selection_values/update-sys-selection-values`,data, { headers: this.headers });
+  }
 }
