@@ -49,20 +49,6 @@
             placeholder="Filter by Date"
           />
         </div>
-        <!-- <div class="col-md-4">
-          <select
-            class="form-select"
-            [(ngModel)]="filterStatus"
-            (change)="applyFilters()"
-          >
-            <option value="">All Status</option>
-            <option value="DELIVERED">Delivered</option>
-            <option value="CANCELLED">Cancelled</option>
-            <option value="PENDING">Pending</option>
-            <option value="RETURNS">Returns</option>
-            <option value="PICKUPS">Pickups</option>
-          </select>
-        </div> -->
       </div>
     </div>
   </div>
@@ -108,7 +94,7 @@
         </td>
         <td class="actions text-end">
           <button class="action-btn info">
-            <i class="bx bxs-edit p-1" (click)="UpdateBranch(branch)"></i>
+            <i class="bx bxs-edit p-1" (click)="goToBranchDetails(branch.id_t2_company_branch)"></i>
           </button>
           <button
             class="action-btn danger"

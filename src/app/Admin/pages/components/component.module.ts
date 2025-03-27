@@ -36,7 +36,13 @@ import { AddSystemRoleComponent } from './system-role/add-system-role/add-system
 import { EditSystemRoleComponent } from './system-role/edit-system-role/edit-system-role/edit-system-role.component';
 import { AddTypeComponent } from './system-types/add-type/add-type.component';
 import { EditTypeComponent } from './system-types/edit-type/edit-type.component';
+import { BranchTypeComponent } from './branch-type/branch-type.component';
+import { SectionTypeComponent } from './section-type/section-type.component';
+import { BuisnessActivityComponent } from './buisness-activity/buisness-activity.component';
+import { CompanyBuisnessActivityComponent } from './company-buisness-activity/company-buisness-activity.component';
 import { SystemTypesComponent } from './system-types/system-types.component';
+import { SectionComponent } from './section/section.component';
+import { BranchDetailsComponent } from './branch-details/branch-details.component';
 
 
 
@@ -79,10 +85,16 @@ import { SystemTypesComponent } from './system-types/system-types.component';
     CompanyRoleComponent,
     SystemRoleComponent,
     AddSystemRoleComponent,
-    EditSystemRoleComponent
+    EditSystemRoleComponent,
     SystemTypesComponent,
     AddTypeComponent,
     EditTypeComponent,
+    BranchTypeComponent,
+    SectionTypeComponent,
+    BuisnessActivityComponent,
+    CompanyBuisnessActivityComponent,
+    SectionComponent,
+    BranchDetailsComponent
   ],
 })
 export class ComponentModule {}

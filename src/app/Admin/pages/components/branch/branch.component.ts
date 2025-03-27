@@ -5,6 +5,7 @@ import { BrachService } from '../../../../Services/branchService/brach.service';
 import { AddBranchComponent } from './add-brach/add-branch/add-branch.component';
 import Swal from 'sweetalert2';
 import { EditBranchComponent } from './edit-branch/edit-branch.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-branch',
@@ -15,7 +16,9 @@ export class BranchComponent {
   branch: Branch[] = [];
   @Input() branches: any[] = [];
   constructor(private componentFactoryResolver: ComponentFactoryResolver, private sweetalert: SweetalertService,
-    private branchservice: BrachService) { }
+    private branchservice: BrachService,
+    private router:Router
+  ) { }
 
   async ngOnInit(): Promise<void> {
     await this.getBranch();
@@ -218,6 +221,8 @@ export class BranchComponent {
       next: (res) => {
         console.log(res);
         this.branch = res.data.Items || [];
+        console.log(this.branch);
+        
         this.updatePaginatedOrders();
       },
       error: (error) => {
@@ -240,6 +245,10 @@ export class BranchComponent {
 
       }
     })
+  }
+
+  goToBranchDetails(id:any){
+    this.router.navigate(['company/branch-details',id]);
   }
   //----------------Update------------------
   UpdateBranch(branch: any): void {

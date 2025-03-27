@@ -23,6 +23,22 @@ private apiUrl = environment.apiUrl;
   deleteSysType(id:string){
     return this.http.delete<any>(`${this.apiUrl}/selection_values/sys-selection-values-delete?id=${id}`, { headers: this.headers });
   }
+
+
+
+  getSysTypeById(id: string) {
+    const rawBody = JSON.stringify(id); 
+    const header = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${this.accessToken}`
+    };
+    return this.http.post<any>(
+      `${this.apiUrl}/selection_values/all-sys-selection-values-by-selection-id`,
+      rawBody,
+      { headers:header }
+    );
+  }
+  
   addSysType(data:any){
     return this.http.post<any>(`${this.apiUrl}/selection_values/add-sys-selection-values`,data, { headers: this.headers });
   }

@@ -16,6 +16,12 @@ import { EmployeeViewComponent } from './employee/employee-view/employee-view.co
 import { CompanyRoleComponent } from './company-role/company-role.component';
 import { SystemRoleComponent } from './system-role/system-role.component';
 import { SystemTypesComponent } from './system-types/system-types.component';
+import { BranchTypeComponent } from './branch-type/branch-type.component';
+import { SectionTypeComponent } from './section-type/section-type.component';
+import { BuisnessActivityComponent } from './buisness-activity/buisness-activity.component';
+import { CompanyBuisnessActivityComponent } from './company-buisness-activity/company-buisness-activity.component';
+import { SectionComponent } from './section/section.component';
+import { BranchDetailsComponent } from './branch-details/branch-details.component';
 
 
 
@@ -105,6 +111,30 @@ export const ComponentRoutes: Routes = [
       {
         path: 'system-type',
         component: SystemTypesComponent,
+      },
+      {
+        path: 'branch-type',
+        component: BranchTypeComponent,
+      },
+      {
+        path: 'section-type',
+        component: SectionTypeComponent,
+      },
+      {
+        path: 'buisness-activity',
+        component: BuisnessActivityComponent,
+      },
+      {
+        path: 'company-buisness-activity',
+        component: CompanyBuisnessActivityComponent,
+      },
+      {
+        path: 'section',
+        component: SectionComponent,
+      },
+      {
+        path: 'branch-details/:id',
+        component: BranchDetailsComponent,
       },
      
       

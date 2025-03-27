@@ -49,6 +49,12 @@
         </a>
         }
         @if(role=="Company"){
+          <a class="nav-link" routerLink="section" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fa-solid fa-code-branch"></i>
+            <span *ngIf="isSidebarExpanded" class="nav-name">Section</span>
+          </a>
+          }
+        @if(role=="Company"){
         <a class="nav-link" routerLink="employee" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <i class="fa-solid fa-users"></i>
           <span *ngIf="isSidebarExpanded" class="nav-name">Employees</span>
@@ -61,11 +67,35 @@
         </a>
         }
         @if(role=="Notetech"){
+          <a class="nav-link" routerLink="buisness-activity" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fa-solid fa-fax"></i>
+            <span *ngIf="isSidebarExpanded" class="nav-name">System Buisness Activity</span>
+          </a>
+          }
+          @if(role=="Company"){
+            <a class="nav-link" routerLink="company-buisness-activity" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              <i class="fa-solid fa-fax"></i>
+              <span *ngIf="isSidebarExpanded" class="nav-name">Buisness Activity</span>
+            </a>
+            }
+        <!-- @if(role=="Notetech"){
           <a class="nav-link" routerLink="system-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
             <i class="fa-solid fa-list-check"></i>
             <span *ngIf="isSidebarExpanded" class="nav-name">System Types</span>
           </a>
           }
+          @if(role=="Company"){
+            <a class="nav-link" routerLink="branch-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              <i class='bx bx-category'></i>
+              <span *ngIf="isSidebarExpanded" class="nav-name">Branch Types</span>
+            </a>
+          }
+          @if(role=="Company"){
+            <a class="nav-link" routerLink="section-type" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              <i class='bx bx-intersect'></i>
+              <span *ngIf="isSidebarExpanded" class="nav-name">Section Types</span>
+            </a>
+          } -->
         <!-- Projects Submenu -->
         <!-- <div class="nav-link collapse">
           <div (click)="toggleSubMenu('projects')">

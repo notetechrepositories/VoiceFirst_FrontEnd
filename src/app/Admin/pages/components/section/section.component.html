@@ -1,0 +1,94 @@
+
+
+<div class="filter-buttons d-flex justify-content-between">
+    <h3 class="mb-4">Branch List</h3>
+    <div>
+        <button
+        class="filter-btn import"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="Import"
+      >
+        <i class="bx bx-import"></i>
+      </button>
+      <button
+        class="filter-btn export"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="Export"
+      >
+        <i class="bx bx-export"></i>
+      </button>
+      <button
+        class="filter-btn create"
+        data-toggle="tooltip"
+        data-placement="top"
+        title="Create"
+        (click)="openAddSection()"
+      >
+        <i class="bx bx-plus"></i>
+      </button>
+    </div>
+</div>
+
+
+<div class="table-responsive" style="padding: 1px">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>Section Name</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let section of paginatedSection; let i = index">
+        <td>{{ section.section_name}}</td>
+       
+        <td class="actions text-end">
+          <button class="action-btn info">
+            <i class="bx bxs-edit p-1"></i>
+          </button>
+          <button
+            class="action-btn danger"
+           
+          >
+            <i class="bx bx-trash p-1"></i>
+          </button>
+        </td>
+      </tr>
+      <tr *ngIf="paginatedSection.length === 0">
+        <td colspan="2" class="text-center">No data available.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    <button (click)="previousPage()" [disabled]="currentPage === 1">
+      <i class="bx bx-chevron-left"></i>
+    </button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+      <i class="bx bx-chevron-right"></i>
+    </button>
+  </div>
+</div>
+
+
+<div class="popup" *ngIf="showAddModal">
+    <div class="popup-content">
+      <!-- Changing Part -->
+      <div class="d-flex justify-content-between mb-3">
+        <h5>Add Section</h5>
+        <i class="ti ti-x" (click)="closeModal()"></i>
+      </div>
+      <form action="" [formGroup]="sectionForm">
+        <div class="form-group">
+          <label for="roleName">Section Name</label>
+          <input type="text" id="roleName" formControlName="section_name" placeholder="Enter section name" />
+        </div>
+        <div class="col-12 d-flex justify-content-end">
+          <button type="submit" class="primary-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
