@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { SweetalertService } from '../../../../Services/sweetAlertService/sweetalert.service';
+import { BuisnessActivityService } from '../../../../Services/buisnessActivity/buisness-activity.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-buisness-activity',
@@ -7,128 +9,34 @@ import { SweetalertService } from '../../../../Services/sweetAlertService/sweeta
   styleUrl: './buisness-activity.component.css'
 })
 export class BuisnessActivityComponent {
-  availableActivities: any[] = [
-    {
-      t3_sys_business_activity_name: 'Food',
-      t3_sys_company: 'Y',
-      t3_sys_branch: 'N',
-      t3_sys_section: 'N',
-      t3_sys_sub_section: 'N'
-    },
-    {
-      t3_sys_business_activity_name: 'Vehicle',
-      t3_sys_company: 'Y',
-      t3_sys_branch: 'Y',
-      t3_sys_section: 'N',
-      t3_sys_sub_section: 'N'
-    },
-    {
-      t3_sys_business_activity_name: 'Electronics',
-      t3_sys_company: 'Y',
-      t3_sys_branch: 'N',
-      t3_sys_section: 'Y',
-      t3_sys_sub_section: 'N'
-    },
-    {
-      t3_sys_business_activity_name: 'Furniture',
-      t3_sys_company: 'Y',
-      t3_sys_branch: 'Y',
-      t3_sys_section: 'Y',
-      t3_sys_sub_section: 'N'
-    },
-    {
-      t3_sys_business_activity_name: 'Clothing',
-      t3_sys_company: 'N',
-      t3_sys_branch: 'Y',
-      t3_sys_section: 'Y',
-      t3_sys_sub_section: 'Y'
-    },
-    {
-      t3_sys_business_activity_name: 'Healthcare',
-      t3_sys_company: 'N',
-      t3_sys_branch: 'N',
-      t3_sys_section: 'N',
-      t3_sys_sub_section: 'Y'
-    },
-    {
-      t3_sys_business_activity_name: 'Education',
-      t3_sys_company: 'Y',
-      t3_sys_branch: 'Y',
-      t3_sys_section: 'N',
-      t3_sys_sub_section: 'N'
-    },
-    {
-      t3_sys_business_activity_name: 'Transport',
-      t3_sys_company: 'N',
-      t3_sys_branch: 'Y',
-      t3_sys_section: 'N',
-      t3_sys_sub_section: 'Y'
-    },
-    {
-      t3_sys_business_activity_name: 'Entertainment',
-      t3_sys_company: 'N',
-      t3_sys_branch: 'N',
-      t3_sys_section: 'Y',
-      t3_sys_sub_section: 'Y'
-    },
-    {
-      t3_sys_business_activity_name: 'Real Estate',
-      t3_sys_company: 'Y',
-      t3_sys_branch: 'N',
-      t3_sys_section: 'N',
-      t3_sys_sub_section: 'N'
-    },
-    {
-      t3_sys_business_activity_name: 'Pharmaceutical',
-      t3_sys_company: 'Y',
-      t3_sys_branch: 'N',
-      t3_sys_section: 'Y',
-      t3_sys_sub_section: 'N'
-    },
-    {
-      t3_sys_business_activity_name: 'Tourism',
-      t3_sys_company: 'N',
-      t3_sys_branch: 'Y',
-      t3_sys_section: 'Y',
-      t3_sys_sub_section: 'N'
-    },
-    {
-      t3_sys_business_activity_name: 'Marketing',
-      t3_sys_company: 'N',
-      t3_sys_branch: 'Y',
-      t3_sys_section: 'Y',
-      t3_sys_sub_section: 'N'
-    },
-    {
-      t3_sys_business_activity_name: 'Logistics',
-      t3_sys_company: 'Y',
-      t3_sys_branch: 'Y',
-      t3_sys_section: 'Y',
-      t3_sys_sub_section: 'N'
-    }
-  ];
-  
-  
+
+  availableActivities: any[] = [];
   selectedActivities: string[] = [];
 
   newActivity: string = '';
   isCompany: boolean = false;
   isBranch: boolean = false;
   isSection: boolean = false;
+  isSubSection: boolean = false;
   isLoading: boolean = false;
+  activityId:string='';
 
   // Modal control
   showAddActivityModal: boolean = false;
+  showEditActivityModal:boolean = false;
 
   // Pagination control
   itemsPerPage: number = 10;
   currentPage: number = 1;
   paginatedOrders: any[] = [];
 
-  constructor(private sweetalert: SweetalertService) {}
+  constructor(
+    private sweetalert: SweetalertService,
+    private buisnessActService: BuisnessActivityService
+  ) {}
 
   ngOnInit(): void {
-    this.updatePaginatedOrders();
+    this.getBuisnessActivity();
   }
 
   // Pagination Functions
@@ -156,74 +64,163 @@ export class BuisnessActivityComponent {
     this.paginatedOrders = this.availableActivities.slice(start, end);
   }
 
+  getBuisnessActivity(){
+    this.buisnessActService.getSysBuisnessActivity().subscribe({
+      next:res=>{
+        this.availableActivities=res.data.Items;
+        console.log(this.availableActivities);
+        
+        this.updatePaginatedOrders();
+      },
+      error:error=>{
+        console.log(error);
+      }
+    })
+  }
+
   // Modal Controls
   openAddActivityModal(): void {
     this.newActivity = '';
     this.isCompany = false;
     this.isBranch = false;
     this.isSection = false;
+    this.isSubSection = false;
     this.showAddActivityModal = true;
   }
 
   closeAddActivityModal(): void {
     this.showAddActivityModal = false;
+    this.showEditActivityModal = false;
+    this.newActivity = '';
+    this.isCompany = false;
+    this.isBranch = false;
+    this.isSection = false;
+    this.isSubSection = false;
+    this.activityId='';
   }
 
   addNewActivity(): void {
     const trimmedActivity = this.newActivity.trim();
-  
     if (!trimmedActivity) {
       alert('Business Activity name cannot be empty!');
       return;
     }
-  
     // Check if an activity with the same name already exists
     const exists = this.availableActivities.some(
       act => act.t3_sys_business_activity_name.toLowerCase() === trimmedActivity.toLowerCase()
     );
   
     if (exists) {
-      alert('This Business Activity is already listed!');
+      // alert('This Business Activity is already listed!');
+      this.sweetalert.showToast('error','This Business Activity is already listed!');
       return;
     }
   
     // Create the new activity object
     const newActivityObj = {
       t3_sys_business_activity_name: trimmedActivity,
-      t3_sys_company: this.isCompany ? 'Y' : 'N',
-      t3_sys_branch: this.isBranch ? 'Y' : 'N',
-      t3_sys_section: this.isSection ? 'Y' : 'N',
-      t3_sys_sub_section: 'N' // You can change this or add another checkbox in the form
+      t3_sys_company: this.isCompany ? 'y' : 'n',
+      t3_sys_branch: this.isBranch ? 'y' : 'n',
+      t3_sys_section: this.isSection ? 'y' : 'n',
+      t3_sys_sub_section: this.isSubSection ? 'y' : 'n',
     };
   
-    // Push the new activity to the list
-    this.availableActivities.push(newActivityObj);
-  
-    // Refresh paginated data and close modal
-    this.updatePaginatedOrders();
-    this.closeAddActivityModal();
-  
-    // Show success message
-    this.sweetalert.showToast('success', 'Business Activity added successfully!');
-  }
-  
-
-  removeSelectedActivity(activity: string): void {
-    const index = this.availableActivities.indexOf(activity);
-
-    if (index !== -1) {
-      this.availableActivities.splice(index, 1);
-
-      if (this.currentPage > this.totalPages) {
-        this.currentPage = this.totalPages || 1;
+    this.buisnessActService.addSysBuisnessActivity(newActivityObj).subscribe({
+      next:res=>{
+        console.log(res);
+        if(res.status==200){
+          this.availableActivities.push(newActivityObj);
+          this.updatePaginatedOrders();
+          this.closeAddActivityModal();
+          this.sweetalert.showToast('success', 'Business Activity added successfully!');
+        }
+        else{
+          this.sweetalert.showToast('error', res.message);
+        }
+      },
+      error:error=>{
+        console.log(error);
+        this.sweetalert.showToast('error', 'Something went wrong!');
       }
-
-      this.updatePaginatedOrders();
-      this.sweetalert.showToast('success', 'Business Activity removed successfully!');
-    }
+    })
   }
 
-  // Helper
+  openEditActivityModal(data:any): void {
+    this.activityId=''
+    this.showEditActivityModal = true;
+    this.activityId=data.id_t3_sys_business_activity
+    this.newActivity = data.t3_sys_business_activity_name;
+    this.isBranch = data.t3_sys_branch === 'y';
+    this.isCompany = data.t3_sys_company === 'y';
+    this.isSection = data.t3_sys_section === 'y';
+    this.isSubSection = data.t3_sys_sub_section === 'y';
+  }
+
+  updateActivity(){
+    const trimmedActivity = this.newActivity.trim();
+    const updateActivityObj = {
+      t3_sys_business_activity_name: trimmedActivity,
+      t3_sys_company: this.isCompany ? 'y' : 'n',
+      t3_sys_branch: this.isBranch ? 'y' : 'n',
+      t3_sys_section: this.isSection ? 'y' : 'n',
+      t3_sys_sub_section: this.isSubSection ? 'y' : 'n',
+      id_t3_sys_business_activity:this.activityId
+    };
+
+    this.buisnessActService.updateSysBuisnessActivity(updateActivityObj).subscribe({
+      next:res=>{
+        if(res.status==200){
+          this.getBuisnessActivity();
+          this.closeAddActivityModal();
+          this.updatePaginatedOrders();
+          this.sweetalert.showToast('success','Updated Successfully');
+        }
+        else{
+          this.sweetalert.showToast('error',res.message);
+        }
+      },
+      error:error=>{
+        console.log(error);
+        this.sweetalert.showToast('error', 'Something went wrong!');
+      }
+    })
+  }
+  
+
+  deleteActivity(activityId: string): void {
+    console.log(activityId);
+    
+  Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.buisnessActService.deleteSysBuisnessActivity(activityId).subscribe({
+          next:res=>{
+            if(res.status==200){
+              this.getBuisnessActivity();
+              this.updatePaginatedOrders();
+              this.sweetalert.showToast('success', 'Business Activity removed successfully!');
+            }
+            else{
+              this.sweetalert.showToast('error', res.message);
+            }
+          },
+          error:error=>{
+            console.log(error);
+            this.sweetalert.showToast('error', 'Something went wrong!');
+          }
+        });
+      }
+    });
+    
+  }
+
   isSelected(activity: string): boolean {
     return this.selectedActivities.includes(activity);
   }

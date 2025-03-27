@@ -51,12 +51,6 @@ export class ProfileComponent {
       t5_zip_code: [{ value: '', disabled: true },[Validators.required]],
       id_t5_users:[{ value: '', disabled: true },[Validators.required]],
       id_t2_1_local:[{ value: '', disabled: true },[Validators.required]],
-
-      // t5_email: new FormControl(''),
-      // t5_mobile_no: new FormControl(''),
-      // t5_address_1: new FormControl(''),
-      // t5_address_2: new FormControl(''),
-      // t5_zip_code: new FormControl('')
     })
     
   }

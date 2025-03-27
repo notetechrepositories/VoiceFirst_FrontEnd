@@ -12,12 +12,12 @@
   
   .colored-toast.swal2-icon-info {
     background-color: #3fc3ee !important;
-  }
+  }       
   
   .colored-toast.swal2-icon-question {
     background-color: #87adbd !important;
   }
-  
+         
   .colored-toast .swal2-title {
     color: white;
   }

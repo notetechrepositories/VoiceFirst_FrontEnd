@@ -49,6 +49,12 @@
         </a>
         }
         @if(role=="Company"){
+          <a class="nav-link" routerLink="section" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fa-solid fa-code-branch"></i>
+            <span *ngIf="isSidebarExpanded" class="nav-name">Section</span>
+          </a>
+          }
+        @if(role=="Company"){
         <a class="nav-link" routerLink="employee" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
           <i class="fa-solid fa-users"></i>
           <span *ngIf="isSidebarExpanded" class="nav-name">Employees</span>

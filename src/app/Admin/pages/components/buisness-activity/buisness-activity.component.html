@@ -32,23 +32,24 @@
   
           <!-- Data Rows -->
           <ng-container *ngIf="!isLoading">
-            <tr *ngFor="let selection of paginatedOrders; let i = index">
+            <tr *ngFor="let activity of paginatedOrders; let i = index">
               <!-- <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td> -->
-              <td>{{ selection.t3_sys_business_activity_name }}</td>
+              <td>{{ activity.t3_sys_business_activity_name }}</td>
               <td>
-                <input type="checkbox" [checked]="selection.t3_sys_company === 'Y'" disabled>
+                <input type="checkbox" [checked]="activity.t3_sys_company === 'y'" disabled>
               </td>
               <td>
-                <input type="checkbox" [checked]="selection.t3_sys_branch === 'Y'" disabled>
+                <input type="checkbox" [checked]="activity.t3_sys_branch === 'y'" disabled>
               </td>
               <td>
-                <input type="checkbox" [checked]="selection.t3_sys_section === 'Y'" disabled>
+                <input type="checkbox" [checked]="activity.t3_sys_section === 'y'" disabled>
               </td>
               <td>
-                <input type="checkbox" [checked]="selection.t3_sys_sub_section === 'Y'" disabled>
+                <input type="checkbox" [checked]="activity.t3_sys_sub_section === 'y'" disabled>
               </td>
               <td class="actions text-end">
-                <button class="action-btn danger"><i class='bx bx-trash p-1' (click)="removeSelectedActivity(selection)"></i></button>
+                <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="openEditActivityModal(activity)"></i></button>
+                <button class="action-btn danger"><i class='bx bx-trash p-1' (click)=" deleteActivity(activity.id_t3_sys_business_activity)"></i></button>
               </td>
             </tr>
           </ng-container>
@@ -62,13 +63,13 @@
   
       <!-- Pagination Controls -->
       <div class="pagination d-flex justify-content-center align-items-center gap-2">
-        <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn btn-sm btn-outline-primary">
+        <button (click)="previousPage()" [disabled]="currentPage === 1" class="btn btn-sm btn-outline-secondary">
           <i class='bx bx-chevron-left'></i>
         </button>
   
         <span>Page {{ currentPage }} of {{ totalPages }}</span>
   
-        <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="btn btn-sm btn-outline-primary">
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="btn btn-sm btn-outline-secondary">
           <i class='bx bx-chevron-right'></i>
         </button>
       </div>
@@ -98,6 +99,45 @@
           </label>
           <label>
             <input type="checkbox" [(ngModel)]="isSection" name="isSection" /> Section
+          </label>
+          <label>
+            <input type="checkbox" [(ngModel)]="isSubSection" name="isSubSection" /> Sub-Section
+          </label>
+        </div>
+  
+        <div class="d-flex justify-content-end">
+          <button type="submit" class="primary-btn">Submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+
+  <div class="popup" *ngIf="showEditActivityModal">
+    <div class="popup-content">
+      <div class="d-flex justify-content-between mb-3">
+        <h5>Edit Business Activity</h5>
+        <i class="ti ti-x" (click)="closeAddActivityModal()"></i>
+      </div>
+  
+      <form (ngSubmit)="updateActivity()">
+        <div class="form-group mb-3">
+          <label for="activityName">Activity Name</label>
+          <input type="text" id="activityName" [(ngModel)]="newActivity" name="newActivity" placeholder="Enter activity name" required />
+        </div>
+  
+        <div class="form-group checkbox-group d-flex justify-content-between mb-3" style="padding: 0px 5px;">
+          <label>
+            <input type="checkbox" [(ngModel)]="isCompany" name="isCompany" /> Company
+          </label>
+          <label>
+            <input type="checkbox" [(ngModel)]="isBranch" name="isBranch" /> Branch
+          </label>
+          <label>
+            <input type="checkbox" [(ngModel)]="isSection" name="isSection" /> Section
+          </label>
+          <label>
+            <input type="checkbox" [(ngModel)]="isSubSection" name="isSubSection" /> Sub-Section
           </label>
         </div>
   
