@@ -43,6 +43,7 @@ import { CompanyBuisnessActivityComponent } from './company-buisness-activity/co
 import { SystemTypesComponent } from './system-types/system-types.component';
 import { SectionComponent } from './section/section.component';
 import { BranchDetailsComponent } from './branch-details/branch-details.component';
+import { SectionDetailsComponent } from './section-details/section-details.component';
 
 
 
@@ -94,7 +95,8 @@ import { BranchDetailsComponent } from './branch-details/branch-details.componen
     BuisnessActivityComponent,
     CompanyBuisnessActivityComponent,
     SectionComponent,
-    BranchDetailsComponent
+    BranchDetailsComponent,
+    SectionDetailsComponent
   ],
 })
 export class ComponentModule {}

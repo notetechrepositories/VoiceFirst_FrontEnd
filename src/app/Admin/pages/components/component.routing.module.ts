@@ -22,6 +22,7 @@ import { BuisnessActivityComponent } from './buisness-activity/buisness-activity
 import { CompanyBuisnessActivityComponent } from './company-buisness-activity/company-buisness-activity.component';
 import { SectionComponent } from './section/section.component';
 import { BranchDetailsComponent } from './branch-details/branch-details.component';
+import { SectionDetailsComponent } from './section-details/section-details.component';
 
 
 
@@ -136,7 +137,10 @@ export const ComponentRoutes: Routes = [
         path: 'branch-details/:id',
         component: BranchDetailsComponent,
       },
-     
+      {
+        path: 'section-details/:id',
+        component: SectionDetailsComponent,
+      },
       
     ],
   },

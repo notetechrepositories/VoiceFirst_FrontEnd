@@ -1,0 +1,42 @@
+.form-group {
+    margin-bottom: 1rem;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  .form-group input[type="text"], select {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .checkbox-group {
+    display: flex;
+        gap: 5rem;
+        justify-content: center;
+  }
+  
+  .modal-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+  
+  
+  .secondary-btn {
+    background-color: #cccccc;
+    color: #333333;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .secondary-btn:hover {
+    background-color: #b3b3b3;
+  }

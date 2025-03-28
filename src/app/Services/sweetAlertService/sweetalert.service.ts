@@ -43,8 +43,8 @@ delete(){
   });
 }
 
-async showToast(type: 'success' | 'error' | 'warning' | 'info' | 'question', title: string) {
-  await this.Toast.fire({
+ showToast(type: 'success' | 'error' | 'warning' | 'info' | 'question', title: string) {
+   this.Toast.fire({
     icon: type,
     title: title,
   });

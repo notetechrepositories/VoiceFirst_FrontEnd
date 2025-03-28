@@ -50,7 +50,7 @@ export class BrachService {
   //GetById Branch
   getBranchById(body:any) {
     const url = `${this.url}/get-by-id`;
-    return this.http.get<any>(url,body);
+    return this.http.post<any>(url,body);
 
   }
 }
