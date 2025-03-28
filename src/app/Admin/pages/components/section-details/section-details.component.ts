@@ -1,28 +1,27 @@
 import { Component, ComponentFactoryResolver, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { SweetalertService } from '../../../../Services/sweetAlertService/sweetalert.service';
 import { SectionService } from '../../../../Services/section.service';
-import Swal from 'sweetalert2';
 import { BrachService } from '../../../../Services/branchService/brach.service';
-import { EditBranchComponent } from '../branch/edit-branch/edit-branch.component';
+import Swal from 'sweetalert2';
+import { SubSectionService } from '../../../../Services/sub-sectionService/sub-section.service';
 
 @Component({
-  selector: 'app-branch-details',
-  templateUrl: './branch-details.component.html',
-  styleUrl: './branch-details.component.css'
+  selector: 'app-section-details',
+  templateUrl: './section-details.component.html',
+  styleUrl: './section-details.component.css'
 })
-export class BranchDetailsComponent {
-
-  branchId!:string;
+export class SectionDetailsComponent {
+  sectionId!:string;
   showAddModal:boolean=false;
-  showEditPopup:boolean=false;
+  showEditModal:boolean=false;
   section:any[]=[];
   filteredSection:any[]=[];
   paginatedSection:any[]=[];
-  sectionForm!:FormGroup;
-  sectionEditForm!:FormGroup;
-  branchDetails:any;
+  subsectionForm!:FormGroup;
+  subsectionEditForm!:FormGroup;
+  sectionDetails:any;
   itemsPerPage = 7;
   currentPage = 1;
   searchTerm = '';
@@ -36,8 +35,7 @@ export class BranchDetailsComponent {
     private sectionService: SectionService,
     private fb:FormBuilder,
     private branchservice:BrachService,
-       private router:Router
-   
+   private subSectionService:SubSectionService
 
   ) {}
 
@@ -62,7 +60,7 @@ export class BranchDetailsComponent {
     }
   
     updatePaginatedOrders() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;   
+      const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
       this.paginatedOrders = this.section.slice(start, end);
     }
@@ -86,41 +84,41 @@ export class BranchDetailsComponent {
       this.updatePaginatedOrders();
     }
   
-   
+    formInit(){
+      this.subsectionForm = this.fb.group({
+        id_t3_branch_section: ['', [Validators.required]],
+        sub_section_name: ['', [Validators.required]],
+      });
+
+      this.subsectionEditForm = this.fb.group({
+        id_t3_branch_sub_section: ['', [Validators.required]],
+        id_t3_branch_section: ['', [Validators.required]],
+        sub_section_name: ['', [Validators.required]],
+        
+      });
+    }
 
     // ===================================================
 
   async ngOnInit(): Promise<void> {
     const id = this.route.snapshot.paramMap.get('id');
     if(id){
-      this.branchId=id;
-      this.getBranchById(this.branchId);
-      console.log(this.branchId);
+      this.sectionId=id;
+      this.getSectionById(this.sectionId);
+      console.log(this.sectionId);
     }
-    await this.getSection();
+    await this.getSubSection();
     this.formInit();
+    
   }
 
-  formInit(){
-    this.sectionForm = this.fb.group({
-      id_t2_company_branch: ['', [Validators.required]],
-      section_name: ['', [Validators.required]],
-    });
-
-    this.sectionEditForm = this.fb.group({
-      id_t2_company_branch: ['', [Validators.required]],
-      section_name: ['', [Validators.required]],
-      id_t3_branch_section: ['', [Validators.required]],
-    });
-  }
-
-  getSection(){
+  getSubSection(){
       const body = { 
           filters: { 
-            // id_t2_company_branch: this.branchId
+            // id_t3_branch_section: this.sectionId
           }
         }; 
-      this.sectionService.getSection(body).subscribe({
+      this.subSectionService.getSubSection(body).subscribe({
         next:res=>{
           this.section=res.data.Items;
           console.log(this.section);
@@ -140,27 +138,26 @@ export class BranchDetailsComponent {
   
     closeModal(){
       this.showAddModal=false;
-      this.showEditPopup=false;
-      this.sectionForm.reset();
-      this.sectionEditForm.reset();
-    }
-    goToSectionDetails(id:any){
-      this.router.navigate(['company/section-details',id]);
+      this.showEditModal=false;
+      this.subsectionForm.reset();
+      this.subsectionEditForm.reset();
     }
 
-    submitAddSection(){
-      this.sectionForm.patchValue({
-        id_t2_company_branch:this.branchId 
+
+    submitAddSubSection(){
+      this.subsectionForm.patchValue({
+        id_t3_branch_section:this.sectionId 
       });
-      const formvalue=this.sectionForm.value;
-      this.sectionService.addSection(formvalue).subscribe({
+
+      const formvalue=this.subsectionForm.value;
+
+      this.subSectionService.addSubSection(formvalue).subscribe({
         next:res=>{
           console.log(res);
-          if(res.status==200){
-            
-            this.getSection();
+          if(res.status==true){
+            this.sweetalert.showToast('success','Sub-Section Added Succesfully!');
+            this.getSubSection();
             this.closeModal();
-            this.sweetalert.showToast('success','Section Added Succesfully!');
           }
           else{
             this.sweetalert.showToast('error',res.message);
@@ -173,26 +170,16 @@ export class BranchDetailsComponent {
       })
     }
 
-
-
-    openEdit(data:any){
-      this.showEditPopup=true;
-      console.log(data);
-      this.sectionEditForm.patchValue({
-        id_t2_company_branch: data.id_t2_company_branch,
-        section_name: data.section_name,
-        id_t3_branch_section: data.id_t3_branch_section
-      })
-    }
-
     submitEditSection(){
-      const formdata=this.sectionEditForm.value;
-      this.sectionService.updateSection(formdata).subscribe({
+      const formdata=this.subsectionEditForm.value;
+      console.log(formdata);
+      
+      this.subSectionService.updateSubsection(formdata).subscribe({
         next:res=>{
           console.log(res);
-          if(res.status){
+          if(res.status==200){
             this.closeModal();
-            this.getSection();
+            this.getSubSection();
             this.sweetalert.showToast('success','Updated!');
           }
           else{
@@ -205,37 +192,38 @@ export class BranchDetailsComponent {
         }
       })
     }
+
+    openEdit(data:any){
+      this.showEditModal=true;
+      console.log(data);
+
+      this.subsectionEditForm.patchValue({
+        id_t3_branch_section: data.id_t3_branch_sub_section,
+        sub_section_name: data.sub_section_name,
+        id_t3_branch_sub_section: data.id_t3_branch_section,
+
+      })
+      console.log(this.subsectionEditForm.value);
+      
+    }
+
   
    
   
-    deleteSection(id: any) {
-    Swal.fire({
-         title: "Are you sure?",
-         text: "You won't be able to revert this!",
-         icon: "warning",
-         showCancelButton: true,
-         confirmButtonColor: "#3085d6",
-         cancelButtonColor: "#d33",
-         confirmButtonText: "Yes, delete it!"
-       }).then((result) => {
-         if (result.isConfirmed) {
-           console.log(id);
-   
-           this.sectionService.deleteSection(id).subscribe({
-             next: (res) => {
-               if (res.message == "Success") {
-                 this.sweetalert.showToast('success', 'Succefully deleted');
-                 //this.paginatedOrders = this.locations.filter(item => item.id_t2_1_country !== id);
-                 this.getSection();
-               }
-             },
-             error: (error) => {
-               this.sweetalert.showToast('error', 'Oops! Something went wrong.');
-             },
-           });
-   
-         }
-       });
+    deleteBranch(id: any) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then((result) => {
+        if (result.isConfirmed) {
+        
+        }
+      });
     }
 
 
@@ -243,16 +231,16 @@ export class BranchDetailsComponent {
 
     // =====================Branch==========================
 
-    getBranchById(id:string) {
+    getSectionById(id:string) {
       const body = {
         filters: {},
         id:id
       };
-      this.branchservice.getBranchById(body).subscribe({
+      this.sectionService.getSectionById(body).subscribe({
         next: (res) => {
           console.log(res);
           if (res && res.data && res.data.Items) {
-            this.branchDetails = res.data.Items; // Store API response in variable
+            this.sectionDetails = res.data.Items; // Store API response in variable
           }
           // this.branchDetails=res.data.Items;
         }
@@ -262,18 +250,16 @@ export class BranchDetailsComponent {
       @ViewChild('popupContainer', { read: ViewContainerRef })
       popupContainer!: ViewContainerRef;
     openEditPopup(branch:any){
-       this.popupContainer.clear();
-          const factory = this.componentFactoryResolver.resolveComponentFactory(EditBranchComponent);
-          const componentRef = this.popupContainer.createComponent(factory);
-          componentRef.instance.branchData = branch;
-          componentRef.instance.closePopup = () => {
-            this.popupContainer.clear();
+      //  this.popupContainer.clear();
+      //     const factory = this.componentFactoryResolver.resolveComponentFactory(EditBranchComponent);
+      //     const componentRef = this.popupContainer.createComponent(factory);
+      //     componentRef.instance.branchData = branch;
+      //     componentRef.instance.closePopup = () => {
+      //       this.popupContainer.clear();
           
-          };
+      //     };
       
       
     }
 
-  
-  
 }

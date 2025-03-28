@@ -1,94 +1,181 @@
 
+<div class="container">
+  <div class="filter-buttons d-flex justify-content-end">
+    <button class="action-btn info">
+      <i class="bx bxs-edit p-1" (click)="openEditPopup(branchDetails)"></i>
+    </button>
+    
+  </div>
+  <form class="row g-3">
 
-<div class="filter-buttons d-flex justify-content-between">
-    <h5 class="mb-4">Branch Sections</h5>
-    <div>
-        <button
-        class="filter-btn import"
-        data-toggle="tooltip"
-        data-placement="top"
-        title="Import"
-      >
-        <i class="bx bx-import"></i>
-      </button>
-      <button
-        class="filter-btn export"
-        data-toggle="tooltip"
-        data-placement="top"
-        title="Export"
-      >
-        <i class="bx bx-export"></i>
-      </button>
-      <button
-        class="filter-btn create"
-        data-toggle="tooltip"
-        data-placement="top"
-        title="Create"
-        (click)="openAddSection()"
-      >
-        <i class="bx bx-plus"></i>
-      </button>
+    <div class="col-md-3">
+      <label class="form-label">Branch Name</label>
+      <input type="text" class="form-control" [value]="branchDetails.t2_company_branch_name" readonly />
     </div>
-</div>
-
-
-<div class="table-responsive" style="padding: 1px">
-  <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th>Section Name</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let section of paginatedSection; let i = index">
-        <td>{{ section.section_name}}</td>
-       
-        <td class="actions text-end">
-          <button class="action-btn info">
-            <i class="bx bxs-edit p-1"></i>
-          </button>
+    
+    <div class="col-md-3">
+      <label class="form-label">Email</label>
+      <input type="email" class="form-control" [value]="branchDetails.t2_email" readonly />
+    </div>
+    
+    <div class="col-md-3">
+      <label class="form-label">Branch Type</label>
+      <input type="text" class="form-control" [value]="branchDetails.branch_type" readonly />
+    </div>
+    
+    <div class="col-3">
+      <label class="form-label">Address</label>
+      <input type="text" class="form-control" [value]="branchDetails.t2_address_1" readonly />
+    </div>
+    
+    <div class="col-3">
+      <label class="form-label">Address 2</label>
+      <input type="text" class="form-control" [value]="branchDetails.t2_address_2" readonly />
+    </div>
+    
+    <div class="col-md-3">
+      <label class="form-label">Mobile Number</label>
+      <input type="text" class="form-control" [value]="branchDetails.t2_mobile_no" readonly />
+    </div>
+    
+    <div class="col-md-3">
+      <label class="form-label">Phone Number</label>
+      <input type="text" class="form-control" [value]="branchDetails.t2_phone_no" readonly />
+    </div>
+    
+    <div class="col-md-3">
+      <label class="form-label">Country</label>
+      <input type="text" class="form-control" [value]="branchDetails.t2_1_country_name" readonly />
+    </div>
+    
+    <div class="col-md-3">
+      <label class="form-label">Location Name</label>
+      <input type="text" class="form-control" [value]="branchDetails.t2_1_local_name" readonly />
+    </div>
+    
+    <div class="col-md-3">
+      <label class="form-label">Zip Code</label>
+      <input type="text" class="form-control" [value]="branchDetails.t2_zip_code" readonly />
+    </div>
+    
+  </form>
+  </div>
+  <div class="filter-buttons d-flex justify-content-between">
+      <h5 class="mb-4">Branch Sections</h5>
+      <div>
           <button
-            class="action-btn danger"
-           
-          >
-            <i class="bx bx-trash p-1"></i>
-          </button>
-        </td>
-      </tr>
-      <tr *ngIf="paginatedSection.length === 0">
-        <td colspan="2" class="text-center">No sections added.</td>
-      </tr>
-    </tbody>
-  </table>
-
-  <div class="pagination">
-    <button (click)="previousPage()" [disabled]="currentPage === 1">
-      <i class="bx bx-chevron-left"></i>
-    </button>
-    <span>Page {{ currentPage }} of {{ totalPages }}</span>
-    <button (click)="nextPage()" [disabled]="currentPage === totalPages">
-      <i class="bx bx-chevron-right"></i>
-    </button>
-  </div>
-</div>
-
-
-<div class="popup" *ngIf="showAddModal">
-    <div class="popup-content">
-      <!-- Changing Part -->
-      <div class="d-flex justify-content-between mb-3">
-        <h5>Add Section</h5>
-        <i class="ti ti-x" (click)="closeModal()"></i>
+          class="filter-btn import"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Import"
+        >
+          <i class="bx bx-import"></i>
+        </button>
+        <button
+          class="filter-btn export"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Export"
+        >
+          <i class="bx bx-export"></i>
+        </button>
+        <button
+          class="filter-btn create"
+          data-toggle="tooltip"
+          data-placement="top"
+          title="Create"
+          (click)="openAddSection()"
+        >
+          <i class="bx bx-plus"></i>
+        </button>
       </div>
-      <form action="" [formGroup]="sectionForm">
-        <div class="form-group">
-          <label for="roleName">Section Name</label>
-          <input type="text" id="roleName" formControlName="section_name" placeholder="Enter section name" />
-        </div>
-        <div class="col-12 d-flex justify-content-end">
-          <button type="submit" class="primary-btn">Submit</button>
-        </div>
-      </form>
+  </div>
+  
+  
+  <div class="table-responsive" style="padding: 1px">
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th>Section Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let section of paginatedSection; let i = index">
+          <td>{{ section.section_name}}</td>
+         
+          <td class="actions text-end">
+            <button class="action-btn view">
+              <i class="fa-solid fa-arrow-up-right-from-square p-1" (click)="goToSectionDetails(section.id_t3_branch_section)"></i>
+            </button>
+            <button class="action-btn info" (click)="openEdit(section)">
+              <i class="bx bxs-edit p-1"></i>
+            </button>
+            <button
+              class="action-btn danger" (click)="deleteSection(section.id_t3_branch_section)"
+             
+            >
+              <i class="bx bx-trash p-1"></i>
+            </button>
+          </td>
+        </tr>
+        <tr *ngIf="paginatedSection.length === 0">
+          <td colspan="2" class="text-center">No sections added.</td>
+        </tr>
+      </tbody>
+    </table>
+  
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="currentPage === 1">
+        <i class="bx bx-chevron-left"></i>
+      </button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+        <i class="bx bx-chevron-right"></i>
+      </button>
     </div>
   </div>
+  
+  <ng-container #popupContainer></ng-container>
+  
+  <div class="popup" *ngIf="showAddModal">
+      <div class="popup-content">
+        <!-- Changing Part -->
+        <div class="d-flex justify-content-between mb-3">
+          <h5>Add Sub-Section</h5>
+          <i class="ti ti-x" (click)="closeModal()"></i>
+        </div>
+        <form action="" [formGroup]="sectionForm">
+          <div class="form-group">
+            <label for="roleName">Section Name</label>
+            <input type="text" id="roleName" formControlName="section_name" placeholder="Enter sub-section name" />
+          </div>
+          <div class="col-12 d-flex justify-content-end">
+            <button type="submit" class="primary-btn" (click)="submitAddSection()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="popup" *ngIf="showEditPopup">
+      <div class="popup-content">
+        <!-- Changing Part -->
+        <div class="d-flex justify-content-between mb-3">
+          <h5>Add Section</h5>
+          <i class="ti ti-x" (click)="closeModal()"></i>
+        </div>
+        <form action="" [formGroup]="sectionEditForm">
+          <div class="form-group">
+            <label for="roleName">Section Name</label>
+            <input type="text" id="roleName" formControlName="section_name" placeholder="Enter section name" />
+          </div>
+          <div class="col-12 d-flex justify-content-end">
+            <button type="submit" class="primary-btn" (click)="submitEditSection()">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+
+
