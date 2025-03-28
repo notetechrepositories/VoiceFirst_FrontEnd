@@ -43,6 +43,8 @@ import { CompanyBuisnessActivityComponent } from './company-buisness-activity/co
 import { SystemTypesComponent } from './system-types/system-types.component';
 import { SectionComponent } from './section/section.component';
 import { BranchDetailsComponent } from './branch-details/branch-details.component';
+import { SystemIssuetypeComponent } from './system-issuetype/system-issuetype.component';
+import { SystemAnswertypeComponent } from './system-answertype/system-answertype.component';
 
 
 
@@ -94,7 +96,9 @@ import { BranchDetailsComponent } from './branch-details/branch-details.componen
     BuisnessActivityComponent,
     CompanyBuisnessActivityComponent,
     SectionComponent,
-    BranchDetailsComponent
+    BranchDetailsComponent,
+    SystemIssuetypeComponent,
+    SystemAnswertypeComponent
   ],
 })
 export class ComponentModule {}

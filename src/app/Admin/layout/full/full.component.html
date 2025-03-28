@@ -72,6 +72,19 @@
             <span *ngIf="isSidebarExpanded" class="nav-name">System Buisness Activity</span>
           </a>
           }
+      @if(role=="Notetech"){
+          <a class="nav-link" routerLink="sys-issuetype" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            <i class="fa-solid fa-users-gear"></i>
+            <span *ngIf="isSidebarExpanded" class="nav-name">Issue Type</span>
+          </a>
+          }
+
+          @if(role=="Notetech"){
+            <a class="nav-link" routerLink="sys-answertype" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+              <i class="fa-solid fa-users-gear"></i>
+              <span *ngIf="isSidebarExpanded" class="nav-name">Answer Type</span>
+            </a>
+            }
           @if(role=="Company"){
             <a class="nav-link" routerLink="company-buisness-activity" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
               <i class="fa-solid fa-fax"></i>

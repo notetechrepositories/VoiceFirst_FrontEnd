@@ -1,0 +1,126 @@
+
+
+
+<h3 class="mb-4">Answer Type</h3>
+
+<div class="filter-buttons d-flex justify-content-end">
+  <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="togglePopup()" ><i class='bx bx-plus'></i></button>
+</div>
+
+<div class="filter-section">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-md-4">
+            <!-- <select  class="form-select" [(ngModel)]="filterStatus" (change)="onChangeSelection($event)">
+                <option value="" disabled>Choose Selection</option>
+                <option  *ngFor="let selection of selection" [value]="selection.id_t4_selection">{{selection.answer_type}}</option>
+            </select> -->
+          </div>
+        <div class="col-md-4">
+          <!-- <input
+            type="text"
+            class="form-control"
+            placeholder="Search"
+            [(ngModel)]="searchTerm"
+            (input)="applyFilters()"
+          /> -->
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="table-responsive" style="padding: 1px;">
+  <table class="table">
+    <thead class="thead-light">
+      <tr>
+        <th>Name</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <tr *ngIf="isLoading">
+        <td colspan="3" class="position-relative p-0" style="height: 150px;">
+          <div class="d-flex flex-column justify-content-center align-items-center position-absolute top-50 start-50 translate-middle w-100">
+            <div class="loader mb-2"></div>
+            <span>Loading...</span>
+          </div>
+        </td>
+      </tr>
+
+      <ng-container *ngIf="!isLoading">
+        <tr *ngFor="let type of answerTypeList; let i = index">
+          <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
+          <td >{{type.answer_type}}</td>
+          <td class="actions text-end">
+            <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="updatePopup(type)"></i></button>
+            <button class="action-btn danger"><i class='bx bx-trash p-1' (click)="deleteFn(type.issue_type_answer_id)"></i></button>
+          </td>
+        </tr>
+      </ng-container>
+
+      <tr *ngIf="!isLoading && paginatedOrders.length === 0">
+        <td colspan="3" class="text-center">No data available.</td>
+      </tr>
+
+    </tbody>
+  </table>
+
+  <div class="pagination">
+    
+    <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
+    <span>Page {{ currentPage }} of {{ totalPages }}</span>
+    <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
+  </div>
+</div>
+
+<!---------------------------  Popup--------------------------------------->
+<div class="popup" *ngIf="isPopupVisible">
+    <div class="popup-content">
+
+        <div class="d-flex justify-content-between mb-3">
+            <h3>Add Issue Type</h3>
+            <i class="ti ti-x" (click)="onClose()"></i>
+        </div>
+            <!-- Changing Part -->
+            <form class="row g-3" [formGroup]="answerTypeForm" (ngSubmit)="onSubmit()">
+            <div class="col-md-12">
+                <label for="country" class="form-label">Name</label>
+                <input type="text" class="form-control" id="answer_type" name="answer_type" formControlName="answer_type">
+                <div *ngIf="answerTypeForm.controls['answer_type'].touched && answerTypeForm.controls['answer_type'].invalid" class="text-danger">
+                <small *ngIf="answerTypeForm.controls['answer_type'].errors?.['required']">Issue name is required</small>
+                </div>
+            </div>
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="primary-btn">Submit</button>
+            </div>
+            </form>
+    </div>
+</div>
+<!--  -->
+<div class="popup" *ngIf="isEditVisible">
+    <div class="popup-content">
+
+        <div class="d-flex justify-content-between mb-3">
+            <h3>Edit Issue Type</h3>
+            <i class="ti ti-x" (click)="onClose()"></i>
+        </div>
+            <!-- Changing Part -->
+            <form class="row g-3" [formGroup]="answerTypeEditForm" (ngSubmit)="onSubmit()">
+            <div class="col-md-12">
+                <label for="country" class="form-label">Selection</label>
+                <input type="text" class="form-control" id="answer_type" name="answer_type" formControlName="answer_type">
+                <div *ngIf="answerTypeEditForm.controls['answer_type'].touched && answerTypeEditForm.controls['answer_type'].invalid" class="text-danger">
+                <small *ngIf="answerTypeEditForm.controls['answer_type'].errors?.['required']">Issue name is required</small>
+                </div>
+            </div>
+            <div class="col-12 d-flex justify-content-end">
+                <button type="submit" class="primary-btn">Submit</button>
+            </div>
+            </form>
+    </div>
+</div>
+
