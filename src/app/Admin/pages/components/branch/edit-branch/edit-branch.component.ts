@@ -77,8 +77,12 @@ export class EditBranchComponent {
   }
   onSubmit() {
     const data = this.branchForm.value;
+    console.log(data);
+    
     this.brachService.updateBranch(data).subscribe({
       next: (response) => {
+        console.log(response);
+        
         if (response.message == "Success") {
           this.sweetalert.showToast('success', 'Successfully updated.');
           this.closePopup();
