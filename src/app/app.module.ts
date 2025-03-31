@@ -7,13 +7,15 @@ import { BlankComponent } from './Admin/layout/blank/blank.component';
 import { FullComponent } from './Admin/layout/full/full.component';
 import { RouterOutlet } from '@angular/router';
 import { AuthService } from './Services/authService/auth.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SubscriptionComponent } from './Admin/layout/subscription/subscription.component';
 import { FilterPipe } from './filter.pipe';
 import { NavbarComponent } from './User/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotfoundComponent } from './User/notfound/notfound.component';
 import { ReactiveFormsModule } from '@angular/forms';
+
+
 
 export function appInitializer(authService: AuthService): () => Promise<void> {
   return () =>

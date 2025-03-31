@@ -1,4 +1,5 @@
-import { AfterViewInit, Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AuthService } from './Services/authService/auth.service';
 declare var bootstrap: any;
 
 @Component({
@@ -6,11 +7,21 @@ declare var bootstrap: any;
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
-export class AppComponent implements AfterViewInit{
+export class AppComponent implements AfterViewInit, OnInit{
   title = 'VoiceFirst';
 
+  constructor(
+    private authService:AuthService
+  ){}
+  
+  ngOnInit(){
+    console.log(this.authService.isTokenExpired());
+    if (this.authService.isTokenExpired()) {
+      this.authService.logout();
+    }
+  }
+
   ngAfterViewInit() {
-    // Initialize Bootstrap tooltips
     const tooltipTriggerList = Array.from(
       document.querySelectorAll('[data-bs-toggle="tooltip"]')
     );

@@ -3,7 +3,9 @@ import { Observable, of, throwError } from 'rxjs';
 import { LocalstorageService } from '../localStorageService/localstorage.service';
 import { Router } from '@angular/router';
 import { environment } from '../../../environment/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHandler, HttpRequest } from '@angular/common/http';
+
+import * as jwt_decode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +51,24 @@ export class AuthService {
       }
     });
   }
+
+  // ---------- JWT Token ------------------
+
+  isTokenExpired(): boolean {
+    const token = localStorage.getItem('jwtToken');
+    if (!token) return true;
+  
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      const expiry = payload.exp * 1000;
+      return Date.now() > expiry;
+    } catch (e) {
+      console.error('Error decoding token:', e);
+      return true;
+    }
+  }
+  
+
 
   // ---------- Forgot Password--------------
 

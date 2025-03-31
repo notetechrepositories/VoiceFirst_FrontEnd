@@ -20,6 +20,29 @@ export class AddSystemRoleComponent {
   actionsList: { [key: string]: Array<{ actionName: string; actionId: string }> } = {};
 
 
+  permissions = [
+    {
+      program_name: 'Company',
+      add: 'y',
+      edit: 'n',
+      delete: 'n',
+      view: 'y',
+      update_from_excel: 'y',
+      download_excel: 'n',
+      download_pdf: 'y'
+    },
+    {
+      program_name: 'Department',
+      add: 'n',
+      edit: 'y',
+      delete: 'y',
+      view: 'y',
+      update_from_excel: 'n',
+      download_excel: 'y',
+      download_pdf: 'n'
+    }
+  ];
+
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -29,22 +52,42 @@ export class AddSystemRoleComponent {
 
   ngOnInit() {
     this.initializeForm();
+    this.loadPermissions();
   }
   initializeForm() {
     this.systemForm = this.fb.group({
       t5_1_sys_roles_name: ['', [Validators.required]],  
       t5_1_sys_all_location_access: [false], 
-      t5_1_sys_all_issues: [false]
+      t5_1_sys_all_issues: [false],
+      permissions: this.fb.array([])
     });
   }
 
   
-
-  
-  get checkboxes() {
-    return this.systemForm.get('checkboxes') as FormArray;
+  get permissionsArray(): FormArray {
+    return this.systemForm.get('permissions') as FormArray;
   }
-
+  
+  loadPermissions() {
+    this.permissions.forEach(program => {
+      const controls: any = {
+        program_name: [program.program_name]
+      };
+  
+      const programTyped = program as Record<string, string>;
+  
+      Object.keys(programTyped).forEach(key => {
+        if (key !== 'program_name' && programTyped[key] === 'y') {
+          controls[key] = [false]; // 👈 visible but unchecked
+        }
+      });
+  
+      this.permissionsArray.push(this.fb.group(controls));
+    });
+  }
+  
+  
+  
 
   onClose() {
     this.closePopup();

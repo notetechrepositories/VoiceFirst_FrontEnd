@@ -28,6 +28,7 @@ export class EditBranchComponent {
   div2: string = '';
   div3: string = '';
   isOtherSelected = false;
+  branchId:string='';
   constructor(private router: Router, private fb: FormBuilder, private brachService: BrachService
     , private sweetalert: SweetalertService, private countryService: CountryService, private companyService: CompanyService) {
     this.branchForm = this.fb.group({
@@ -59,7 +60,7 @@ export class EditBranchComponent {
   }
   onClose() {
     this.closePopup();
-    this.router.navigate(['/company/branch'])
+    this.router.navigate(['/company/branch-details',this.branchId]);
   }
 
   onBranchTypeChange(event: any) {
@@ -85,8 +86,9 @@ export class EditBranchComponent {
         
         if (response.message == "Success") {
           this.sweetalert.showToast('success', 'Successfully updated.');
-          this.closePopup();
+          this.branchId=data.id_t2_company_branch;
           this.branchForm.reset();
+          this.closePopup();
         }
         else {
           this.sweetalert.showToast('error', response.message);
