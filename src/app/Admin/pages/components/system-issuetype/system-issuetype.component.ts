@@ -40,7 +40,7 @@ export class SystemIssuetypeComponent {
     }
   // -----------------------------------------design----------------------------------------------------------------------------------
   
-    itemsPerPage = 5;
+    itemsPerPage = 10;
     currentPage = 1;
     paginatedOrders = this.issueTypeList.slice(0, this.itemsPerPage);
   
@@ -54,18 +54,19 @@ export class SystemIssuetypeComponent {
         this.updatePaginatedOrders();
       }
     }
-  
+    
+    
     previousPage() {
       if (this.currentPage > 1) {
         this.currentPage--;
         this.updatePaginatedOrders();
       }
     }
-  
     updatePaginatedOrders() {
       const start = (this.currentPage - 1) * this.itemsPerPage;
       const end = start + this.itemsPerPage;
       this.paginatedOrders = this.issueTypeList.slice(start, end);
+      
     }
   
     // ----------------------
@@ -103,7 +104,9 @@ export class SystemIssuetypeComponent {
         
       if(res.status==200){
         this.onClose();
-        this.issueTypeList=res
+        this.issueTypeList=res.data.Items
+        console.log(this.issueTypeList);
+        
         this.filteredOrders=this.issueTypeList;
         this.updatePaginatedOrders();
       }
@@ -135,16 +138,16 @@ export class SystemIssuetypeComponent {
     const data=this.issueTypeForm.value;
     console.log(data);
     this.issueService.addSysIssueType(data).subscribe({
-      next: res => {
-      // if(res.status =="Success"){
-      //   this.sweetalert.showToast('success','Successfully created.');
-      //   this.onClose();
+      next: (res:any) => {
+      if(res.status ===200){
+        this.sweetalert.showToast('success',' Added Succesfully!');
+        this.onClose();
        
-      //   this.issueTypeForm.reset();
-      // }
-      // else{
-      //   this.sweetalert.showToast('error',res.message);
-      // }
+        this.issueTypeForm.reset();
+      }
+      else{
+        this.sweetalert.showToast('error',res.message);
+      }
       },
       error: error => {
         this.sweetalert.showToast('error','Oops! Something went wrong.');
@@ -163,17 +166,18 @@ export class SystemIssuetypeComponent {
 
   onSubmitEditIssuetype(){
     const data=this.issueTypeEditForm.value;
+    console.log(data);
     this.issueService.updateSysIssueType(data).subscribe({
-      next: (res) => {
-      // if(res.status =="Success"){
-      //   this.sweetalert.showToast('success','Successfully created.');
-      //   this.onClose();
-       
-      //   this.issueTypeForm.reset();
-      // }
-      // else{
-      //   this.sweetalert.showToast('error',response.message);
-      // }
+      next: (res:any) => {
+      if(res.status === 200){
+        this.sweetalert.showToast('success','Successfully Updated.');
+        this.onClose();
+       this.getSysIssueType();
+        this.issueTypeForm.reset();
+      }
+      else{
+        this.sweetalert.showToast('error',res.message);
+      }
       },
       error: (error) => {
         this.sweetalert.showToast('error','Oops! Something went wrong.');
@@ -192,18 +196,21 @@ export class SystemIssuetypeComponent {
       confirmButtonText: "Yes, delete it!"
     }).then((result) => {
       if (result.isConfirmed) {
-        this.sweetalert.showToast('success','Succefully deleted');
+      console.log(id);
+      
         this.issueService.deleteSysIssueType(id).subscribe({
-          next: (res) => {
-          // if(res.status =="Success"){
-          //   this.sweetalert.showToast('success','Successfully created.');
-          //   this.onClose();
-           
-          //   this.issueTypeForm.reset();
-          // }
-          // else{
-          //   this.sweetalert.showToast('error',response.message);
-          // }
+          next: (res:any) => {
+            console.log(result);
+            
+          if(res.status ===200){
+            this.sweetalert.showToast('success','Succefully deleted');
+            this.onClose();
+           this.getSysIssueType();
+            this.issueTypeForm.reset();
+          }
+          else{
+            this.sweetalert.showToast('error',res.message);
+          }
           },
           error: (error) => {
             this.sweetalert.showToast('error','Oops! Something went wrong.');

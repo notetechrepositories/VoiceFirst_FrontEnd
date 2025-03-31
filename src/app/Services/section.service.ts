@@ -38,7 +38,7 @@ export class SectionService {
   deleteSection(SectionId: any) {
     console.log(SectionId);
 
-    const url = `${this.apiUrl}/${SectionId}`;
+    const url = `${this.apiUrl}/section/${SectionId}`;
     return this.http.delete<any>(url);
   }
      

@@ -38,7 +38,7 @@ export class SubSectionService {
   deleteSubSection(subSectionId: any) {
     console.log(subSectionId);
 
-    const url = `${this.apiUrl}/${subSectionId}`;
+    const url = `${this.apiUrl}/sub-section/${subSectionId}`;
     return this.http.delete<any>(url);
   }
 }

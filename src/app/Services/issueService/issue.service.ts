@@ -40,7 +40,7 @@ export class IssueService {
       return this.http.delete(`${this.apiUrl}/SysIssueType/delete-sys-issue-type-values?id=${id}`,{headers:this.headers});
     }
 
-    // ------Sys Issue Type--------------
+    // ------Sys Issue Answer Type--------------
 
     addSysAnswerType(data:any){
       return this.http.post(`${this.apiUrl}/SysIssueType/add-sys-issue-answer-type`, data,{headers:this.headers});

@@ -154,7 +154,7 @@ export class SectionDetailsComponent {
       this.subSectionService.addSubSection(formvalue).subscribe({
         next:res=>{
           console.log(res);
-          if(res.status==true){
+          if(res.status===200){
             this.sweetalert.showToast('success','Sub-Section Added Succesfully!');
             this.getSubSection();
             this.closeModal();
@@ -178,9 +178,10 @@ export class SectionDetailsComponent {
         next:res=>{
           console.log(res);
           if(res.status==200){
+            this.sweetalert.showToast('success','Updated!');
             this.closeModal();
             this.getSubSection();
-            this.sweetalert.showToast('success','Updated!');
+           
           }
           else{
             this.sweetalert.showToast('error',res.message);
@@ -246,9 +247,41 @@ export class SectionDetailsComponent {
         }
       })
     }
+     
+        deleteSection(id: any) {
+        Swal.fire({
+             title: "Are you sure?",
+             text: "You won't be able to revert this!",
+             icon: "warning",
+             showCancelButton: true,
+             confirmButtonColor: "#3085d6",
+             cancelButtonColor: "#d33",
+             confirmButtonText: "Yes, delete it!"
+           }).then((result) => {
+             if (result.isConfirmed) {
+               console.log(id);
+       
+               this.subSectionService.deleteSubSection(id).subscribe({
+                 next: (res) => {
+                   if (res.status === 200) {
+                     this.sweetalert.showToast('success', 'Succefully deleted');
+                     //this.paginatedOrders = this.locations.filter(item => item.id_t2_1_country !== id);
+                     this.getSubSection();
+                   }
+                 },
+                 error: (error) => {
+                   this.sweetalert.showToast('error', 'Oops! Something went wrong.');
+                 },
+               });
+       
+             }
+           });
+        }
+    
     
       @ViewChild('popupContainer', { read: ViewContainerRef })
       popupContainer!: ViewContainerRef;
+
     openEditPopup(branch:any){
       //  this.popupContainer.clear();
       //     const factory = this.componentFactoryResolver.resolveComponentFactory(EditBranchComponent);

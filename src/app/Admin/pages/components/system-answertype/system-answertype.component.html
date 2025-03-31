@@ -37,7 +37,7 @@
     <thead class="thead-light">
       <tr>
         <th>Name</th>
-        <th>Action</th>
+        <th class="text-end">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -52,8 +52,8 @@
       </tr>
 
       <ng-container *ngIf="!isLoading">
-        <tr *ngFor="let type of answerTypeList; let i = index">
-          <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
+        <tr *ngFor="let type of paginatedOrders; let i = index">
+        
           <td >{{type.answer_type}}</td>
           <td class="actions text-end">
             <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="updatePopup(type)"></i></button>
@@ -82,7 +82,7 @@
     <div class="popup-content">
 
         <div class="d-flex justify-content-between mb-3">
-            <h3>Add Issue Type</h3>
+            <h3>Add Issue AnswerType</h3>
             <i class="ti ti-x" (click)="onClose()"></i>
         </div>
             <!-- Changing Part -->
@@ -105,11 +105,11 @@
     <div class="popup-content">
 
         <div class="d-flex justify-content-between mb-3">
-            <h3>Edit Issue Type</h3>
+            <h3>Edit Issue AnswerType</h3>
             <i class="ti ti-x" (click)="onClose()"></i>
         </div>
             <!-- Changing Part -->
-            <form class="row g-3" [formGroup]="answerTypeEditForm" (ngSubmit)="onSubmit()">
+            <form class="row g-3" [formGroup]="answerTypeEditForm" (ngSubmit)="onSubmitEditIssuetype()">
             <div class="col-md-12">
                 <label for="country" class="form-label">Selection</label>
                 <input type="text" class="form-control" id="answer_type" name="answer_type" formControlName="answer_type">
