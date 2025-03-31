@@ -35,11 +35,11 @@ export class SystemAnswertypeComponent {
        }
    
        ngOnInit(): void {
-         this.getSysIssueType()
+         this.getAllSysAnswertype()
        }
      // -----------------------------------------design----------------------------------------------------------------------------------
      
-       itemsPerPage = 5;
+       itemsPerPage = 10;
        currentPage = 1;
        paginatedOrders = this.answerTypeList.slice(0, this.itemsPerPage);
      
@@ -90,20 +90,19 @@ export class SystemAnswertypeComponent {
      
      // ----------------------------------POP UP----------------------------------------
      
-     getSysIssueType(){
+     getAllSysAnswertype(){
    
        const filter = {
          filters: {},
        };
    
-       this.issueService.getAllSysIssuetype(filter).subscribe({
-         next: (res) => {
-           console.log(res);
-           
+       this.issueService.getAllSysAnswertype(filter).subscribe({
+         next: (res:any) => {
          if(res){
-           this.sweetalert.showToast('success','Successfully created.');
+        console.log(res);
+        
            this.onClose();
-           // this.answerTypeList=res
+            this.answerTypeList=res.data.Items
            this.filteredOrders=this.answerTypeList;
            this.updatePaginatedOrders();
          }
@@ -134,17 +133,19 @@ export class SystemAnswertypeComponent {
      onSubmit():void {
        const data=this.answerTypeForm.value;
        console.log(data);
-       this.issueService.addSysIssueType(data).subscribe({
-         next: (res) => {
-         // if(res.status =="Success"){
-         //   this.sweetalert.showToast('success','Successfully created.');
-         //   this.onClose();
+       this.issueService.addSysAnswerType(data).subscribe({
+         next: (res:any) => {
+          console.log(res);
           
-         //   this.answerTypeForm.reset();
-         // }
-         // else{
-         //   this.sweetalert.showToast('error',response.message);
-         // }
+         if(res.status ===200 ){
+           this.sweetalert.showToast('success','Successfully created.');
+           this.onClose();
+          this.getAllSysAnswertype();
+           this.answerTypeForm.reset();
+         }
+         else{
+           this.sweetalert.showToast('error',res.message);
+         }
          },
          error: (error) => {
            this.sweetalert.showToast('error','Oops! Something went wrong.');
@@ -163,17 +164,19 @@ export class SystemAnswertypeComponent {
    
      onSubmitEditIssuetype(){
        const data=this.answerTypeEditForm.value;
-       this.issueService.updateSysIssueType(data).subscribe({
-         next: (res) => {
-         // if(res.status =="Success"){
-         //   this.sweetalert.showToast('success','Successfully created.');
-         //   this.onClose();
-          
-         //   this.answerTypeForm.reset();
-         // }
-         // else{
-         //   this.sweetalert.showToast('error',response.message);
-         // }
+       console.log(data);
+       
+       this.issueService.updateSysAnswerType(data).subscribe({
+         next: (res:any) => {
+         if(res.status === 200){
+           this.sweetalert.showToast('success','Successfully Updated.');
+           this.onClose();
+           this.getAllSysAnswertype();
+           this.answerTypeForm.reset();
+         }
+         else{
+           this.sweetalert.showToast('error',res.message);
+         }
          },
          error: (error) => {
            this.sweetalert.showToast('error','Oops! Something went wrong.');
@@ -192,18 +195,21 @@ export class SystemAnswertypeComponent {
          confirmButtonText: "Yes, delete it!"
        }).then((result) => {
          if (result.isConfirmed) {
-           this.sweetalert.showToast('success','Succefully deleted');
-           this.issueService.deleteSysIssueType(id).subscribe({
-             next: (res) => {
-             // if(res.status =="Success"){
-             //   this.sweetalert.showToast('success','Successfully created.');
-             //   this.onClose();
+          console.log(id);
+          
+           this.issueService.deleteSysAnswerType(id).subscribe({
+             next: (res:any) => {
+              console.log(res);
               
-             //   this.answerTypeForm.reset();
-             // }
-             // else{
-             //   this.sweetalert.showToast('error',response.message);
-             // }
+             if(res.status === 200){
+              this.sweetalert.showToast('success','Succefully deleted');
+               this.onClose();
+               this.getAllSysAnswertype();
+               this.answerTypeForm.reset();
+             }
+             else{
+               this.sweetalert.showToast('error',res.message);
+             }
              },
              error: (error) => {
                this.sweetalert.showToast('error','Oops! Something went wrong.');
