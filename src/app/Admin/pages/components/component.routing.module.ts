@@ -24,6 +24,7 @@ import { SectionComponent } from './section/section.component';
 import { BranchDetailsComponent } from './branch-details/branch-details.component';
 import { SystemIssuetypeComponent } from './system-issuetype/system-issuetype.component';
 import { SectionDetailsComponent } from './section-details/section-details.component';
+import { SystemAnswertypeComponent } from './system-answertype/system-answertype.component';
 
 
 
@@ -146,7 +147,7 @@ export const ComponentRoutes: Routes = [
      
       {
         path: 'sys-answertype',
-        component: SystemIssuetypeComponent,
+        component: SystemAnswertypeComponent,
       },
  {
         path: 'section-details/:id',

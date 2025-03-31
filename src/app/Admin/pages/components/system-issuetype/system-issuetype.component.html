@@ -30,52 +30,52 @@
     </div>
 
   </div>
-</div>
-
-<div class="table-responsive" style="padding: 1px;">
-  <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th>Name</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-
-      <tr *ngIf="isLoading">
-        <td colspan="3" class="position-relative p-0" style="height: 150px;">
-          <div class="d-flex flex-column justify-content-center align-items-center position-absolute top-50 start-50 translate-middle w-100">
-            <div class="loader mb-2"></div>
-            <span>Loading...</span>
-          </div>
-        </td>
-      </tr>
-
-      <ng-container *ngIf="!isLoading">
-        <tr *ngFor="let type of issueTypeList; let i = index">
-          <td>{{ i + 1 + (currentPage - 1) * itemsPerPage }}</td>
-          <td >{{type.issue_name}}</td>
-          <td class="actions text-end">
-            <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="updatePopup(type)"></i></button>
-            <button class="action-btn danger"><i class='bx bx-trash p-1' (click)="deleteFn(type.issue_type_id)"></i></button>
+  <div class="table-responsive" style="padding: 1px;">
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th>Name</th>
+          <th class="text-end">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+  
+        <tr *ngIf="isLoading">
+          <td colspan="3" class="position-relative p-0" style="height: 150px;">
+            <div class="d-flex flex-column justify-content-center align-items-center position-absolute top-50 start-50 translate-middle w-100">
+              <div class="loader mb-2"></div>
+              <span>Loading...</span>
+            </div>
           </td>
         </tr>
-      </ng-container>
-
-      <tr *ngIf="!isLoading && paginatedOrders.length === 0">
-        <td colspan="3" class="text-center">No data available.</td>
-      </tr>
-
-    </tbody>
-  </table>
-
-  <div class="pagination">
-    
-    <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
-    <span>Page {{ currentPage }} of {{ totalPages }}</span>
-    <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
+  
+        <ng-container *ngIf="!isLoading">
+          <tr *ngFor="let type of paginatedOrders; let i = index">
+            <td >{{type.issue_name}}</td>
+            <td class="actions text-end">
+              <button class="action-btn info"><i class='bx bxs-edit p-1' (click)="updatePopup(type)"></i></button>
+              <button class="action-btn danger"><i class='bx bx-trash p-1' (click)="deleteFn(type.issue_type_id)"></i></button>
+            </td>
+          </tr>
+        </ng-container>
+  
+        <tr *ngIf="!isLoading && paginatedOrders.length === 0">
+          <td colspan="3" class="text-center">No data available.</td>
+        </tr>
+  
+      </tbody>
+    </table>
+  
+    <!-- Pagination -->
+    <div class="pagination">
+      <button (click)="previousPage()" [disabled]="currentPage === 1"><i class='bx bx-chevron-left'></i></button>
+      <span>Page {{ currentPage }} of {{ totalPages }}</span>
+      <button (click)="nextPage()" [disabled]="currentPage === totalPages"><i class='bx bx-chevron-right'></i></button>
+    </div>
   </div>
 </div>
+
+
 
 <!---------------------------  Popup--------------------------------------->
 <div class="popup" *ngIf="isPopupVisible">
@@ -109,7 +109,7 @@
             <i class="ti ti-x" (click)="onClose()"></i>
         </div>
             <!-- Changing Part -->
-            <form class="row g-3" [formGroup]="issueTypeForm" (ngSubmit)="onSubmit()">
+            <form class="row g-3" [formGroup]="issueTypeEditForm" (ngSubmit)="onSubmitEditIssuetype()">
             <div class="col-md-12">
                 <label for="country" class="form-label">Selection</label>
                 <input type="text" class="form-control" id="issue_name" name="issue_name" formControlName="issue_name">
