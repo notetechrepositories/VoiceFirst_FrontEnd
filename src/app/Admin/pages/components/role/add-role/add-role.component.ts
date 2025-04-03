@@ -12,8 +12,8 @@ import { SweetalertService } from '../../../../../Services/sweetAlertService/swe
 export class AddRoleComponent {
   @Output() closePopup = () => {};
 
-  labels = ['User', 'Country', 'Company']; // Dynamic labels
-  actions = ['Create', 'View', 'Update', 'Delete', 'Print']; // Actions (checkboxes)
+  labels = ['User', 'Country', 'Company'];
+  actions = ['Create', 'View', 'Update', 'Delete', 'Print'];
   form: FormGroup;
 
   selectedPermissions: string[] = [];

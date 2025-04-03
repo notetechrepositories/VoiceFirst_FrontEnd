@@ -46,6 +46,7 @@ import { BranchDetailsComponent } from './branch-details/branch-details.componen
 import { SystemIssuetypeComponent } from './system-issuetype/system-issuetype.component';
 import { SystemAnswertypeComponent } from './system-answertype/system-answertype.component';
 import { SectionDetailsComponent } from './section-details/section-details.component';
+import { AddIssueTypeComponent } from './system-issuetype/add-issue-type/add-issue-type.component';
 
 
 
@@ -99,6 +100,7 @@ import { SectionDetailsComponent } from './section-details/section-details.compo
     SectionComponent,
     BranchDetailsComponent,
     SystemIssuetypeComponent,
+    AddIssueTypeComponent,
     SystemAnswertypeComponent,
     SectionDetailsComponent
   ],

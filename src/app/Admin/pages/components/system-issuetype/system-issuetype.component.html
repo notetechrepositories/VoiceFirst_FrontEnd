@@ -5,6 +5,7 @@
 
 <div class="filter-buttons d-flex justify-content-end">
   <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" (click)="togglePopup()" ><i class='bx bx-plus'></i></button>
+  <button class="filter-btn create" data-toggle="tooltip" data-placement="top" title="Create" routerLink="/company/add-issuetype" ><i class='bx bx-minus'></i></button>
 </div>
 
 <div class="filter-section">
@@ -100,7 +101,7 @@
             </form>
     </div>
 </div>
-<!--  -->
+<!-- Edit  pop -->
 <div class="popup" *ngIf="isEditVisible">
     <div class="popup-content">
 

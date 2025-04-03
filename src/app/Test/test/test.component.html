@@ -1,0 +1,26 @@
+<!-- sidebar/sidebar.component.html -->
+<ul class="sidebar">
+    <ng-container *ngFor="let item of nestedMenu">
+      <ng-template [ngTemplateOutlet]="menuItem" [ngTemplateOutletContext]="{ $implicit: item }"></ng-template>
+    </ng-container>
+  </ul>
+  
+  <ng-template #menuItem let-item>
+    <li>
+      <div class="menu-item" (click)="toggle(item)">
+        {{ item.menuname }}
+        <span *ngIf="item.children?.length" class="arrow">
+          <i 
+            class="fa-solid"
+            [ngClass]="item.expanded ? 'fa-angle-down' : 'fa-angle-right'"
+          ></i>
+        </span>
+      </div>
+      <ul *ngIf="item.children?.length && item.expanded" class="submenu">
+        <ng-container *ngFor="let child of item.children">
+          <ng-template [ngTemplateOutlet]="menuItem" [ngTemplateOutletContext]="{ $implicit: child }"></ng-template>
+        </ng-container>
+      </ul>
+    </li>
+  </ng-template>
+  

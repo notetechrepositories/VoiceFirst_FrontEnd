@@ -21,6 +21,45 @@
             <input type="checkbox" formControlName="t5_1_sys_all_issues" id="t5_1_sys_all_issues" /> All Issue Access
           </label>
         </div>
+        <div formArrayName="permissions">
+          <div *ngFor="let permissionGroup of permissionsArray.controls; let i = index" [formGroupName]="i" class="permission-row d-flex mb-2">
+            
+            <div style="width:150px">
+              <label><strong>{{ permissionGroup.get('program_name')?.value }}</strong></label>
+            </div>
+            <div class="label">
+              <label *ngIf="permissionGroup.get('add')">
+                <input type="checkbox" formControlName="add" /> Add
+              </label>
+          
+              <label *ngIf="permissionGroup.get('edit')">
+                <input type="checkbox" formControlName="edit" /> Edit
+              </label>
+          
+              <label *ngIf="permissionGroup.get('delete')">
+                <input type="checkbox" formControlName="delete" /> Delete
+              </label>
+          
+              <label *ngIf="permissionGroup.get('view')">
+                <input type="checkbox" formControlName="view" /> View
+              </label>
+          
+              <label *ngIf="permissionGroup.get('update_from_excel')">
+                <input type="checkbox" formControlName="update_from_excel" /> Import Excel
+              </label>
+          
+              <label *ngIf="permissionGroup.get('download_excel')">
+                <input type="checkbox" formControlName="download_excel" /> Download Excel
+              </label>
+          
+              <label *ngIf="permissionGroup.get('download_pdf')">
+                <input type="checkbox" formControlName="download_pdf" /> Download PDF
+              </label>
+            </div>
+          </div>
+        </div>
+        
+        
         <div class="col-12 d-flex justify-content-end">
           <button type="submit" class="primary-btn" (click)="addNewRole()">Submit</button>
         </div>

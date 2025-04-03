@@ -44,4 +44,10 @@
   .secondary-btn:hover {
     background-color: #b3b3b3;
   }
+
+  .label label{
+    margin-right: 20px;
+    
+  }
+
   
