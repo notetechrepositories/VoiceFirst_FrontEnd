@@ -7,6 +7,7 @@ import { SubscriptionComponent } from './Admin/layout/subscription/subscription.
 import { NavbarComponent } from './User/navbar/navbar.component';
 import { LandingpageComponent } from './User/landingpage/landingpage.component';
 import { NotfoundComponent } from './User/notfound/notfound.component';
+import { TestComponent } from './Test/test/test.component';
 
 export const routes: Routes = [
 
@@ -59,6 +60,18 @@ export const routes: Routes = [
             (m) => m.ComponentModule
           ),
       },
+    ],
+  },
+
+  {
+    path: '',
+    component: BlankComponent,
+    children: [
+      {
+        path: 'test',
+        component:TestComponent
+      },
+
     ],
   },
   {

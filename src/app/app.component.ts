@@ -15,10 +15,10 @@ export class AppComponent implements AfterViewInit, OnInit{
   ){}
   
   ngOnInit(){
-    console.log(this.authService.isTokenExpired());
-    if (this.authService.isTokenExpired()) {
-      this.authService.logout();
-    }
+    // console.log(this.authService.isTokenExpired());
+    // if (this.authService.isTokenExpired()) {
+    //   this.authService.logout();
+    // }
   }
 
   ngAfterViewInit() {

@@ -14,6 +14,7 @@ import { NavbarComponent } from './User/navbar/navbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NotfoundComponent } from './User/notfound/notfound.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TestComponent } from './Test/test/test.component';
 
 
 
@@ -33,6 +34,7 @@ export function appInitializer(authService: AuthService): () => Promise<void> {
     NotfoundComponent,
     FilterPipe,
     NavbarComponent,
+    TestComponent,
     
   ],
   imports: [

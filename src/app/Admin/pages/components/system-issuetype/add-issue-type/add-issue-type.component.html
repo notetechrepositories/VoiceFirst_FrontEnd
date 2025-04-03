@@ -1,0 +1,118 @@
+<div>
+    <div class="form-container">
+        <h3>Add New Issue Type</h3>
+        <form>
+            <!-- Issue Type Name -->
+            <div class="mb-3">
+                <label for="issueTypeName" class="form-label">Issue Type Name</label>
+                <input type="text" class="form-control" id="issueTypeName" placeholder="Enter issue type name" required>
+            </div>
+
+            <!-- Media Type Section -->
+            <div class="media-type-section">
+                <h5>Media Type Options</h5>
+                <p class="text-muted">Configure photo/video attachment requirements</p>
+
+                <!-- Photo Options -->
+                <div class="media-option">
+                    <div class="form-check form-switch mb-2 mx-3">
+                        <input class="form-check-input" type="checkbox" id="enablePhoto">
+                        <label class="form-check-label" for="enablePhoto">Enable Photo Attachment</label>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Photo Requirement</label>
+                            <div class="d-flex">
+                                <div class="form-check mx-5">
+                                    <input class="form-check-input" type="radio" name="photoRequirement" id="photoMandatory" value="mandatory">
+                                    <label class="form-check-label" for="photoMandatory">Mandatory</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="photoRequirement" id="photoOptional" value="optional">
+                                    <label class="form-check-label" for="photoOptional">Optional</label>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="photoMaxSize" class="form-label">Max Size (MB)</label>
+                                <input type="number" class="form-control" id="photoMaxSize" value="5" min="1">
+                                <label for="photoMaxNumber" class="form-label">Max Number</label>
+                                <input type="number" class="form-control" id="photoMaxNumber" value="3" min="1">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-6 mb-3">
+                            <div class="mb-3 d-flex">
+                                <input type="text" class="form-control" placeholder="Enter photo type" [(ngModel)]="photoType" name="photoType" (keyup.enter)="addPhotoTypes()">
+                                <button class="btn btn-primary" type="button" (click)="addPhotoTypes()">Add</button>
+                            </div>
+                            
+                            <div class="tags-container">
+                                <span class="badge me-2 mb-2" *ngFor="let tag of photoTypeList">
+                                    {{ tag }}
+                                    <i class="fas fa-times ms-2" (click)="removePhoteType(tag)"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+
+                <!-- Video Options -->
+                <div class="media-option">
+                    <div class="form-check form-switch mb-2  mx-3">
+                        <input class="form-check-input" type="checkbox" id="enableVideo">
+                        <label class="form-check-label" for="enableVideo">Enable Video Attachment</label>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Video Requirement</label>
+                            <div class="d-flex">
+                                <div class="form-check mx-5">
+                                    <input class="form-check-input" type="radio" name="videorequirement" id="photoMandatory" value="mandatory" checked>
+                                    <label class="form-check-label" for="photoMandatory">Mandatory</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="videorequirement" id="photoOptional" value="optional">
+                                    <label class="form-check-label" for="photoOptional">Optional</label>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="videoMaxSize" class="form-label">Max Size (MB)</label>
+                                <input type="number" class="form-control" id="videoMaxSize" value="20" min="1">
+                                <label for="videoMaxNumber" class="form-label">Max Number</label>
+                                <input type="number" class="form-control" id="videoMaxNumber" value="1" min="1">
+                            </div>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <div class="mb-3 d-flex">
+                                <input type="text" class="form-control" placeholder="Enter video type" [(ngModel)]="videoType" name="photoType" (keyup.enter)="addVideoType()">
+                                <button class="btn btn-primary" type="button" (click)="addVideoType()">Add</button>
+                            </div>
+                            
+                            <div class="tags-container">
+                                <span class="badge me-2 mb-2" *ngFor="let tag of videoTypeList">
+                                    {{ tag }}
+                                    <i class="fas fa-times ms-2" (click)="removePhoteType(tag)"></i>
+                                </span>
+                            </div>
+                        </div>
+                        
+
+                        
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Add Issue Type</button>
+            </div>
+        </form>
+    </div>
+</div>
